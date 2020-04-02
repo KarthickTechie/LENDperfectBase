@@ -1,0 +1,42 @@
+.venus-btn{
+    padding: 5px;
+    max-width: 100px;
+    min-width: 50px;
+    height: auto;
+    background: #1a73e8;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+
+}
+
+.primary{
+    background: #1a73e8;
+}
+.danger{
+    background: rgb(170, 30, 30)
+}
+
+.success{
+    background: green
+}
+
+.clear{
+    background: #cccccc;
+    color: #000;
+}
+
+.round{
+    border-radius: 20px;
+}
+
+.flat{
+    border-radius: 5px;
+}
+
+.small{
+    font-size: 12px;
+    padding:4px 10px;
+}

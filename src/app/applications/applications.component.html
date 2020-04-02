@@ -1,0 +1,29 @@
+<div>
+
+  <venus-simplelist>
+    <venus-simplelistitem *ngFor="let application of applications">
+     
+      <p><B>name : </B>{{application.name}}</p>
+      <p style="margin-left:1em"><B>Loan Amount : </B>{{application.loanamount}}</p>
+      <p style="margin-left:1em">
+        <B>Staus : 
+          <span 
+          
+          [style.color]="application.status=='submitted' ? 'green' : 'red' ">{{application.status}}</span>
+        </B>
+      </p>
+      <venusbutton 
+      *ngIf="application.status=='notsubmitted'"
+      style="position: absolute;right:10%"
+      [color]="'green'" [cornor]="'flat'" [size]="'small'"
+      (click)="onClickSubmitBtn(application)"
+      >
+          Submit
+      </venusbutton>
+    </venus-simplelistitem>
+  </venus-simplelist>
+
+  
+
+
+</div>

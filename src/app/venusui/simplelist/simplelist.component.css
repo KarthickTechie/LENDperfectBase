@@ -1,0 +1,9 @@
+.venus-list-container{
+    
+    min-width: 450px;
+    height:auto;
+    padding: 0.5em;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+    border-radius: 5px;
+    margin: 0 4em;
+}

@@ -1,0 +1,153 @@
+body{
+    color: rgba(0,0,0,.87);
+    font-family: Roboto,HelveticaNeue,Arial,sans-serif;
+}
+.container{
+}
+.heading{
+    display: flex;
+    margin: 0 auto;
+    flex-flow: column wrap;
+    width: 75%;
+    height: auto;
+    background: white;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28)
+}
+
+.heading-div1{
+    width: 100%;
+    height: 60px;
+    background: white;
+}
+
+.heading-div2{
+    width: 100%;
+            height: 60px;
+            background: #b7dee8;
+            text-align: center;
+}
+
+
+.heading-div2 > h3{
+    margin-top:30px;
+}
+
+
+
+.heading-div3{
+    width: 50%;
+    height: 50px;
+    background: white;
+    position: absolute;
+    top: 40px;
+    margin-left: 12%;
+    border: 2px solid #dab48c;
+    text-align: center;
+
+}
+
+.heading-div3>h1{
+    line-height: 0;
+}
+
+.resume-content{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+}
+.resume-content-leftblock{
+    margin:1em 0;
+    border-right: 1px solid #ccc;
+    width: 40%;
+    background: transparent;
+    height: auto;
+}
+
+.resume-content-rightblock{
+    margin:1em 0;
+    width: 55%;
+    background:transparent;
+    height: auto;
+}
+
+.contact-block{
+    display: flex;
+    flex-flow: column wrap;
+    height: auto;
+    padding: 10px;
+    margin: 10px;
+    background: transparent;
+}
+
+.contact-block>h3{
+    color:#909090;
+    text-align:center;
+}
+.orange-line{
+    width: 50px;
+    height: 2px;
+    background: orange;
+    position: relative;
+    top: -28px;
+    left: 75%;
+}
+
+.contact-block>p{
+    margin: 0;
+    text-align: left;
+    color:#4e4d4d;
+    margin:5px;
+}
+
+.contact-block>p>i{
+    position: absolute;
+    left: 35%;
+    color:#000;
+}
+
+.rating{
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0.2em;
+}
+
+.rating>div.skill{
+    width: 160px;
+}
+
+.rating>div.star{
+    display: inline-block;
+    position: relative;
+    left: 50px;
+    color:#ff5e00;
+    font-size: 12px;
+}
+
+.summary-block{
+    display: flex;
+    flex-flow: column wrap;
+    height: auto;
+    padding: 10px;
+    margin: 10px;
+    background: transparent;
+}
+
+.summary-block>h3{
+    color:#909090;
+    text-align:center;
+}
+
+li{
+    color: #616263;
+    padding: 0.25em;
+}
+
+.experience-list>p{
+    text-align: center;
+    background: #c1c1c159;
+    padding: 1em;
+    color: #5a5a5a80;
+    text-transform: uppercase;
+    font-weight: 600;
+}

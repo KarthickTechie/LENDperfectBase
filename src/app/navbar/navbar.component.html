@@ -1,0 +1,21 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="home" routerLinkActive="active">Home</a></li>
+        <li><a routerLink="posts" routerLinkActive="active" >Posts</a></li>
+        <li><a routerLink="admin" routerLinkActive="active" >Admin</a></li>
+        <li>
+          <a routerLink="applications" routerLinkActive="active" >
+            Applications
+            <span class="badge" 
+            [style.background]="notSubmittedCount>5 ? 'red' : 'yellowgreen' "
+            >{{notSubmittedCount}}</span>
+          </a>
+          
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
