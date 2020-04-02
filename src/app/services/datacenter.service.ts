@@ -23,5 +23,10 @@ export class DatacenterService {
       
     return this.applications.filter(item=>item.status=='notsubmitted').length;
   }
+  
+  getSubmittedApplicationCount():number{
+      
+    return this.applications.filter(item=>item.status=='submitted').length;
+  }
 
 }
