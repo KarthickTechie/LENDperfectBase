@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <img style='float: right' src="assets/imgs/almasrafLogo.png" alt="" id="logo" text-end>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="img-container"><img src="assets/imgs/abudhabi.jpg" alt=""></div>
+
+  <div class="logininfo">
+    <div class="logoname">{{name}}</div>
+    <div class="logindata" *ngIf="setLoginInfo.logincheck">
+      <ion-item class="loginInput">
+        <ion-label position="floating">
+          <ion-icon name="person" class="loginIcon"></ion-icon>User Name
+        </ion-label>
+        <ion-input type="text" [(ngModel)]="username"></ion-input>
+      </ion-item>
+      <ion-item class="loginInput">
+        <ion-label position="floating">
+          <ion-icon name="lock" class="loginIcon"></ion-icon>Password
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <ion-button color="logo" (click)="doLogin()">Login</ion-button>
+    </div>
+
+    <div class="logindata" *ngIf="setLoginInfo.loginset">
+      <ion-item class="loginInput">
+        <ion-label position="floating">
+          <ion-icon name="unlock" class="loginIcon"></ion-icon>Enter PIN
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="pin" maxlength="4"></ion-input>
+      </ion-item>
+      <ion-button color="logo" (click)="login()">Login</ion-button>
+    </div>
+
+    <div class="logindata" *ngIf="setLoginInfo.loginpin">
+      <ion-item class="loginInput">
+        <ion-label position="floating">
+          <ion-icon name="unlock" class="loginIcon"></ion-icon>Set new PIN
+        </ion-label>
+        <ion-input type="password" maxlength="4" [(ngModel)]="pina"></ion-input>
+      </ion-item>
+      <ion-item class="loginInput">
+        <ion-label position="floating">
+          <ion-icon name="unlock" class="loginIcon"></ion-icon>Confirm PIN
+        </ion-label>
+        <ion-input type="password" maxlength="4" [(ngModel)]="pinb"></ion-input>
+      </ion-item>
+      <ion-button color="logo" (click)="setPin()">Continue</ion-button>
+    </div>
+
+  </div>
+
+</ion-content>

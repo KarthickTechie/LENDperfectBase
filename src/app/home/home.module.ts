@@ -1,27 +1,23 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "./home.component";
-import { VenusuiModule } from './../venusui/venusui.module';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from "@angular/forms";
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
-const route: Routes = [{
-    path:'',
-    component:HomeComponent
-}]
+import { HomePage } from './home.page';
 
 @NgModule({
-    declarations:[
-        HomeComponent,
-    ],
-    imports:[
+  imports: [
     CommonModule,
     FormsModule,
-    VenusuiModule,
-    RouterModule.forChild(route)
-    ],
-    exports:[]
+    IonicModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: HomePage
+      }
+    ])
+  ],
+  declarations: [HomePage]
 })
-export class HomeModule{
-    
-}
+export class HomePageModule {}

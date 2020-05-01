@@ -1,0 +1,36 @@
+.container{
+  width: 95vw;
+}
+
+form{
+  display:grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+}
+
+
+// .title {
+//     margin-bottom: 0px;
+//     color: #313679;
+//     font-size: 18px;
+//     font-weight: 600;
+//     text-align: center;
+//   }
+
+// .mandatory
+// {
+//     color:red;
+//     padding-left: 5px;
+// }
+
+// ion-select
+// {
+//   color:black;
+// }
+
+// .errText
+// {
+//     color:red;
+//     margin-left: 5%;
+//     font-size: 10px;
+// }

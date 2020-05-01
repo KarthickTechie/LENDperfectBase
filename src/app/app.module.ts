@@ -1,38 +1,29 @@
+import { SqliteProvider } from './global/sqlite';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import {Route,RouterModule} from '@angular/router';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { VenusuiModule } from './venusui/venusui.module';
+import { RouteReuseStrategy } from '@angular/router';
 
-const route:Route[] = [
-  {
-    path:'',
-    pathMatch:'full',
-    redirectTo:"home"
-  },
-  {path:'home',loadChildren:'./home/home.module#HomeModule'},
-  {path:'admin',loadChildren:'./admin/admin.module#AdminModule'},
-  {path:'funny',loadChildren:'./funny/funny.module#FunnyModule'},
-  {path:'applications',loadChildren:'./applications/applications.module#ApplicationsModule'}
-];
+import { ReactiveFormsModule } from "@angular/forms";
+
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import { ColorPickerModule } from "ngx-color-picker";
+import { IonicStorageModule } from '@ionic/storage';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { SQLite } from '@ionic-native/sqlite/ngx';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
+  declarations: [AppComponent],
+  entryComponents: [],
+  imports: [BrowserModule, ColorPickerModule, ReactiveFormsModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot()],
+  providers: [
+    StatusBar,
+    SplashScreen, SQLite, SqliteProvider,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    VenusuiModule,
-    RouterModule.forRoot(route)
-  ],
-  exports:[],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

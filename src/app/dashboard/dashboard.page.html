@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color='logo'>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true" color="logotext"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="logotext">Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <ion-card class="card card1" (click)="newApplicant()">
+      <ion-icon class="card_icons" name="person-add"></ion-icon>
+      <h2 class="text_content">New Application</h2>
+      <div class="outerArrow">
+        <div class="innerArrow"></div>
+      </div>
+    </ion-card>
+
+    <ion-card class="card card2" (click)="openExistingPage()">
+      <ion-icon class="card_icons" name="person"></ion-icon>
+      <h2 class="text_content" style="z-index: 1;">Existing Application</h2>
+      <div class="outerArrow">
+        <div class="innerArrow" style="background-color: aquamarine;"></div>
+      </div>
+    </ion-card>
+
+    <ion-card class="card card3">
+
+      <ion-icon class="card_icons" name="cloud-download"></ion-icon>
+      <h2 class="text_content">Master Update</h2>
+      <div class="outerArrow">
+        <div class="innerArrow" style="background-color: mediumspringgreen;"></div>
+      </div>
+    </ion-card>
+  </div>
+
+
+
+</ion-content>

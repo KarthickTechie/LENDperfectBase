@@ -1,0 +1,66 @@
+
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+
+.container{
+  position: relative;
+  background-color:whitesmoke;
+  height: 100vh;
+}
+
+
+.card{
+  border-radius: 15px;
+  height: 100px;
+  position: relative;
+}
+
+.card1{
+  background-color: yellow;
+  top: 50px;
+}
+
+.card2{
+  background-color:aquamarine;
+  top: 100px;
+}
+
+.card3{
+  background-color: mediumspringgreen;
+  top: 150px;
+}
+
+.card_icons{
+  font-size: 48px;
+  position: relative;
+  top:25px;
+  left:20px
+}
+
+.text_content{
+  position: relative;
+  left:100px;
+  bottom:40px
+}
+
+.outerArrow{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-color: dimgray;
+  transform: rotate(45deg);
+  top:25px;
+  left: 292px;
+  border-radius: 10px;
+}
+
+.innerArrow{
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background-color: yellow;
+  top:11px;
+  left: -1px;
+}

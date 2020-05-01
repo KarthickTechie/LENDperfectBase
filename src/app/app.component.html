@@ -1,3 +1,44 @@
-<navbar></navbar>
+<ion-app>
+  <ion-menu side="start" menuId="first" contentId="content1">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title text-center>User Profile</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="userdetails">
 
-<router-outlet></router-outlet>
+        <div class="userdet">
+          <ion-avatar style="margin-left:30%;width:120px;height:120px;padding-top:10px;">
+            <img src="assets/imgs/userpro.png" width="120" height="120">
+          </ion-avatar>
+          <h2 style="line-height:0;color:#ffffff;">{{fname}}</h2>
+          <div style="padding-top:3%;color:white;" class="timedet">
+            {{myDate | date: 'short'}}
+          </div>
+        </div>
+      </div>
+      <ion-list *ngFor="let pages of navigate">
+        <ion-menu-toggle auto-hide="true">
+          <ion-item [routerLink]="pages.url" routerDirection="forward">
+            <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+            {{pages.title}}
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+
+
+    </ion-content>
+    <ion-footer style="box-shadow: 0 5px 5px 5px #333;">
+      <ion-toolbar (click)="logout()">
+        <ion-menu-toggle>
+          <ion-title class="profiletitle">Logout
+            <ion-icon name="log-out" style="float:right;"></ion-icon>
+          </ion-title>
+        </ion-menu-toggle>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-menu>
+  <ion-router-outlet id="content1"></ion-router-outlet>
+
+</ion-app>

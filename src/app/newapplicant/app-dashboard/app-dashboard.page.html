@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color='logo'>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true" color="logotext"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="logotext">New Applicant
+      <span (click)="takepic()"><img src="assets/imgs/profile.png" class="navuserimg"></span>
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-segment [(ngModel)]="userdetail" (ionChange)="onSegmentChanged($event)">
+    <ion-segment-button value="personal">
+      <ion-icon name="person" color="logo"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="income">
+      <ion-icon name="document" color="logo"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="kyc">
+      <ion-icon name="journal" color="logo"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="loan">
+      <ion-icon name="cash-outline" color="logo"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+
+
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="userdetail">
+    <ion-slides #mySlider (ionSlideDidChange)="onSlideChanged($event)">
+      <ion-slide>
+        <app-personal-details></app-personal-details>
+      </ion-slide>
+      <ion-slide>
+        <app-income-details></app-income-details>
+      </ion-slide>
+      <ion-slide>
+        <app-kyc-details></app-kyc-details>
+      </ion-slide>
+      <ion-slide>
+        <app-loan-details></app-loan-details>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+</ion-content>

@@ -1,0 +1,48 @@
+.container{
+    display: grid;
+    grid-column-gap: 50px;
+  grid-template-columns: 30px auto;
+}
+
+.container1{
+    display: grid;
+    // grid-row-gap: 100px;
+  grid-template-rows: 100px auto;
+}
+
+.container2{
+  display: grid;
+  grid-template-columns: 125px auto; 
+  height: 150px;
+  border:2px solid turquoise;
+}
+
+.left_content{
+  background-color:turquoise;
+}
+
+.left_content_img{
+  width: 100px;
+  position: relative;
+  left: 9px;
+  top:25px;
+  border: 2px solid white;
+  border-radius: 50px;
+}
+.right_content{
+  background-color: white;
+}
+
+.right_content_text{
+  color:turquoise !important;
+  margin-left: 10px;
+}
+
+.right_content_icon{
+  font-size: 48px;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    color: turquoise;
+}
+
