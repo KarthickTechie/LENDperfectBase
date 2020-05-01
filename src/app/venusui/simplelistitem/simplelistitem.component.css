@@ -1,9 +1,0 @@
-.venus-list-item{
-    margin: 5px;
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    color: rgb(59, 54, 54);
-    border-bottom: 1px solid rgba(204, 204, 204, 0.555);
-
-}
