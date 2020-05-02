@@ -78,8 +78,6 @@
       "cordova-sqlite-storage": {},
       "com.outsystems.mobile.stetho": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }
