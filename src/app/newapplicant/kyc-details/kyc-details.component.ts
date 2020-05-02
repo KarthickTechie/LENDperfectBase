@@ -28,7 +28,7 @@ export class KycDetailsComponent implements OnInit {
     this.sqlite.createtable("KYC_DETAILS", "kycId", Object.keys(this.master.getKycTable()), Object.values(this.master.getKycTable()));
   }
 
-  kycSave() {
+  kycSave(val) {
 
 
   }

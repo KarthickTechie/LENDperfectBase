@@ -5,7 +5,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="img-container"><img src="assets/imgs/abudhabi.jpg" alt=""></div>
+
+  <div class="img-container"><img [src]=logoImg alt=""></div>
+
+  <div style="position: absolute;  top: 70px;  right: 10px;">
+    <ion-item>
+      <ion-select (ionChange)="logoChange($event.target.value)" style='max-width: 100%; padding: 0px;' placeholder="Select Logo"
+        interface="popover">
+        <ion-select-option value="abudhabi">abudhabi</ion-select-option>
+        <ion-select-option value="profile">profile</ion-select-option>
+        <ion-select-option value="round_headshot">round_headshot</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
   <div class="logininfo">
     <div class="logoname">{{name}}</div>

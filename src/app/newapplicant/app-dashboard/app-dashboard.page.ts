@@ -51,6 +51,6 @@ export class AppDashboardPage implements OnInit {
   scrollToTop() {
     this.content.scrollToTop();
   }
-
+  takepic() { }
 
 }

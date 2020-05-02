@@ -15,7 +15,10 @@ export class ThemePage implements OnInit {
   @ViewChild('secondary', { static: false }) secondary: ElementRef;
   @ViewChild('accent', { static: false }) accent: ElementRef;
   @ViewChild('text', { static: false }) text: ElementRef;
-
+  color: any;
+  color1: any;
+  color2: any;
+  color3: any;
 
   themData: ThemeColor = {
     primary: '#000000',
