@@ -167,13 +167,27 @@ export class MasterData {
         ];
     }
 
+    getKycProofType() {
+        return [
+            { Name: 'Id Proof', code: "01" },
+            { Name: 'Address Proof', code: "02" }
+        ]
+    }
+
+    getKycScanType() {
+        return [
+            { Name: 'QR', code: "01" },
+            { Name: 'OCR', code: "02" }
+        ]
+    }
+
     getKycproofList() {
         return [
-            { Name: 'Pan Card', code: "01 " },
-            { Name: 'Aadhar Card', code: "02 " },
-            { Name: 'Voter ID Card', code: "03 " },
-            { Name: 'Passport', code: "04 " },
-            { Name: 'Driving License', code: "05 " },
+            { Name: 'Pan Card', code: "01" },
+            { Name: 'Aadhar Card', code: "02" },
+            { Name: 'Voter ID Card', code: "03" },
+            { Name: 'Passport', code: "04" },
+            { Name: 'Driving License', code: "05" },
         ]
     }
 

@@ -151,18 +151,15 @@ export class HandlingError {
 
     kycFormValidation() {
         return {
+            kycProofType: [
+                { type: "required", message: "Select Id Proof." },
+            ],
             kycIdType: [
                 { type: "required", message: "Select Id Proof." },
             ],
             kycIdvalue: [
                 { type: "required", message: "Enter Id Proof Value." },
-            ],
-            kycAddressType: [
-                { type: "required", message: "Select Address Proof." },
-            ],
-            kycAddressvalue: [
-                { type: "required", message: "Enter Address Proof Value." },
-            ],
+            ]
         }
     }
 

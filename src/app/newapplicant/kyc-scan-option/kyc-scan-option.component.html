@@ -1,0 +1,5 @@
+<p style="text-align: right;">
+  <li>
+    <ol *ngFor="let type of kycScanType" (click)="emitScanType(type.code)">{{type.Name}}</ol>
+  </li>
+</p>
