@@ -36,11 +36,6 @@ export class PersonalDetailsComponent implements OnInit {
     this.titleList = this.master.getTitleList();
     this.nationalityList = this.master.getNationalityList();
     this.maritalStatusList = this.master.getMaritalStatusList();
-    this.personalData = this.keyService.personalDetails;
-    this.translate.get(Object.values(this.personalData)).subscribe((res: string) => {
-      console.log(res);
-      this.personalData = res;
-    })
 
   }
   ngAfterViewInit() {

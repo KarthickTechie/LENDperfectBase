@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)='goBack()' *ngIf='logoCheck'>
+      <ion-icon name="arrow-back" color="white" style="font-size:20px; margin-left:10px;"></ion-icon>
+    </ion-buttons>
+
+    <ion-buttons slot="start" (click)='goHome()' *ngIf='!logoCheck'>
+      <ion-icon name="home" color="white" style="font-size:20px; margin-left:10px;"></ion-icon>
+    </ion-buttons>
+    <ion-title>{{labelText.heading}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class='flex-container'>
+    <div class='flex-info' [id]=i *ngFor="let logo of setLogoData; let i=index">
+      <ion-card appLogo [id]=logo.logoId (click)='logoChange()'>
+        <img [src]=logo.logoImg alt="">
+        <div style='text-align: center;'>{{logo.logoName}}</div>
+      </ion-card>
+      <ion-icon class='checkmark' name="checkbox-outline"></ion-icon>
+    </div>
+  </div>
+</ion-content>
+<div appAlert></div>

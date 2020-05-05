@@ -5,11 +5,38 @@ import { Injectable } from '@angular/core';
 })
 export class KeytextService {
 
-  constructor() { }
+  public static labelDeta: labelInfo = {
+    "themeInfo": {
+      "heading": "Themes",
+      "label": [
+        "Primary",
+        "Secondary",
+        "Accent",
+        "Text"
+      ],
+      "btnText": 'Apply Theme'
+    },
+    "logoInfo": {
+      "heading": "Logo"
+    },
+    "settingInfo": {
+      "heading": "Setting"
+    }
+  }
 
-  personalDetails = {
-    'Personal DATA': 'Personal DATA',
-    'First Name': 'First Name',
-    'Last Name': 'Last Name'
+
+}
+
+interface labelInfo {
+  themeInfo: {
+    heading: string,
+    label: string[],
+    btnText: string,
+  },
+  logoInfo: {
+    heading: string,
+  },
+  settingInfo: {
+    heading: string,
   }
 }

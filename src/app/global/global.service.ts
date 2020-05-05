@@ -13,8 +13,8 @@ export class GlobalService {
 
   async presentAlert(title, subtitle) {
     let alert = await this.alertCtrl.create({
-      header: this.translate.instant(title),
-      subHeader: this.translate.instant(subtitle),
+      header: title,
+      subHeader: subtitle,
       buttons: ['OK']
     });
     await alert.present();

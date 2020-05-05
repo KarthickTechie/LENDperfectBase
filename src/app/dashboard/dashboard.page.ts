@@ -2,8 +2,6 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -22,7 +20,5 @@ export class DashboardPage implements OnInit {
   newApplicant() {
     this.router.navigate(['/newapp']);
   }
-
-
 
 }

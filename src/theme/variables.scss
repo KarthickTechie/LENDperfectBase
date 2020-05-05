@@ -86,7 +86,11 @@
     --background: #ffffff;
     --color: var(--ion-color-dark);
   }
-
+  app-home ion-content {
+    --background: beige;
+    --color: var(--ion-color-dark);
+  }
+  
   ion-icon {
     color:  var(--ion-color-secondary); 
       }

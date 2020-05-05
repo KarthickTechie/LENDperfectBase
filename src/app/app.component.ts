@@ -1,5 +1,6 @@
 import { SqliteProvider } from './global/sqlite';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from "@angular/router";
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -19,7 +20,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar, public sqlite: SqliteProvider,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public router: Router
   ) {
     this.initializeApp();
     this.sideMenu();
@@ -39,12 +41,16 @@ export class AppComponent {
       [
         { title: "New Applicant", url: "/newapp", icon: "person" },
         { title: "Existing Applicant", url: "/existapp", icon: "person" },
-        { title: "Themes", url: "/theme", icon: "settings" },
+        { title: "Settings", url: "/setting", icon: "settings" }
       ]
   }
 
   logout() {
 
+  }
+
+  settingDetails() {
+    // this.router.navigate('/setting');
   }
 
 }

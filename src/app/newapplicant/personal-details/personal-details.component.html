@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="title">{{personalData['Personal DATA']}}</h2>
+  <h2 class="title">Personal Details</h2>
   <form [formGroup]="personalDetails" (ngSubmit)="personalSave(personalDetails.value)">
 
     <div class="item">
@@ -13,8 +13,7 @@
       </ion-item>
       <div>
         <ng-container *ngFor="let validation of validation_messages.title">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('title').hasError(validation.type) && (personalDetails.get('title').dirty || personalDetails.get('title').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('title').hasError(validation.type) && (personalDetails.get('title').dirty || personalDetails.get('title').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -23,14 +22,13 @@
 
     <div class="item">
       <ion-item>
-        <!-- <ion-label position="floating">First Name <span class="mandatory">*</span></ion-label> -->
+        <ion-label position="floating">First Name <span class="mandatory">*</span></ion-label>
 
         <ion-input placeholder="First Name *" type="text" formControlName="firstName" maxlength="30"></ion-input>
       </ion-item>
       <div>
         <ng-container *ngFor="let validation of validation_messages.firstName">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('firstName').hasError(validation.type) && (personalDetails.get('firstName').dirty || personalDetails.get('firstName').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('firstName').hasError(validation.type) && (personalDetails.get('firstName').dirty || personalDetails.get('firstName').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -39,14 +37,13 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">{{"Middle Name" | translate}}</ion-label>
+        <ion-label position="floating">Middle Name</ion-label>
         <ion-input type="text" formControlName="middleName" maxlength="30"></ion-input>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.middleName">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('middleName').hasError(validation.type) && (personalDetails.get('middleName').dirty || personalDetails.get('middleName').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('middleName').hasError(validation.type) && (personalDetails.get('middleName').dirty || personalDetails.get('middleName').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -57,12 +54,11 @@
       <ion-item>
         <ion-label position="floating">Last Name <span class="mandatory">*</span></ion-label>
         <ion-input type="text" formControlName="lastName" maxlength="30"></ion-input>
-      </ion-item>
+      </ion-item>\
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.lastName">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('lastName').hasError(validation.type) && (personalDetails.get('lastName').dirty || personalDetails.get('lastName').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('lastName').hasError(validation.type) && (personalDetails.get('lastName').dirty || personalDetails.get('lastName').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -83,8 +79,7 @@
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.gender">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('gender').hasError(validation.type) && (personalDetails.get('gender').dirty || personalDetails.get('gender').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('gender').hasError(validation.type) && (personalDetails.get('gender').dirty || personalDetails.get('gender').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -104,8 +99,7 @@
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.dob">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('dob').hasError(validation.type) && (personalDetails.get('dob').dirty || personalDetails.get('dob').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('dob').hasError(validation.type) && (personalDetails.get('dob').dirty || personalDetails.get('dob').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -120,8 +114,7 @@
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.mobileNumber">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('mobileNumber').hasError(validation.type) && (personalDetails.get('mobileNumber').dirty || personalDetails.get('mobileNumber').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('mobileNumber').hasError(validation.type) && (personalDetails.get('mobileNumber').dirty || personalDetails.get('mobileNumber').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -136,8 +129,7 @@
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.email">
-          <div class="mandatory"
-            *ngIf="personalDetails.get('email').hasError(validation.type) && (personalDetails.get('email').dirty || personalDetails.get('email').touched)">
+          <div class="mandatory" *ngIf="personalDetails.get('email').hasError(validation.type) && (personalDetails.get('email').dirty || personalDetails.get('email').touched)">
             <p class="marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -174,8 +166,7 @@
 
         <div>
           <ng-container *ngFor="let validation of validation_messages.permanentAddress1">
-            <div class="mandatory"
-              *ngIf="personalDetails.get('permanentAddress1').hasError(validation.type) && (personalDetails.get('permanentAddress1').dirty || personalDetails.get('permanentAddress1').touched)">
+            <div class="mandatory" *ngIf="personalDetails.get('permanentAddress1').hasError(validation.type) && (personalDetails.get('permanentAddress1').dirty || personalDetails.get('permanentAddress1').touched)">
               <p class="marginLR0pxTB5px">{{validation.message}}</p>
             </div>
           </ng-container>
@@ -198,8 +189,7 @@
 
         <div>
           <ng-container *ngFor="let validation of validation_messages.residentialAddress1">
-            <div class="mandatory"
-              *ngIf="personalDetails.get('residentialAddress1').hasError(validation.type) && (personalDetails.get('residentialAddress1').dirty || personalDetails.get('residentialAddress1').touched)">
+            <div class="mandatory" *ngIf="personalDetails.get('residentialAddress1').hasError(validation.type) && (personalDetails.get('residentialAddress1').dirty || personalDetails.get('residentialAddress1').touched)">
               <p class="marginLR0pxTB5px">{{validation.message}}</p>
             </div>
           </ng-container>

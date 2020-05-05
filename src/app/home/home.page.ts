@@ -15,41 +15,50 @@ import { HandlingError } from "./../utility/ErrorHandling";
 
 export class HomePage {
 
-  logoImg: any = 'assets/imgs/abudhabi.jpg';
-  logoInfo: LogoInfo = {
-    abudhabi: 'assets/imgs/abudhabi.jpg',
-    profile: 'assets/imgs/profile.png',
-    round_headshot: 'assets/imgs/round_headshot.png'
+  setLogoImg: LogoInfo = {
+    logoImg: 'assets/imgs/abudhabi.jpg',
   }
+  logoImg: string;
 
   setLoginInfo: LoginInfo = {
     logincheck: true,
     loginpin: false,
     loginset: false,
+    forgotPwd: false
   };
 
-  name = "almasraf";
+  setPinInfo: pinInfo = {
+    pina: '',
+    pinb: '',
+  }
 
-  pina: any;
-  pinb: any;
   pin: any;
-  username: any;
-  password: any;
+
+  setUserInfo: userInfo = {
+    username: '',
+    password: ''
+  }
+
+  currentUser: string;
 
   constructor(
     public router: Router,
     public authService: AuthService,
     private errorHandling: HandlingError
   ) {
-    this.logoImg = localStorage.getItem('logo');
+    this.logoImg = this.setLogoImg.logoImg;
   }
 
+  ngDoCheck() {
+    localStorage.getItem('logo') ? (this.logoImg = localStorage.getItem('logo')) : this.logoImg = this.setLogoImg.logoImg;
+  }
 
   doLogin() {
-    this.authService.userservice(this.username, this.password).then(loginservice => {
+    this.authService.userservice(this.setUserInfo).then(loginservice => {
       this.setLoginInfo.logincheck = false;
       this.setLoginInfo.loginpin = true;
       this.setLoginInfo.loginset = false;
+      this.setLoginInfo.forgotPwd = false;
     }, error => {
       this.errorHandling.getUserPass();
     });
@@ -57,10 +66,11 @@ export class HomePage {
 
 
   setPin() {
-    this.authService.loginpinservice(this.pina, this.pinb).then(loginservice => {
+    this.authService.loginpinservice(this.setPinInfo).then(loginservice => {
       this.setLoginInfo.logincheck = false;
       this.setLoginInfo.loginpin = false;
       this.setLoginInfo.loginset = true;
+      this.setLoginInfo.forgotPwd = false;
     }, error => {
       error == 'PinValid' ? this.errorHandling.pinCheck() : error == 'PinNotMatch' ? this.errorHandling.pinNotMatch() : this.errorHandling.pinField()
     });
@@ -74,10 +84,10 @@ export class HomePage {
     });
   }
 
-  logoChange(value) {
-    this.logoImg = this.logoInfo[value];
-    localStorage.setItem('logo', this.logoInfo[value]);
+  settings() {
+    this.router.navigate(["/setting"]);
   }
+
 
 }
 
@@ -85,9 +95,16 @@ interface LoginInfo {
   logincheck: boolean,
   loginpin: boolean,
   loginset: boolean,
+  forgotPwd: boolean
 }
 interface LogoInfo {
-  abudhabi: string,
-  profile: string,
-  round_headshot: string
+  logoImg: string,
+}
+interface userInfo {
+  username: string,
+  password: string
+}
+interface pinInfo {
+  pina: string,
+  pinb: string
 }
