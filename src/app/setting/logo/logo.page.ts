@@ -25,12 +25,12 @@ export class LogoPage implements OnInit {
     { logoImg: "assets/imgs/yeslogo.png", logoName: 'YesBank', logoId: "yesbank" },
     { logoImg: "assets/imgs/CBI.png", logoName: 'CBI', logoId: "boi" }
   ]
-  labelText: object;
+  labelText = KeytextService.labelDeta.logoInfo;
 
   constructor(
     public alertPage: AlertPage,
     public router: Router, public activatedRoute: ActivatedRoute) {
-    this.labelText = KeytextService.labelDeta.logoInfo;
+
   }
 
   ngOnInit() {

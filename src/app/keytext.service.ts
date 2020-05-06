@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class KeytextService {
 
-  public static labelDeta: labelInfo = {
+  static labelDeta = {
     "themeInfo": {
       "heading": "Themes",
       "label": [
@@ -25,18 +25,4 @@ export class KeytextService {
   }
 
 
-}
-
-interface labelInfo {
-  themeInfo: {
-    heading: string,
-    label: string[],
-    btnText: string,
-  },
-  logoInfo: {
-    heading: string,
-  },
-  settingInfo: {
-    heading: string,
-  }
 }

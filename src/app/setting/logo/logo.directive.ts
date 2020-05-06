@@ -29,7 +29,7 @@ export class LogoDirective {
     }
   }
 
-  @HostListener('click') onclick(event) {
+  @HostListener('click') onclick() {
     this.setId = this.elementRef.nativeElement.parentNode.id;
     localStorage.setItem('logoId', this.setId);
     localStorage.setItem('logo', this.setLogoInfo[this.elementRef.nativeElement.id]);

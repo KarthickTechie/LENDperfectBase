@@ -35,14 +35,15 @@ export class ThemePage implements OnInit {
     textColor: '#000000'
   }
 
-  labelText: object;
-  labelData: object;
+  // labelText: object;
+  // labelData: object;
+
+  labelText = KeytextService.labelDeta.themeInfo;
 
   constructor(
     public alertPage: AlertPage,
     public themeService: ThemeService,
     public router: Router, public activatedRoute: ActivatedRoute, public dataService: DataService) {
-    this.labelText = KeytextService.labelDeta.themeInfo;
   }
 
   ngOnInit() { }

@@ -11,14 +11,13 @@ import { KeytextService } from '../keytext.service';
 export class SettingPage implements OnInit {
 
   navigate: navigateInfo[];
-  labelText: object;
+  labelText = KeytextService.labelDeta.settingInfo;
 
   constructor(
     public router: Router, public activatedRoute: ActivatedRoute,
     public dataService: DataService
   ) {
-    this.labelText = KeytextService.labelDeta.settingInfo;
-
+    
     this.navigate =
       [
         { labelName: "Logo", url: "logo", icon: "logo-buffer" },
