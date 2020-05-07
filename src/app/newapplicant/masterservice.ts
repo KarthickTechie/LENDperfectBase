@@ -64,10 +64,9 @@ export class MasterData {
 
     getKycTable() {
         return {
+            kycProofType: "TEXT",
             kycIdType: "TEXT",
             kycIdvalue: "TEXT",
-            kycAddressType: "TEXT",
-            kycAddressvalue: "TEXT"
         }
     }
 
@@ -176,8 +175,8 @@ export class MasterData {
 
     getKycScanType() {
         return [
-            { Name: 'QR', code: "01" },
-            { Name: 'OCR', code: "02" }
+            { Name: 'QR', code: "01", icon: "qr-code-outline" },
+            { Name: 'OCR', code: "02", icon: "image-outline" }
         ]
     }
 
