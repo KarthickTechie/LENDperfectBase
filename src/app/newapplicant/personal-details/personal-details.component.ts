@@ -38,7 +38,7 @@ export class PersonalDetailsComponent implements OnInit {
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     //console.log(Object.keys(this.personalDetails.controls)[0]);
-    this.sqlite.createtable("PERSONAL_DETAILS", "personalId", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
+    // this.sqlite.createtable("PERSONAL_DETAILS", "personalId", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
   }
 
   personalSave(data) {
