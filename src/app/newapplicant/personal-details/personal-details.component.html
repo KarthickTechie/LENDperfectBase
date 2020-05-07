@@ -4,7 +4,7 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Title <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">Title <span class="mandatory">*</span></ion-label>
         <ion-select interface="popover" formControlName="title" (ionChange)="selectGender()">
           <ion-select-option *ngFor="let title of titleList" [value]="title.code">
             {{title.OptionDesc}}
@@ -20,11 +20,10 @@
       </div>
     </div>
 
-    <div class="item">
+    <div class="item" style="margin-left: 10px;">
       <ion-item>
         <ion-label position="floating">First Name <span class="mandatory">*</span></ion-label>
-
-        <ion-input placeholder="First Name *" type="text" formControlName="firstName" maxlength="30"></ion-input>
+        <ion-input type="text" formControlName="firstName" maxlength="30"></ion-input>
       </ion-item>
       <div>
         <ng-container *ngFor="let validation of validation_messages.firstName">
@@ -54,7 +53,7 @@
       <ion-item>
         <ion-label position="floating">Last Name <span class="mandatory">*</span></ion-label>
         <ion-input type="text" formControlName="lastName" maxlength="30"></ion-input>
-      </ion-item>\
+      </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.lastName">

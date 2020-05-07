@@ -3,13 +3,15 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end" class='homeIcon' [routerLink]="['/home']">
+      <ion-icon name="home"></ion-icon>
+    </ion-buttons>
     <ion-title>{{labelText.heading}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <ion-card>
+  <ion-list>
     <ion-item *ngFor="let list of navigate" (click)="settingPage(list.url)">
       <ion-avatar slot="start">
         <p>
@@ -20,6 +22,5 @@
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
-  </ion-card>
-
+  </ion-list>
 </ion-content>

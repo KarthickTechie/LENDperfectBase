@@ -25,7 +25,7 @@ export class KycDetailsComponent implements OnInit {
   }
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
-    this.sqlite.createtable("KYC_DETAILS", "kycId", Object.keys(this.master.getKycTable()), Object.values(this.master.getKycTable()));
+    // this.sqlite.createtable("KYC_DETAILS", "kycId", Object.keys(this.master.getKycTable()), Object.values(this.master.getKycTable()));
   }
 
   kycSave(val) {

@@ -98,6 +98,11 @@
   ion-toolbar {
     --background: var(--ion-color-primary);  
     --color:  var(--ion-color-primary-contrast); 
+    ion-icon {
+      --background: var(--ion-color-primary);  
+      color:  var(--ion-color-primary-contrast);
+    }
+    
   }
 
   ion-card {

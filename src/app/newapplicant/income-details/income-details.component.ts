@@ -33,7 +33,7 @@ export class IncomeDetailsComponent implements OnInit {
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     //console.log(Object.keys(this.personalDetails.controls)[0]);
-    this.sqlite.createtable("INCOME_DETAILS", "incomeId", Object.keys(this.master.getIncomeTable()), Object.values(this.master.getIncomeTable()));
+    // this.sqlite.createtable("INCOME_DETAILS", "incomeId", Object.keys(this.master.getIncomeTable()), Object.values(this.master.getIncomeTable()));
   }
 
   getToday(): string {

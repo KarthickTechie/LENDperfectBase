@@ -47,17 +47,19 @@
             <ion-col size="1">
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
-            <ion-col size="9">
-              <ion-input type="password" placeholder="Password" [(ngModel)]="setUserInfo.password"></ion-input>
+            <ion-col size="8">
+              <ion-input [type]="inputType" placeholder="Password" [(ngModel)]="setUserInfo.password"></ion-input>
             </ion-col>
-            <ion-col size="1"></ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="inputChng()">
+              <ion-icon name="eye" *ngIf="inputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="inputType != 'password'"></ion-icon>
+            </ion-col>
           </ion-row>
         </div>
-        <ion-row class="ion-align-items-center">
-          <ion-col size="3"></ion-col>
-          <ion-col size="6" class="colFontSize">Forgot Password</ion-col>
-          <ion-col size="3"></ion-col>
-        </ion-row>
+
+        <div class="ion-text-end colFontSize">Forgot Password</div>
+
+
         <div class="loginSubmit">
           <div class="loginBtn">
             <ion-fab-button color='warning' (click)="doLogin()">
@@ -74,10 +76,13 @@
             <ion-col size="1">
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
-            <ion-col size="9">
-              <ion-input type="password" placeholder="Set new PIN" maxlength="4" [(ngModel)]="setPinInfo.pina"></ion-input>
+            <ion-col size="8">
+              <ion-input [type]="pinInputType" placeholder="Set new PIN" maxlength="4" [(ngModel)]="setPinInfo.pina"></ion-input>
             </ion-col>
-            <ion-col size="1"></ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
+              <ion-icon name="eye" *ngIf="pinInputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="pinInputType != 'password'"></ion-icon>
+            </ion-col>
           </ion-row>
         </div>
         <div class="fieldDesigns">
@@ -86,10 +91,13 @@
             <ion-col size="1">
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
-            <ion-col size="9">
-              <ion-input type="password" placeholder="Confirm PIN" maxlength="4" [(ngModel)]="setPinInfo.pinb"></ion-input>
+            <ion-col size="8">
+              <ion-input [type]="pinInputType" placeholder="Confirm PIN" maxlength="4" [(ngModel)]="setPinInfo.pinb"></ion-input>
             </ion-col>
-            <ion-col size="1"></ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
+              <ion-icon name="eye" *ngIf="pinInputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="pinInputType != 'password'"></ion-icon>
+            </ion-col>
           </ion-row>
         </div>
         <div class="loginSubmit">
@@ -109,10 +117,13 @@
             <ion-col size="1">
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
-            <ion-col size="9">
-              <ion-input type="password" placeholder="Enter PIN" maxlength="4" [(ngModel)]="pin"></ion-input>
+            <ion-col size="8">
+              <ion-input [type]="pinInputType" placeholder="Enter PIN" maxlength="4" [(ngModel)]="pin"></ion-input>
             </ion-col>
-            <ion-col size="1"></ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
+              <ion-icon name="eye" *ngIf="pinInputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="pinInputType != 'password'"></ion-icon>
+            </ion-col>
           </ion-row>
         </div>
 
@@ -130,7 +141,7 @@
 </ion-content>
 
 <ion-footer class="ion-no-border">
-  <span class='logochange' [routerLink]="['/setting/logo', {'logoicon': 'home'}]"><ion-icon name="settings" class="setting"></ion-icon></span>
+  <span class='logochange' [routerLink]="['/setting']"><ion-icon name="settings" class="setting"></ion-icon></span>
 
   <!-- <div class="settings" (click)="settings()">
     <ion-icon name="person"></ion-icon> settings</div> -->

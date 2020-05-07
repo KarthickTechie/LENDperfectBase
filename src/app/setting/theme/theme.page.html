@@ -8,35 +8,36 @@
 
 </ion-header>
 <ion-content>
+
   <div class='table'>
     <div class='tablecol'>{{labelText.label[0]}}</div>
-    <div class='tablecol'> <input class='colortheme' type='text' #setPrimaryColor maxlength="7" [(colorPicker)]="primaryColor" [cpWidth]="'180px'"
-        [value]="primaryColor" (colorPickerChange)="primaryColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'"
-        [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.background]="primaryColor"
+    <div class='tablecol'> <input class='colortheme' type='text' #setPrimaryColor maxlength="7" [(colorPicker)]="setTheme.primaryColor" [cpWidth]="'180px'"
+        [value]="setTheme.primaryColor" (colorPickerChange)="setTheme.primaryColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'"
+        [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.borderColor]="setTheme.primaryColor"
         [cpOKButtonClass]="'btn-ok'" /></div>
   </div>
 
   <div class='table'>
     <div class='tablecol'>{{labelText.label[1]}}</div>
-    <div class='tablecol'> <input class='colortheme' type='text' #setSecondaryColor maxlength="7" [(colorPicker)]="secondaryColor" [cpWidth]="'180px'"
-        [value]="secondaryColor" (colorPickerChange)="secondaryColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'"
-        [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.background]="secondaryColor"
+    <div class='tablecol'> <input class='colortheme' type='text' #setSecondaryColor maxlength="7" [(colorPicker)]="setTheme.secondaryColor" [cpWidth]="'180px'"
+        [value]="setTheme.secondaryColor" (colorPickerChange)="setTheme.secondaryColor=$event" [cpDialogDisplay]="'popup'"
+        [cpPosition]="'bottom'" [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.borderColor]="setTheme.secondaryColor"
         [cpOKButtonClass]="'btn-ok'" /></div>
   </div>
 
   <div class='table'>
     <div class='tablecol'>{{labelText.label[2]}}</div>
-    <div class='tablecol'> <input class='colortheme' type='text' #setAccentColor maxlength="7" [(colorPicker)]="accentColor" [cpWidth]="'180px'"
-        [value]="accentColor" (colorPickerChange)="accentColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'"
-        [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.background]="accentColor"
+    <div class='tablecol'> <input class='colortheme' type='text' #setAccentColor maxlength="7" [(colorPicker)]="setTheme.accentColor" [cpWidth]="'180px'"
+        [value]="setTheme.accentColor" (colorPickerChange)="setTheme.accentColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'"
+        [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.borderColor]="setTheme.accentColor"
         [cpOKButtonClass]="'btn-ok'" /></div>
   </div>
   <div class='table'>
     <div class='tablecol'>{{labelText.label[3]}}</div>
-    <div class='tablecol'> <input class='colortheme' type='text' #setTextColor maxlength="7" [(colorPicker)]="textColor" [cpWidth]="'180px'" [value]="textColor"
-        (colorPickerChange)="textColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'" [cpPositionOffset]="'10%'"
-        [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.background]="textColor" [cpOKButtonClass]="'btn-ok'"
-      /></div>
+    <div class='tablecol'> <input class='colortheme' type='text' #setTextColor maxlength="7" [(colorPicker)]="setTheme.textColor" [cpWidth]="'180px'"
+        [value]="setTheme.textColor" (colorPickerChange)="setTheme.textColor=$event" [cpDialogDisplay]="'popup'" [cpPosition]="'bottom'"
+        [cpPositionOffset]="'10%'" [cpPositionRelativeToArrow]="true" [cpOKButton]="'true'" [style.borderColor]="setTheme.textColor"
+        [cpOKButtonClass]="'btn-ok'" /></div>
   </div>
   <div style='text-align: center'>
     <ion-button type='button' icon-only shape="round" (click)='changeTheme()' center>{{labelText.btnText}}</ion-button>

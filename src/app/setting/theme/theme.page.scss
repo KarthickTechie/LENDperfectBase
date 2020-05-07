@@ -20,11 +20,15 @@ ion-card {
     background: #000 !important;
 }
 .tablecol > .colortheme {
-    background: rgb(0, 0, 0);
-    padding-left: 16px;
-    height: 17px;
     width: 100%;
+    color: #fff;
+    border: 2px solid #ccc;
+    background: #fff !important;
+    text-decoration: none;
 }
+
+.tablecol > .colortheme::selection { background: transparent; }
+
 .table {
     display: block;
     width: 100%;
@@ -38,7 +42,5 @@ ion-card {
 }
 .tablecol:last-child {
     width: 66%;
-    padding: 4px;
-    border: 1px solid #000;
     display: inline-block;
 }

@@ -5,31 +5,25 @@
 }
 .userdet {
     text-align: center;
-    text-transform: capitalize;
   }
-.setting {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.power {
+    position: relative;
+    margin: 10px;
     zoom: 1.5;
 }
-
-
-
-.userdetails {
-    // background-color:#313679;
-    padding-bottom:10px;
-    // box-shadow: 0 2px 2px 2px #333;
+.avatarImg{
+    margin: auto auto 10px auto;
+    width: 100px;
+    height: 100px;
+    padding-top:10px;
 }
-.userdet {
-    text-align: center;
-    text-transform: capitalize;
-  }
-.setting {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    zoom: 1.5;
+.name{
+    font-weight: bold;
+}
+.custId{
+    color: #c9c9c9;
+    font-size: 90%;
+    margin-top: .4em;
 }
 
 ion-menu .list-md{

@@ -1,11 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start" (click)='goBack()' *ngIf='logoCheck'>
+    <ion-buttons slot="start" (click)='goBack()'>
       <ion-icon name="arrow-back" color="white" style="font-size:20px; margin-left:10px;"></ion-icon>
-    </ion-buttons>
-
-    <ion-buttons slot="start" (click)='goHome()' *ngIf='!logoCheck'>
-      <ion-icon name="home" color="white" style="font-size:20px; margin-left:10px;"></ion-icon>
     </ion-buttons>
     <ion-title>{{labelText.heading}}</ion-title>
   </ion-toolbar>
@@ -18,7 +14,7 @@
         <img [src]=logo.logoImg alt="">
         <div style='text-align: center;'>{{logo.logoName}}</div>
       </ion-card>
-      <ion-icon class='checkmark' name="checkbox-outline"></ion-icon>
+      <ion-icon class='checkmark' name="checkmark-circle"></ion-icon>
     </div>
   </div>
 </ion-content>

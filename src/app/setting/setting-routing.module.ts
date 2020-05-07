@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'logo',
     loadChildren: () => import('./logo/logo.module').then(m => m.LogoPageModule)
+  },
+  {
+    path: 'language',
+    loadChildren: () => import('./language/language.module').then( m => m.LanguagePageModule)
   }
 ];
 

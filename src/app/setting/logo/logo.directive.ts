@@ -6,7 +6,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 export class LogoDirective {
 
   setLogoInfo: LogoInfo = {
-    default: 'assets/imgs/almasraf.png',
+    suryoday: 'assets/imgs/suryodaylogo.png',
     almasraf: 'assets/imgs/almasraf.png',
     jfs: 'assets/imgs/JSF.png',
     ujjivan: 'assets/imgs/ujjivan.png',
@@ -44,7 +44,7 @@ export class LogoDirective {
 }
 
 interface LogoInfo {
-  default: string,
+  suryoday: string,
   almasraf: string,
   jfs: string,
   ujjivan: string,

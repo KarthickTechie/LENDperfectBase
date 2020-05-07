@@ -22,21 +22,12 @@ export class ThemePage implements OnInit {
   @ViewChild('setTextColor', { static: false }) setTextColor: ElementRef;
   @ViewChild(AlertDirective, { static: false }) alertMessage: AlertDirective;
 
-  labelInfo: string;
-  primaryColor: string;
-  secondaryColor: string;
-  accentColor: string;
-  textColor: string;
-
   setTheme: ThemeColor = {
-    primaryColor: '#000000',
-    secondaryColor: '#000000',
-    accentColor: '#000000',
-    textColor: '#000000'
+    primaryColor: "#cccccc",
+    secondaryColor: "#cccccc",
+    accentColor: "#cccccc",
+    textColor: "#cccccc"
   }
-
-  // labelText: object;
-  // labelData: object;
 
   labelText = KeytextService.labelDeta.themeInfo;
 
@@ -48,16 +39,6 @@ export class ThemePage implements OnInit {
 
   ngOnInit() { }
 
-  ngAfterViewInit() {
-    this.setPrimaryColor.nativeElement.value = this.setTheme.primaryColor;
-    this.setPrimaryColor.nativeElement.style.background = this.setTheme.primaryColor;
-    this.setSecondaryColor.nativeElement.value = this.setTheme.secondaryColor;
-    this.setSecondaryColor.nativeElement.style.background = this.setTheme.secondaryColor;
-    this.setAccentColor.nativeElement.value = this.setTheme.accentColor;
-    this.setAccentColor.nativeElement.style.background = this.setTheme.accentColor;
-    this.setTextColor.nativeElement.value = this.setTheme.textColor;
-    this.setTextColor.nativeElement.style.background = this.setTheme.textColor;
-  }
 
   changeTheme() {
     this.alertPage.getAlertControl(AlertComponent, this.alertMessage, "Appling Theme");

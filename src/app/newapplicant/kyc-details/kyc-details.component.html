@@ -3,14 +3,14 @@
   <form [formGroup]="kycDetails" (ngSubmit)="kycSave(kycDetails.value)">
 
     <div class="item">
-      <ion-card color="primary" class="ccardkyc">
-
+      <ion-card class="ccardkyc" justify-content-center align-items-center>
         <span class="titlesize">
-          <b>Identity Proof</b>
+          <b>IDENTITY PROOF</b>
         </span>
-
       </ion-card>
     </div>
+
+
 
 
     <div class="item">
@@ -25,8 +25,7 @@
 
       <div>
         <ng-container *ngFor="let validation of errorMessage.kycIdType">
-          <div class="mandatory"
-            *ngIf="kycDetails.get('kycIdType').hasError(validation.type) && (kycDetails.get('kycIdType').dirty || kycDetails.get('kycIdType').touched)">
+          <div class="mandatory" *ngIf="kycDetails.get('kycIdType').hasError(validation.type) && (kycDetails.get('kycIdType').dirty || kycDetails.get('kycIdType').touched)">
             <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -44,8 +43,7 @@
 
       <div>
         <ng-container *ngFor="let validation of errorMessage.kycIdvalue">
-          <div class="mandatory"
-            *ngIf="kycDetails.get('kycIdvalue').hasError(validation.type) && (kycDetails.get('kycIdvalue').dirty || kycDetails.get('kycIdvalue').touched)">
+          <div class="mandatory" *ngIf="kycDetails.get('kycIdvalue').hasError(validation.type) && (kycDetails.get('kycIdvalue').dirty || kycDetails.get('kycIdvalue').touched)">
             <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -54,11 +52,9 @@
 
 
     <div class="item">
-      <ion-card color="primary" class="ccardkyc">
-
-
+      <ion-card class="ccardkyc">
         <span class="titlesize">
-          <b>Address Proof</b>
+          <b>ADDRESS PROOF</b>
         </span>
 
       </ion-card>
@@ -77,8 +73,7 @@
 
       <div>
         <ng-container *ngFor="let validation of errorMessage.kycAddressType">
-          <div class="mandatory"
-            *ngIf="kycDetails.get('kycAddressType').hasError(validation.type) && (kycDetails.get('kycAddressType').dirty || kycDetails.get('kycAddressType').touched)">
+          <div class="mandatory" *ngIf="kycDetails.get('kycAddressType').hasError(validation.type) && (kycDetails.get('kycAddressType').dirty || kycDetails.get('kycAddressType').touched)">
             <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -96,8 +91,7 @@
 
       <div>
         <ng-container *ngFor="let validation of errorMessage.kycAddressvalue">
-          <div class="mandatory"
-            *ngIf="kycDetails.get('kycAddressvalue').hasError(validation.type) && (kycDetails.get('kycAddressvalue').dirty || kycDetails.get('kycAddressvalue').touched)">
+          <div class="mandatory" *ngIf="kycDetails.get('kycAddressvalue').hasError(validation.type) && (kycDetails.get('kycAddressvalue').dirty || kycDetails.get('kycAddressvalue').touched)">
             <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>

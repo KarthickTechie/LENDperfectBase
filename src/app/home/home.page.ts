@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { GlobalService } from '../global/global.service';
 import { AuthService } from '../auth.service';
 import { HandlingError } from "./../utility/ErrorHandling";
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -14,7 +15,10 @@ import { HandlingError } from "./../utility/ErrorHandling";
 })
 
 export class HomePage {
+  logout: Subscription;
 
+  pinInputType: string = "password";
+  inputType: string = "password";
   setLogoImg: LogoInfo = {
     logoImg: 'assets/imgs/abudhabi.jpg',
   }
@@ -44,12 +48,37 @@ export class HomePage {
   constructor(
     public router: Router,
     public authService: AuthService,
-    private errorHandling: HandlingError
+    private errorHandling: HandlingError,
+    public globalService: GlobalService
   ) {
     this.logoImg = this.setLogoImg.logoImg;
+
+  }
+  ngOnInit() {
+    this.logout = this.globalService.logout.subscribe(data => {
+      if (data == 'logout') {
+        this.dologout();
+      }
+    })
+  }
+
+  dologout() {
+
+    this.setLoginInfo.logincheck = true;
+    this.setLoginInfo.loginpin = false;
+    this.setLoginInfo.loginset = false;
+    this.setLoginInfo.forgotPwd = false;
+    this.setUserInfo.username = '';
+    this.setUserInfo.password = '';
+    this.setPinInfo.pina = '';
+    this.setPinInfo.pinb = '';
+    this.pin = '';
+
   }
 
   ngDoCheck() {
+
+
     localStorage.getItem('logo') ? (this.logoImg = localStorage.getItem('logo')) : this.logoImg = this.setLogoImg.logoImg;
   }
 
@@ -88,6 +117,26 @@ export class HomePage {
     this.router.navigate(["/setting"]);
   }
 
+
+  inputChng() {
+    if (this.inputType == "password") {
+      this.inputType = 'text';
+    } else {
+      this.inputType = 'password';
+    }
+  }
+
+  pinInputChng() {
+    if (this.pinInputType == "password") {
+      this.pinInputType = 'text';
+    } else {
+      this.pinInputType = 'password';
+    }
+  }
+
+  ngOnDestroy() {
+    this.logout.unsubscribe();
+  }
 
 }
 

@@ -19,6 +19,10 @@ export class KeytextService {
     "logoInfo": {
       "heading": "Logo"
     },
+    "langInfo": {
+      "heading": "Language",
+      "btnText": 'Apply Language'
+    },
     "settingInfo": {
       "heading": "Setting"
     }
