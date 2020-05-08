@@ -9,23 +9,62 @@ import { GlobalService } from '../global/global.service';
 
 export class HandlingError {
 
-    constructor(private global: GlobalService) {
+    constructor(private global ?: GlobalService) {
     }
 
     getUserPass() {
-        this.global.presentAlert(`Login`, `Please Enter the username and password!`);
+        new GlobalService().presentAlert(`Login`, `Please Enter the username and password!`);
     }
     getValidPin() {
-        this.global.presentAlert(`Alert`, `Please enter a valid pin!`);
+        new GlobalService().presentAlert(`Alert`, `Please enter a valid pin!`);
     }
     pinCheck() {
-        this.global.presentAlert('Alert', 'Plese Enter Your 4 Digit Pin.')
+        new GlobalService().presentAlert('Alert', 'Plese Enter Your 4 Digit Pin.')
     }
     pinNotMatch() {
-        this.global.presentAlert('Alert', " Your Pin Doesn't Match.")
+        new GlobalService().presentAlert('Alert', " Your Pin Doesn't Match.")
     }
     pinField() {
-        this.global.presentAlert(`Alert`, `Please Fill Both Pin Field!`);
+        new GlobalService().presentAlert(`Alert`, `Please Fill Both Pin Field!`);
+    }
+    ocrErrorInCapture(){
+        new GlobalService().presentAlert("Alert", "Error Occured while capturing Image, Please try Again.! ")
+    }
+    panCardSuccessAlert(){
+        new GlobalService().presentAlert("Alert", "", "PAN Card Scanned Successfully");
+    }
+    notScanPan(){
+        new GlobalService().presentAlert("Alert","Didn't Scan Pan Card ", 'Kindly choose your Document Correctly.')
+    }
+    aadharCardSuccessAlert(){
+        new GlobalService().presentAlert("Alert", "", "Aadhar Card Scanned Successfully");
+    }
+    notScanAadhar(){
+        new GlobalService().presentAlert("Alert","Didn't Scan Aadhar Card ", 'Kindly choose your Document Correctly.')
+    }
+    dlSuccessAlert(){
+        new GlobalService().presentAlert("Alert", "", "Driving License Scanned Successfully");
+    }
+    notScanDl(){
+        new GlobalService().presentAlert("Alert","Didn't Scan Driving License ", 'Kindly choose your Document Correctly.')
+    }
+    voterSuccessAlert(){
+        new GlobalService().presentAlert("Alert", "", "Voter ID Scanned Successfully");
+    }
+    notScanVoter(){
+        new GlobalService().presentAlert("Alert","Didn't Scan Voter ID ", 'Kindly choose your Document Correctly.')
+    }
+    qrScannerErr() {
+        new GlobalService().presentAlert("Alert", "Error Occured in Scanning Process");
+    }
+    qrResFormatErr() {
+        new GlobalService().presentAlert("Alert", "QR Response doen't Match with valid format");
+    }
+    kycNotMatchErr() {
+        new GlobalService().presentAlert("Alert", "QR Response doen't Match with Proof Selected");
+    }
+    chooseProofDocument(){
+        new GlobalService().presentAlert(`Alert`, `Please Select KYC Proof Type and Proof Document`);
     }
 
 
@@ -151,18 +190,15 @@ export class HandlingError {
 
     kycFormValidation() {
         return {
+            kycProofType: [
+                { type: "required", message: "Select Id Proof." },
+            ],
             kycIdType: [
                 { type: "required", message: "Select Id Proof." },
             ],
             kycIdvalue: [
                 { type: "required", message: "Enter Id Proof Value." },
-            ],
-            kycAddressType: [
-                { type: "required", message: "Select Address Proof." },
-            ],
-            kycAddressvalue: [
-                { type: "required", message: "Enter Address Proof Value." },
-            ],
+            ]
         }
     }
 

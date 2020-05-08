@@ -7,17 +7,18 @@ import { AlertController } from "@ionic/angular"
 })
 export class GlobalService {
 
-  constructor(public alertCtrl: AlertController) { }
+  constructor(public alertCtrl ?: AlertController) { }
 
-
-  async presentAlert(title, subtitle) {
-    let alert = await this.alertCtrl.create({
+  async presentAlert(title, subtitle, msg?) {
+    let alert = await new AlertController().create({
       header: title,
       subHeader: subtitle,
+      message: msg,
       buttons: ['OK']
     });
     await alert.present();
   }
+
 
 
 }
