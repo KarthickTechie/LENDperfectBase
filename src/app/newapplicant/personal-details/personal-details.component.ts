@@ -1,3 +1,4 @@
+import { KeytextService } from './../../keytext.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from "@angular/forms";
 
@@ -5,6 +6,7 @@ import { FormControlData } from "../formcontrol";
 import { MasterData } from "../masterservice";
 import { SqliteProvider } from "../../global/sqlite"
 import { HandlingError } from "../../utility/ErrorHandling";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-personal-details',
@@ -20,12 +22,13 @@ export class PersonalDetailsComponent implements OnInit {
   titleList: any;
   nationalityList: any;
   maritalStatusList: any;
-
+  personalData: any;
   addressType: any;
   ionCheck: boolean = false;
 
 
-  constructor(public formctrl: FormControlData, public master: MasterData, public sqlite: SqliteProvider, private errorHandling: HandlingError) { }
+  constructor(public formctrl: FormControlData, public master: MasterData, public sqlite: SqliteProvider, private errorHandling: HandlingError,
+    private keyService: KeytextService, private translate: TranslateService) { }
 
   ngOnInit() {
     this.validation_messages = this.errorHandling.personalvalid();
@@ -38,7 +41,7 @@ export class PersonalDetailsComponent implements OnInit {
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     //console.log(Object.keys(this.personalDetails.controls)[0]);
-    this.sqlite.createtable("PERSONAL_DETAILS", "personalId", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
+    // this.sqlite.createtable("PERSONAL_DETAILS", "personalId", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
   }
 
   personalSave(data) {
@@ -47,7 +50,7 @@ export class PersonalDetailsComponent implements OnInit {
         data[key] = "empty";
       }
     }
-    this.sqlite.insertQuery("PERSONAL_DETAILS", this.personalDetails.value, '01');
+    // this.sqlite.insertQuery("PERSONAL_DETAILS", this.personalDetails.value, '01');
   }
 
   selectGender() {

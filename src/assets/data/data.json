@@ -1,0 +1,13 @@
+{
+    "themeInfo": [
+        {
+            "heading": "Themes",
+            "label": [
+                "Primary",
+                "Secondary",
+                "Accent",
+                "Text"
+            ]
+        }
+    ]
+}

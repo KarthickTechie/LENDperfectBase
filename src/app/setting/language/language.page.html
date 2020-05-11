@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)='goBack()'>
+      <ion-icon name="arrow-back" color="white" style="font-size:20px; margin-left:10px;"></ion-icon>
+    </ion-buttons>
+    <ion-title>{{labelText.heading}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-radio-group>
+      <ion-item>
+        <ion-label>English</ion-label>
+        <ion-radio slot="start" value="biff"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Tamil</ion-label>
+        <ion-radio slot="start" value="griff"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    <div style='text-align: center'>
+      <ion-button type='button' icon-only shape="round" (click)='changeLanguage()' center>{{labelText.btnText}}</ion-button>
+    </div>
+  </ion-list>
+</ion-content>

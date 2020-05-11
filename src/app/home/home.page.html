@@ -1,56 +1,148 @@
-<ion-header>
-  <ion-toolbar>
-    <img style='float: right' src="assets/imgs/almasrafLogo.png" alt="" id="logo" text-end>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <div class="img-container"><img src="assets/imgs/abudhabi.jpg" alt=""></div>
 
-  <div class="logininfo">
-    <div class="logoname">{{name}}</div>
-    <div class="logindata" *ngIf="setLoginInfo.logincheck">
-      <ion-item class="loginInput">
-        <ion-label position="floating">
-          <ion-icon name="person" class="loginIcon"></ion-icon>User Name
-        </ion-label>
-        <ion-input type="text" [(ngModel)]="username"></ion-input>
-      </ion-item>
-      <ion-item class="loginInput">
-        <ion-label position="floating">
-          <ion-icon name="lock" class="loginIcon"></ion-icon>Password
-        </ion-label>
-        <ion-input type="password" [(ngModel)]="password"></ion-input>
-      </ion-item>
-      <ion-button color="logo" (click)="doLogin()">Login</ion-button>
+  <div class="img-container"><img [src]=logoImg alt="img" /></div>
+
+  <div class="loginBox">
+    <div class="loginContainer">
+      <!-- <div class="logoname">{{name}}</div> -->
+
+      <div *ngIf="setLoginInfo.forgotPwd">
+        <div class="fieldDesigns">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">
+              <ion-icon name="person"></ion-icon>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input type="text" placeholder="User name" [(ngModel)]="currentUser"></ion-input>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+        </div>
+        <div class="loginSubmit">
+          <div class="loginBtn">
+            <ion-fab-button color='warning' (click)="doLogin()">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-fab-button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="setLoginInfo.logincheck">
+        <div class="fieldDesigns">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">
+              <ion-icon name="person"></ion-icon>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input type="text" placeholder="User name" [(ngModel)]="setUserInfo.username"></ion-input>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+        </div>
+        <div class="fieldDesigns">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">
+              <ion-icon name="lock-closed"></ion-icon>
+            </ion-col>
+            <ion-col size="8">
+              <ion-input [type]="inputType" placeholder="Password" [(ngModel)]="setUserInfo.password"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="inputChng()">
+              <ion-icon name="eye" *ngIf="inputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="inputType != 'password'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div class="ion-text-end colFontSize">Forgot Password</div>
+
+
+        <div class="loginSubmit">
+          <div class="loginBtn">
+            <ion-fab-button color='warning' (click)="doLogin()">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-fab-button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="setLoginInfo.loginpin">
+        <div class="fieldDesigns">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">
+              <ion-icon name="lock-closed"></ion-icon>
+            </ion-col>
+            <ion-col size="8">
+              <ion-input [type]="pinInputType" placeholder="Set new PIN" maxlength="4" [(ngModel)]="setPinInfo.pina"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
+              <ion-icon name="eye" *ngIf="pinInputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="pinInputType != 'password'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="fieldDesigns">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">
+              <ion-icon name="lock-closed"></ion-icon>
+            </ion-col>
+            <ion-col size="8">
+              <ion-input [type]="pinInputType" placeholder="Confirm PIN" maxlength="4" [(ngModel)]="setPinInfo.pinb"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
+              <ion-icon name="eye" *ngIf="pinInputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="pinInputType != 'password'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="loginSubmit">
+          <div class="loginBtn">
+            <ion-fab-button color='warning' (click)="setPin()">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-fab-button>
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngIf="setLoginInfo.loginset">
+        <div class="fieldDesigns">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">
+              <ion-icon name="lock-closed"></ion-icon>
+            </ion-col>
+            <ion-col size="8">
+              <ion-input [type]="pinInputType" placeholder="Enter PIN" maxlength="4" [(ngModel)]="pin"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
+              <ion-icon name="eye" *ngIf="pinInputType == 'password'"></ion-icon>
+              <ion-icon name="eye-off" *ngIf="pinInputType != 'password'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div class="loginSubmit">
+          <div class="loginBtn">
+            <ion-fab-button color='warning' (click)="login()">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-fab-button>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <div class="logindata" *ngIf="setLoginInfo.loginset">
-      <ion-item class="loginInput">
-        <ion-label position="floating">
-          <ion-icon name="unlock" class="loginIcon"></ion-icon>Enter PIN
-        </ion-label>
-        <ion-input type="password" [(ngModel)]="pin" maxlength="4"></ion-input>
-      </ion-item>
-      <ion-button color="logo" (click)="login()">Login</ion-button>
-    </div>
-
-    <div class="logindata" *ngIf="setLoginInfo.loginpin">
-      <ion-item class="loginInput">
-        <ion-label position="floating">
-          <ion-icon name="unlock" class="loginIcon"></ion-icon>Set new PIN
-        </ion-label>
-        <ion-input type="password" maxlength="4" [(ngModel)]="pina"></ion-input>
-      </ion-item>
-      <ion-item class="loginInput">
-        <ion-label position="floating">
-          <ion-icon name="unlock" class="loginIcon"></ion-icon>Confirm PIN
-        </ion-label>
-        <ion-input type="password" maxlength="4" [(ngModel)]="pinb"></ion-input>
-      </ion-item>
-      <ion-button color="logo" (click)="setPin()">Continue</ion-button>
-    </div>
-
   </div>
-
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <span class='logochange' [routerLink]="['/setting']"><ion-icon name="settings" class="setting"></ion-icon></span>
+
+  <!-- <div class="settings" (click)="settings()">
+    <ion-icon name="person"></ion-icon> settings</div> -->
+</ion-footer>
