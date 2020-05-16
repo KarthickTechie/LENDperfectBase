@@ -7,7 +7,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./crop-doc.component.scss'],
 })
 export class CropDocComponent implements OnInit {
-  @Input() doc: object;
+  @Input() doc: {doc:"",view:false};
 
   constructor(public modalCtrl: ModalController) { 
   }
