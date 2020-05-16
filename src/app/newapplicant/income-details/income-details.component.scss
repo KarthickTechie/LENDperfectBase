@@ -6,9 +6,11 @@ form{
   grid-template-rows: auto;
   grid-template-columns: auto;
 }
-ion-card{
-  padding: 10px;
+.item.sc-ion-label-md-h, .item .sc-ion-label-md-h
+{
+    font-size:14px;
 }
+
 
 
 
@@ -22,14 +24,9 @@ ion-card{
   //   background: #f8c42a;
   // }
 
-  // .titlesize {
-  //   font-size: 14px;
-  //   color: #313679;
-  // }
-
-  // .leftSpace{
-  //     margin-left:10%;
-  // }
+  .leftSpace{
+      margin-left:10%;
+  }
 
   // .ion-grid {
   //   padding: 0px !important;

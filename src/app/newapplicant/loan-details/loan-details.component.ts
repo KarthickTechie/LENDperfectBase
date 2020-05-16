@@ -35,7 +35,7 @@ export class LoanDetailsComponent implements OnInit {
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     //console.log(Object.keys(this.personalDetails.controls)[0]);
-    this.sqlite.createtable("LOAN_DETAILS", "loanId", Object.keys(this.master.getLoadTable()), Object.values(this.master.getLoadTable()));
+    // this.sqlite.createtable("LOAN_DETAILS", "loanId", Object.keys(this.master.getLoadTable()), Object.values(this.master.getLoadTable()));
   }
 
   loanSave(value) {

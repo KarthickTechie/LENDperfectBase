@@ -4,7 +4,7 @@
 /dist
 /tmp
 /out-tsc
-
+*.7z
 # dependencies
 /node_modules
 /platforms

@@ -8,7 +8,7 @@ import { IonSlides, IonContent } from '@ionic/angular';
 })
 export class AppDashboardPage implements OnInit {
 
-  userdetail: string = 'userdetail';
+  userdetail: string;
   @ViewChild('mySlider', { static: true }) slider: IonSlides;
   @ViewChild(IonContent, { static: true }) content: IonContent;
 
@@ -16,7 +16,7 @@ export class AppDashboardPage implements OnInit {
 
 
   constructor() {
-    // this.slides.id = 'personal';
+    this.userdetail = 'personal'
   }
 
   ngOnInit() {
@@ -51,6 +51,6 @@ export class AppDashboardPage implements OnInit {
   scrollToTop() {
     this.content.scrollToTop();
   }
-
+  takepic() { }
 
 }

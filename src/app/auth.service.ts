@@ -21,25 +21,24 @@ export class AuthService {
     return this.setgpin;
   }
 
-  userservice(username: string, password: string) {
+  userservice(userInfo) {
     let promise = new Promise((resolve, reject) => {
-      (username && password) ? resolve('success') : reject('error');
+      (userInfo.username && userInfo.password) ? resolve('success') : reject('error');
     });
     return promise;
   }
 
 
-  loginpinservice(pina: string, pinb: string) {
+  loginpinservice(pinInfo) {
     let promise = new Promise((resolve, reject) => {
-      if (pina && pinb) {
-        debugger;
-        if (pina.toString().length != 4 && pinb.toString().length != 4) {
+      if (pinInfo.pina && pinInfo.pinb) {
+        if (pinInfo.pina.toString().length != 4 && pinInfo.pinb.toString().length != 4) {
           reject('PinValid');
-        } else if (pina != pinb) {
+        } else if (pinInfo.pina != pinInfo.pinb) {
           reject('PinNotMatch');
         }
         else {
-          this.setLoginPin(pina);
+          this.setLoginPin(pinInfo.pina);
           resolve("PinSuccess");
         }
       } else {
