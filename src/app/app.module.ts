@@ -2,12 +2,15 @@ import { SqliteProvider } from './global/sqlite';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { ReactiveFormsModule } from "@angular/forms";
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { OCR } from '@ionic-native/ocr/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
 
 import { ColorPickerModule } from "ngx-color-picker";
 import { IonicStorageModule } from '@ionic/storage';
@@ -17,25 +20,38 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, ColorPickerModule, ReactiveFormsModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot(),
+  imports: [
+    BrowserModule,
+    ColorPickerModule,
+    ReactiveFormsModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    }), HttpClientModule],
+    }), HttpClientModule
+  ],
   providers: [
     StatusBar,
-    SplashScreen, SQLite, SqliteProvider,
+    SplashScreen,
+    SQLite,
+    SqliteProvider,
+    BarcodeScanner,
+    OCR,
+    Camera,
+    FilePath,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

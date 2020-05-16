@@ -9,6 +9,7 @@ import { IncomeDetailsComponent } from './income-details/income-details.componen
 import { KycDetailsComponent } from './kyc-details/kyc-details.component';
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
 import { FormControlData } from '../newapplicant/formcontrol';
+import { KycScanOptionComponent } from './kyc-scan-option/kyc-scan-option.component';
 
 @NgModule({
 
@@ -17,6 +18,7 @@ import { FormControlData } from '../newapplicant/formcontrol';
         IncomeDetailsComponent,
         KycDetailsComponent,
         LoanDetailsComponent,
+        KycScanOptionComponent
     ],
     imports: [
         CommonModule,
@@ -32,6 +34,7 @@ import { FormControlData } from '../newapplicant/formcontrol';
         IncomeDetailsComponent,
         KycDetailsComponent,
         LoanDetailsComponent,
+        KycScanOptionComponent
     ]
 })
 

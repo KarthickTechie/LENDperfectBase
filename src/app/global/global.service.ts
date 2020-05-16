@@ -5,30 +5,28 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { MenuController } from '@ionic/angular';
 
 import { Subject } from 'rxjs'
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalService {
+export class GlobalService {  
   logout = new Subject();
-  constructor(
-    public router: Router,
-    public activatedRoute: ActivatedRoute,
-    public menuController: MenuController,
-    public alertCtrl: AlertController,
-    public translate: TranslateService) { }
+  
+  constructor(public alertCtrl ?: AlertController) { }
 
-
-  async presentAlert(title, subtitle) {
-    let alert = await this.alertCtrl.create({
+  async presentAlert(title, subtitle, msg?) {
+    let alert = await new AlertController().create({
       header: title,
       subHeader: subtitle,
+      message: msg,
       buttons: ['OK']
     });
     await alert.present();
   }
 
   async confirmAlert(title, subtitle) {
-    let alert = await this.alertCtrl.create({
+    let alert = await new AlertController().create({
       header: title,
       message: subtitle,
       buttons: [
@@ -42,9 +40,8 @@ export class GlobalService {
         }, {
           text: 'Sure',
           handler: () => {
-            this.menuController.close();
-            this.logout.next('logout')
-            this.router.navigate(["/home"])
+            new MenuController().close();
+            this.logout.next('logout');
             //localStorage.setItem('logout', 'success');
           }
         }
@@ -52,5 +49,4 @@ export class GlobalService {
     });
     await alert.present();
   }
-
 }

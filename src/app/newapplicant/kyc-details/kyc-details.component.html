@@ -1,7 +1,6 @@
 <div class="container">
   <h2 class="title"> KYC Details</h2>
   <form [formGroup]="kycDetails" (ngSubmit)="kycSave(kycDetails.value)">
-
     <div class="item">
       <ion-card class="ccardkyc" justify-content-center align-items-center>
         <span class="titlesize">
@@ -10,22 +9,40 @@
       </ion-card>
     </div>
 
-
-
-
     <div class="item">
       <ion-item>
         <ion-label>Choose Identity Proof<span class="mandatory">*</span>
         </ion-label>
-        <ion-select formControlName="kycIdType" interface="popover">
-          <ion-select-option *ngFor="let kycproof of kycproofList" [value]="kycproof.code"> {{kycproof.Name}}
+        <ion-select formControlName="kycProofType" interface="popover">
+          <ion-select-option *ngFor="let type of kycProofType" [value]="type.code"> {{type.Name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div>
+        <ng-container *ngFor="let validation of errorMessage.kycProofType">
+          <div class="mandatory"
+            *ngIf="kycDetails.get('kycProofType').hasError(validation.type) && (kycDetails.get('kycProofType').dirty || kycDetails.get('kycProofType').touched)">
+            <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label>Enter Identity Proof value<span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="kycIdType" interface="popover" (ionChange)="setValidation()">
+          <ion-select-option *ngFor="let kycproof of kycproofList" [value]="kycproof.code" > {{kycproof.Name}}
           </ion-select-option>
         </ion-select>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of errorMessage.kycIdType">
-          <div class="mandatory" *ngIf="kycDetails.get('kycIdType').hasError(validation.type) && (kycDetails.get('kycIdType').dirty || kycDetails.get('kycIdType').touched)">
+          <div class="mandatory"
+            *ngIf="kycDetails.get('kycIdType').hasError(validation.type) && (kycDetails.get('kycIdType').dirty || kycDetails.get('kycIdType').touched)">
             <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
@@ -35,71 +52,26 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Enter Identity Proof value<span class="mandatory">*</span>
-        </ion-label>
+      <!--   <ion-label position="floating">Id Value<span class="mandatory">*</span>
+        </ion-label> -->
 
-        <ion-input type="text" formControlName="kycIdvalue"></ion-input>
+        <ion-input type="text" formControlName="kycIdvalue" placeholder="Enter Id Value"></ion-input>
+        <ion-icon name="images-outline" (click)="showScannerOption()"></ion-icon>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of errorMessage.kycIdvalue">
-          <div class="mandatory" *ngIf="kycDetails.get('kycIdvalue').hasError(validation.type) && (kycDetails.get('kycIdvalue').dirty || kycDetails.get('kycIdvalue').touched)">
+          <div class="mandatory"
+            *ngIf="kycDetails.get('kycIdvalue').hasError(validation.type) && (kycDetails.get('kycIdvalue').dirty || kycDetails.get('kycIdvalue').touched)">
             <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
           </div>
         </ng-container>
       </div>
     </div>
 
-
-    <div class="item">
-      <ion-card class="ccardkyc">
-        <span class="titlesize">
-          <b>ADDRESS PROOF</b>
-        </span>
-
-      </ion-card>
-    </div>
-
-
-    <div class="item">
-
-      <ion-item>
-        <ion-label>Choose Address Proof <span class="mandatory">*</span></ion-label>
-        <ion-select formControlName="kycAddressType" interface="popover">
-          <ion-select-option *ngFor="let kycproof of kycproofList" [value]="kycproof.code"> {{kycproof.Name}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <div>
-        <ng-container *ngFor="let validation of errorMessage.kycAddressType">
-          <div class="mandatory" *ngIf="kycDetails.get('kycAddressType').hasError(validation.type) && (kycDetails.get('kycAddressType').dirty || kycDetails.get('kycAddressType').touched)">
-            <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-
-
-    <div class="item">
-      <ion-item>
-        <ion-label>Enter Address Proof value<span class="mandatory">*</span>
-        </ion-label>
-
-        <ion-input type="text" formControlName="kycAddressvalue"></ion-input>
-      </ion-item>
-
-      <div>
-        <ng-container *ngFor="let validation of errorMessage.kycAddressvalue">
-          <div class="mandatory" *ngIf="kycDetails.get('kycAddressvalue').hasError(validation.type) && (kycDetails.get('kycAddressvalue').dirty || kycDetails.get('kycAddressvalue').touched)">
-            <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-
-
-
+      <app-kyc-scan-option [hidden]="hideScanOption" (_scanTypeSelected)="calAPIMethods($event)"></app-kyc-scan-option>
+      
+    
     <div class="item">
       <div class="buttspace roundbtn" class="ion-text-center">
         <ion-button [disabled]="kycDetails.invalid" type="submit" shape="round">Save </ion-button>

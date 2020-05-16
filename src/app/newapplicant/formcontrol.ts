@@ -62,10 +62,11 @@ export class FormControlData {
 
     kycform() {
         return this.formbuilder.group({
+            kycProofType: ['', Validators.compose([Validators.required])],
             kycIdType: ['', Validators.compose([Validators.required])],
             kycIdvalue: ['', Validators.compose([Validators.required])],
-            kycAddressType: ['', Validators.compose([Validators.required])],
-            kycAddressvalue: ['', Validators.compose([Validators.required])]
+            // kycAddressType: ['', Validators.compose([Validators.required])],
+            // kycAddressvalue: ['', Validators.compose([Validators.required])]
         });
     }
 
