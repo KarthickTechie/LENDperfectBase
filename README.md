@@ -30,6 +30,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Document Upload Sample Program
 
+Step-1 : Install the following cordova plugin 
+
+https://github.com/abelabbesnabi/cordova-plugin-image-picker 
+
+Step-2 : Refer the sample code to use the Document upload API that has the following feature's
+1. Multiple Document upload , update and delete
+2. Crop image
+3. Profile picture upload 
+
 In html 
 
   <div class='docUpload'>
