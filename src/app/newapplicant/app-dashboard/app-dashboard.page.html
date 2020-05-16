@@ -4,7 +4,11 @@
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
     <ion-title>New Applicant
-      <span (click)="takepic()"><img src="assets/imgs/profile.png" class="navuserimg"></span>
+      <span (click)="presentActionSheet()">
+        <img src="assets/imgs/profile.png" class="navuserimg" *ngIf="!profPic">
+        <img [src]="profPic" class="navuserimg" *ngIf="profPic">
+      </span>
+     
     </ion-title>
   </ion-toolbar>
 
@@ -28,6 +32,8 @@
 </ion-header>
 
 <ion-content>
+
+
   <div [ngSwitch]="userdetail">
     <ion-slides #mySlider (ionSlideDidChange)="onSlideChanged($event)">
       <ion-slide>
