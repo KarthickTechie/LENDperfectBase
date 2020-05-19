@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>documentUpload</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <br>
+    <ion-badge color="light">Network: </ion-badge>
+    <ion-badge color="success">{{networkStatus}}</ion-badge>
+
+    <br>
+    <div class="container">
+
+      <ion-button (click)="docUpload()">Upload Document</ion-button>
+
+    </div>
+
+  </ion-card>
+
+
+</ion-content>
+
+
+
+<ng-template appProgressBar></ng-template>
