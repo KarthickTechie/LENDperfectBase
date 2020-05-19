@@ -25,6 +25,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { CropDocComponent } from './Components/crop-doc/crop-doc.component';
+import { DocumentUploadPageModule } from './document-upload/document-upload.module';
+
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -48,7 +50,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    }), HttpClientModule
+    }), HttpClientModule,
+    DocumentUploadPageModule
   ],
   providers: [
     StatusBar,
