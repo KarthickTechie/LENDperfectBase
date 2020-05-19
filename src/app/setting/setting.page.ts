@@ -22,7 +22,7 @@ export class SettingPage implements OnInit {
       [
         { labelName: "Logo", url: "logo", icon: "logo-buffer" },
         { labelName: "Themes", url: "theme", icon: "color-fill" },
-        { labelName: "Language", url: "language", icon: "language" },
+        { labelName: "Language", url: "language", icon: "language" }
       ]
   }
 
