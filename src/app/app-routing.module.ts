@@ -19,7 +19,11 @@ const routes: Routes = [
   {
     path: 'setting',
     loadChildren: () => import('./setting/setting.module').then(m => m.SettingPageModule)
+  },  {
+    path: 'document-upload',
+    loadChildren: () => import('./document-upload/document-upload.module').then( m => m.DocumentUploadPageModule)
   },
+
   
 ];
 
