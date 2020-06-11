@@ -21,7 +21,7 @@ export class KycDetailsComponent implements OnInit {
   errorMessage: any;
   hideScanOption: boolean = true;
   scanner: KycScanAPI;
-
+  proofvalsubmitted = false;
   proofValueEmitted: Subscription;
   proofValueEmittedDL: Subscription;
 
@@ -31,7 +31,7 @@ export class KycDetailsComponent implements OnInit {
     private sqlite: SqliteProvider,
     private master: MasterData,
     private errorHandling: HandlingError,
-  ) {  }
+  ) { }
 
   ngOnInit() {
     this.kycDetails = this.formctrl.kycform();
@@ -64,36 +64,44 @@ export class KycDetailsComponent implements OnInit {
       this.errorHandling.chooseProofDocument();
   }
 
-   calAPIMethods(scannerType) {
+  calAPIMethods(scannerType) {
 
     this.hideScanOption = true;
     const selecterProof = this.kycDetails.get('kycIdType').value;
     this.scanner = new KycScanAPI();
-    const scanoptions:ScannerOptions = {
-      scannerType:scannerType,
-      proofType:selecterProof
+    const scanoptions: ScannerOptions = {
+      scannerType: scannerType,
+      proofType: selecterProof
     }
 
-    this.proofValueEmitted = this.scanner.scanDocument(scanoptions).subscribe(scanoutput=>{
+    this.proofValueEmitted = this.scanner.scanDocument(scanoptions).subscribe(scanoutput => {
+      console.log(scanoutput, 'hahahahahahahahahahaha');
       this.kycDetails.get('kycIdvalue').setValue(scanoutput)
+      this.proofvalsubmitted = true;
     });
-    
-   
+
   }
 
-  
+
 
   setValidation() {
     //clear value., setDirectiveName for validation., set Min Max length
     this.kycDetails.get('kycIdvalue').reset();
   }
 
-  /* Venkateshwari code */
+  /* Venkateswari code */
 
-  
-  ngOnDestroy(){
-    this.proofValueEmitted.unsubscribe();
-    this.proofValueEmittedDL.unsubscribe();
+
+  ngOnDestroy() {
+    // console.log(
+    //   this.proofValueEmitted.closed, "hahahahahahahahahahahahahahahaha"
+    // );
+    // this.proofValueEmitted.unsubscribe();
+    // this.proofValueEmittedDL.unsubscribe();
+    if (this.proofvalsubmitted) {
+      this.proofValueEmitted.unsubscribe();
+      //this.proofValueEmittedDL.unsubscribe();
+    }
   }
 
 

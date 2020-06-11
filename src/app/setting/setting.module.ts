@@ -11,6 +11,7 @@ import { AlertComponent } from './alert/alert.component';
 
 import { ShareModule } from './share.module';
 import { AlertPage } from './alert.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -19,10 +20,12 @@ import { AlertPage } from './alert.page';
     ColorPickerModule,
     IonicModule,
     ShareModule,
-    SettingPageRoutingModule
+    SettingPageRoutingModule,
+    TranslateModule
   ],
   providers: [AlertPage],
   declarations: [SettingPage, AlertComponent],
   entryComponents: [AlertComponent],
+
 })
 export class SettingPageModule { }

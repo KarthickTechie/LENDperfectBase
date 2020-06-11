@@ -4,25 +4,37 @@ import { TranslateService } from "@ngx-translate/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MenuController } from '@ionic/angular';
 
+
 import { Subject } from 'rxjs'
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalService {  
+export class GlobalService {
   logout = new Subject();
-  
-  constructor(public alertCtrl ?: AlertController) { }
+  alertCtrl = new AlertController();
 
-  async presentAlert(title, subtitle, msg?) {
-    let alert = await new AlertController().create({
-      header: title,
-      subHeader: subtitle,
-      message: msg,
-      buttons: ['OK']
-    });
-    await alert.present();
+
+  constructor(public translate: TranslateService, public router: Router) { }
+
+  async presentAlert(title: string, subtitle: string, msg?: string) {
+    // console.log(this.translate.instant(subtitle, "tesssssssssssssssst"));
+    let header, subHeader;
+    this.translate.get([title, subtitle, msg]).subscribe(async res => {
+      console.log(res, "language response");
+
+      let key = Object.keys(res);
+
+      let alert = await this.alertCtrl.create({
+        header: res[key[0]],
+        subHeader: res[key[1]],
+        message: (res[key[2]]) ? res[key[2]] : '',
+        buttons: ['OK']
+      });
+      await alert.present();
+    })
+
   }
 
   async confirmAlert(title, subtitle) {
@@ -42,6 +54,7 @@ export class GlobalService {
           handler: () => {
             new MenuController().close();
             this.logout.next('logout');
+            this.router.navigate(["/home"])
             //localStorage.setItem('logout', 'success');
           }
         }

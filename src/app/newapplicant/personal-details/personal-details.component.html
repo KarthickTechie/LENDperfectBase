@@ -1,20 +1,21 @@
 <div class="container">
-  <h2 class="title">Personal Details</h2>
+  <h2 class="title">{{"Personal Details" | translate}}</h2>
   <form [formGroup]="personalDetails" (ngSubmit)="personalSave(personalDetails.value)">
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Title <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"Title" | translate}}<span class="mandatory">*</span></ion-label>
         <ion-select interface="popover" formControlName="title" (ionChange)="selectGender()">
           <ion-select-option *ngFor="let title of titleList" [value]="title.code">
-            {{title.OptionDesc}}
+            {{title.OptionDesc | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
       <div>
         <ng-container *ngFor="let validation of validation_messages.title">
-          <div class="mandatory" *ngIf="personalDetails.get('title').hasError(validation.type) && (personalDetails.get('title').dirty || personalDetails.get('title').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('title').hasError(validation.type) && (personalDetails.get('title').dirty || personalDetails.get('title').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -22,13 +23,14 @@
 
     <div class="item" style="margin-left: 10px;">
       <ion-item>
-        <ion-label position="floating">First Name <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"First Name"| translate}}<span class="mandatory">*</span></ion-label>
         <ion-input type="text" formControlName="firstName" maxlength="30"></ion-input>
       </ion-item>
       <div>
         <ng-container *ngFor="let validation of validation_messages.firstName">
-          <div class="mandatory" *ngIf="personalDetails.get('firstName').hasError(validation.type) && (personalDetails.get('firstName').dirty || personalDetails.get('firstName').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('firstName').hasError(validation.type) && (personalDetails.get('firstName').dirty || personalDetails.get('firstName').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -36,14 +38,15 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Middle Name</ion-label>
+        <ion-label position="floating">{{"Middle Name" | translate}}</ion-label>
         <ion-input type="text" formControlName="middleName" maxlength="30"></ion-input>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.middleName">
-          <div class="mandatory" *ngIf="personalDetails.get('middleName').hasError(validation.type) && (personalDetails.get('middleName').dirty || personalDetails.get('middleName').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('middleName').hasError(validation.type) && (personalDetails.get('middleName').dirty || personalDetails.get('middleName').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -51,14 +54,15 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Last Name <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"Last Name" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-input type="text" formControlName="lastName" maxlength="30"></ion-input>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.lastName">
-          <div class="mandatory" *ngIf="personalDetails.get('lastName').hasError(validation.type) && (personalDetails.get('lastName').dirty || personalDetails.get('lastName').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('lastName').hasError(validation.type) && (personalDetails.get('lastName').dirty || personalDetails.get('lastName').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -66,20 +70,21 @@
 
     <div class="item">
       <ion-item lines="none">
-        <ion-label class="genderLabel">Gender <span class="mandatory">*</span></ion-label>
+        <ion-label class="genderLabel">{{"Gender" | translate}} <span class="mandatory">*</span></ion-label>
       </ion-item>
       <div class="segment">
         <ion-segment [(ngModel)]="genderSelect" (ionChange)="genderChng()" formControlName="gender">
-          <ion-segment-button value="M" class="genMale">Male</ion-segment-button>
-          <ion-segment-button value="F" class="genFem">Female</ion-segment-button>
-          <ion-segment-button value="N" class="genOth">Others</ion-segment-button>
+          <ion-segment-button value="M" class="genMale">{{"Male" | translate}}</ion-segment-button>
+          <ion-segment-button value="F" class="genFem">{{"Female" | translate}}</ion-segment-button>
+          <ion-segment-button value="N" class="genOth">{{"Others" | translate}}</ion-segment-button>
         </ion-segment>
       </div>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.gender">
-          <div class="mandatory" *ngIf="personalDetails.get('gender').hasError(validation.type) && (personalDetails.get('gender').dirty || personalDetails.get('gender').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('gender').hasError(validation.type) && (personalDetails.get('gender').dirty || personalDetails.get('gender').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -88,7 +93,7 @@
     <div class="item">
       <div class="newdate">
         <ion-item>
-          <ion-label position="floating">D.O.B
+          <ion-label position="floating">{{"D.O.B" | translate}}
             <span class="mandatory">*</span>
           </ion-label>
           <ion-input type="date" formControlName="dob" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
@@ -98,8 +103,9 @@
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.dob">
-          <div class="mandatory" *ngIf="personalDetails.get('dob').hasError(validation.type) && (personalDetails.get('dob').dirty || personalDetails.get('dob').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('dob').hasError(validation.type) && (personalDetails.get('dob').dirty || personalDetails.get('dob').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -107,14 +113,15 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Mobile Number <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"Mobile Number" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-input type="tel" formControlName="mobileNumber" maxlength="10"></ion-input>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.mobileNumber">
-          <div class="mandatory" *ngIf="personalDetails.get('mobileNumber').hasError(validation.type) && (personalDetails.get('mobileNumber').dirty || personalDetails.get('mobileNumber').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('mobileNumber').hasError(validation.type) && (personalDetails.get('mobileNumber').dirty || personalDetails.get('mobileNumber').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -122,14 +129,15 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">E-mail <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"E-mail" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
 
       <div>
         <ng-container *ngFor="let validation of validation_messages.email">
-          <div class="mandatory" *ngIf="personalDetails.get('email').hasError(validation.type) && (personalDetails.get('email').dirty || personalDetails.get('email').touched)">
-            <p class="marginLR0pxTB5px">{{validation.message}}</p>
+          <div class="mandatory"
+            *ngIf="personalDetails.get('email').hasError(validation.type) && (personalDetails.get('email').dirty || personalDetails.get('email').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -137,10 +145,10 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Nationality</ion-label>
+        <ion-label>{{"Nationality" | translate}}</ion-label>
         <ion-select interface="popover" formControlName="nationality">
           <ion-select-option *ngFor="let national of nationalityList" [value]="national.code">
-            {{national.Name}}
+            {{national.Name | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -150,8 +158,8 @@
     <div class="item">
       <div class="segment">
         <ion-segment [(ngModel)]="addressType" formControlName="ad_type">
-          <ion-segment-button value="Permanent" class="genMale">Permanent</ion-segment-button>
-          <ion-segment-button value="Residential" class="genFem">Residential</ion-segment-button>
+          <ion-segment-button value="Permanent" class="genMale">{{"Permanent" | translate}}</ion-segment-button>
+          <ion-segment-button value="Residential" class="genFem">{{"Residential" | translate}}</ion-segment-button>
         </ion-segment>
       </div>
     </div>
@@ -159,14 +167,15 @@
     <div class="item">
       <div *ngIf="addressType === 'Permanent'">
         <ion-item>
-          <ion-label position="floating">Address 1 <span class="mandatory">*</span></ion-label>
+          <ion-label position="floating">{{"Address" | translate}} <span class="mandatory">*</span></ion-label>
           <ion-input type="text" formControlName="permanentAddress1"></ion-input>
         </ion-item>
 
         <div>
           <ng-container *ngFor="let validation of validation_messages.permanentAddress1">
-            <div class="mandatory" *ngIf="personalDetails.get('permanentAddress1').hasError(validation.type) && (personalDetails.get('permanentAddress1').dirty || personalDetails.get('permanentAddress1').touched)">
-              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            <div class="mandatory"
+              *ngIf="personalDetails.get('permanentAddress1').hasError(validation.type) && (personalDetails.get('permanentAddress1').dirty || personalDetails.get('permanentAddress1').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
             </div>
           </ng-container>
         </div>
@@ -182,14 +191,15 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Address 1 <span class="mandatory">*</span></ion-label>
+          <ion-label position="floating">{{"Address" | translate}} <span class="mandatory">*</span></ion-label>
           <ion-input type="text" formControlName="residentialAddress1"></ion-input>
         </ion-item>
 
         <div>
           <ng-container *ngFor="let validation of validation_messages.residentialAddress1">
-            <div class="mandatory" *ngIf="personalDetails.get('residentialAddress1').hasError(validation.type) && (personalDetails.get('residentialAddress1').dirty || personalDetails.get('residentialAddress1').touched)">
-              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            <div class="mandatory"
+              *ngIf="personalDetails.get('residentialAddress1').hasError(validation.type) && (personalDetails.get('residentialAddress1').dirty || personalDetails.get('residentialAddress1').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
             </div>
           </ng-container>
         </div>
@@ -199,7 +209,8 @@
 
     <div class="item">
       <div class="buttspace roundbtn" class="ion-text-center">
-        <ion-button [disabled]="personalDetails.invalid" type="submit" shape="round">Save </ion-button>
+        <ion-button [disabled]="personalDetails.invalid" type="submit" shape="round">{{"Save" | translate}}
+        </ion-button>
       </div>
     </div>
 

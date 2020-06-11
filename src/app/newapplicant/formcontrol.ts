@@ -92,7 +92,7 @@ export class FormControlData {
 
     otherDocumnetForm() {
         return this.formbuilder.group({
-            otherDocument: ['', Validators.compose([Validators.required])],
+            otherDocumentType: ['', Validators.compose([Validators.required])],
             otherDescription: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*')])]
         });
     }

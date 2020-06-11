@@ -38,6 +38,7 @@ export class AuthService {
           reject('PinNotMatch');
         }
         else {
+          localStorage.setItem('setPin', pinInfo.pina);
           this.setLoginPin(pinInfo.pina);
           resolve("PinSuccess");
         }
@@ -50,7 +51,7 @@ export class AuthService {
 
   loginservice(pin) {
     let promise = new Promise((resolve, reject) => {
-      (pin == this.getLoginPin()) ? resolve('success') : reject('error')
+      (pin == localStorage.getItem('setPin')) ? resolve('success') : reject('error')
     });
     return promise;
   }

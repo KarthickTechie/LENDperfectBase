@@ -7,24 +7,24 @@ export class KeytextService {
 
   static labelDeta = {
     "themeInfo": {
-      "heading": "Themes",
+      "themeheading": "Themes",
       "label": [
         "Primary",
         "Secondary",
         "Accent",
         "Text"
       ],
-      "btnText": 'Apply Theme'
+      "themebtnText": 'Apply Theme'
     },
     "logoInfo": {
-      "heading": "Logo"
+      "logoheading": "Logo"
     },
     "langInfo": {
       "heading": "Language",
       "btnText": 'Apply Language'
     },
     "settingInfo": {
-      "heading": "Setting"
+      "settingheading": "Setting"
     }
   }
 

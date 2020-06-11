@@ -9,62 +9,80 @@ import { GlobalService } from '../global/global.service';
 
 export class HandlingError {
 
-    constructor(private global ?: GlobalService) {
+    constructor(public global: GlobalService) {
+        // this.global.presentAlert(`Login`, `Please Enter the username and password!`);
     }
 
+    // getUserPass() {
+    //     this.global.presentAlert("Login", "Please Enter the username and password!");
+    // }
+
+    // pinCheck() {
+    //     this.global.presentAlert('Alert', 'Plese Enter Your 4 Digit Pin.')
+    // }
+    // getValidPin() {
+    //     this.global.presentAlert(`Alert`, `Please enter a valid pin!`);
+    // }
+    // pinNotMatch() {
+    //     this.global.presentAlert('Alert', " Your Pin Doesn't Match.")
+    // }
+    // pinField() {
+    //     this.global.presentAlert(`Alert`, `Please Fill Both Pin Field!`);
+    // }
+
     getUserPass() {
-        new GlobalService().presentAlert(`Login`, `Please Enter the username and password!`);
+        this.global.presentAlert(`Login`, `Please Enter the username and password!`);
     }
     getValidPin() {
-        new GlobalService().presentAlert(`Alert`, `Please enter a valid pin!`);
+        this.global.presentAlert(`Alert`, `Please enter a valid pin!`);
     }
     pinCheck() {
-        new GlobalService().presentAlert('Alert', 'Plese Enter Your 4 Digit Pin.')
+        this.global.presentAlert('Alert', 'Plese Enter Your 4 Digit Pin.')
     }
     pinNotMatch() {
-        new GlobalService().presentAlert('Alert', " Your Pin Doesn't Match.")
+        this.global.presentAlert('Alert', " Your Pin Doesn't Match.")
     }
     pinField() {
-        new GlobalService().presentAlert(`Alert`, `Please Fill Both Pin Field!`);
+        this.global.presentAlert(`Alert`, `Please Fill Both Pin Field!`);
     }
-    ocrErrorInCapture(){
-        new GlobalService().presentAlert("Alert", "Error Occured while capturing Image, Please try Again.! ")
+    ocrErrorInCapture() {
+        this.global.presentAlert("Alert", "Error Occured while capturing Image, Please try Again.! ")
     }
-    panCardSuccessAlert(){
-        new GlobalService().presentAlert("Alert", "", "PAN Card Scanned Successfully");
+    panCardSuccessAlert() {
+        this.global.presentAlert("Alert", "", "PAN Card Scanned Successfully");
     }
-    notScanPan(){
-        new GlobalService().presentAlert("Alert","Didn't Scan Pan Card ", 'Kindly choose your Document Correctly.')
+    notScanPan() {
+        this.global.presentAlert("Alert", "Didn't Scan Pan Card ", 'Kindly choose your Document Correctly.')
     }
-    aadharCardSuccessAlert(){
-        new GlobalService().presentAlert("Alert", "", "Aadhar Card Scanned Successfully");
+    aadharCardSuccessAlert() {
+        this.global.presentAlert("Alert", "", "Aadhar Card Scanned Successfully");
     }
-    notScanAadhar(){
-        new GlobalService().presentAlert("Alert","Didn't Scan Aadhar Card ", 'Kindly choose your Document Correctly.')
+    notScanAadhar() {
+        this.global.presentAlert("Alert", "Didn't Scan Aadhar Card ", 'Kindly choose your Document Correctly.')
     }
-    dlSuccessAlert(){
-        new GlobalService().presentAlert("Alert", "", "Driving License Scanned Successfully");
+    dlSuccessAlert() {
+        this.global.presentAlert("Alert", "", "Driving License Scanned Successfully");
     }
-    notScanDl(){
-        new GlobalService().presentAlert("Alert","Didn't Scan Driving License ", 'Kindly choose your Document Correctly.')
+    notScanDl() {
+        this.global.presentAlert("Alert", "Didn't Scan Driving License ", 'Kindly choose your Document Correctly.')
     }
-    voterSuccessAlert(){
-        new GlobalService().presentAlert("Alert", "", "Voter ID Scanned Successfully");
+    voterSuccessAlert() {
+        this.global.presentAlert("Alert", "", "Voter ID Scanned Successfully");
     }
-    notScanVoter(){
-        new GlobalService().presentAlert("Alert","Didn't Scan Voter ID ", 'Kindly choose your Document Correctly.')
+    notScanVoter() {
+        this.global.presentAlert("Alert", "Didn't Scan Voter ID ", 'Kindly choose your Document Correctly.')
     }
     qrScannerErr() {
-        new GlobalService().presentAlert("Alert", "Error Occured in Scanning Process");
+        this.global.presentAlert("Alert", "Error Occured in Scanning Process");
     }
     qrResFormatErr() {
-        new GlobalService().presentAlert("Alert", "QR Response doen't Match with valid format");
+        this.global.presentAlert("Alert", "QR Response doen't Match with valid format");
     }
     kycNotMatchErr() {
-        new GlobalService().presentAlert("Alert", "QR Response doen't Match with Proof Selected");
+        this.global.presentAlert("Alert", "QR Response doen't Match with Proof Selected");
     }
-    chooseProofDocument(){
-        new GlobalService().presentAlert(`Alert`, `Please Select KYC Proof Type and Proof Document`);
+    chooseProofDocument() {
+        this.global.presentAlert(`Alert`, `Please Select KYC Proof Type and Proof Document`);
     }
 
 
@@ -96,11 +114,11 @@ export class HandlingError {
                 { type: "pattern", message: "Enter Valid Email." },
             ],
             permanentAddress1: [
-                { type: "required", message: "Enter Address 1." },
+                { type: "required", message: "Enter Permanent Address." },
             ],
 
             residentialAddress1: [
-                { type: "required", message: "Enter Address 1." },
+                { type: "required", message: "Enter Resedential Address." },
             ],
             customerCategory: [
                 { type: "required", message: "Select Custom Categroy Type. " }
@@ -191,13 +209,13 @@ export class HandlingError {
     kycFormValidation() {
         return {
             kycProofType: [
-                { type: "required", message: "Select Id Proof." },
+                { type: "required", message: "Select Proof Type." },
             ],
             kycIdType: [
-                { type: "required", message: "Select Id Proof." },
+                { type: "required", message: "Select Proof Document." },
             ],
             kycIdvalue: [
-                { type: "required", message: "Enter Id Proof Value." },
+                { type: "required", message: "Enter Proof Value." },
             ]
         }
     }

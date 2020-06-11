@@ -1,4 +1,4 @@
-import { ActionSheetController} from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { BarcodeScannerOptions, BarcodeScanner, } from "@ionic-native/barcode-scanner/ngx";
 import { OCR, OCRSourceType, OCRResult } from '@ionic-native/ocr/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
@@ -14,22 +14,22 @@ export class KycScanAPI {
     proofSelected: string;
     proofValue = new Subject<any>();
     proofValueDL = new Subject<any>();
-    actionSheetCtrl:ActionSheetController;
-    barcodeScanner:BarcodeScanner;
-    ocr:OCR;
-    camera:Camera;
-    filePath:FilePath;
-    errorHandler:HandlingError;
-    _options:ScannerOptions;
+    actionSheetCtrl: ActionSheetController;
+    barcodeScanner: BarcodeScanner;
+    ocr: OCR;
+    camera: Camera;
+    filePath: FilePath;
+    errorHandler: HandlingError;
+    _options: ScannerOptions;
     constructor() {
 
-           this.actionSheetCtrl = new ActionSheetController();
-           this.barcodeScanner = new BarcodeScanner();
-           this.ocr = new OCR();
-           this.camera = new Camera();
-           this.filePath = new FilePath();
-           this.errorHandler = new HandlingError();
-               
+        this.actionSheetCtrl = new ActionSheetController();
+        this.barcodeScanner = new BarcodeScanner();
+        this.ocr = new OCR();
+        this.camera = new Camera();
+        this.filePath = new FilePath();
+        //    this.errorHandler = new HandlingError();
+
     }
 
     async  _QRScanner() {
@@ -188,65 +188,64 @@ export class KycScanAPI {
         }
     }
 
-    scanDocument(options:ScannerOptions):Subject<any>{
+    scanDocument(options: ScannerOptions): Subject<any> {
 
-            this._options = options;
+        this._options = options;
+        if (options.scannerType == '01') {
+            this._qrScanner();
+            return this.proofValue;
+        } else {
+            this.selectSource(this._options.proofType);
+            return this.proofValue;
 
-            if (options.scannerType == '01') {
-                this._qrScanner();
-                return this.proofValue;    
-              } else {
-              this.selectSource(this._options.proofType);
-              return this.proofValue;
+        }
 
-            }
-          
     }
 
     _qrScanner() {
         this._QRScanner().then(data => {
-          console.log(data, 'api');
-          let qrResponse = this.formatQRResponse(data);
-          this.kycDataBinding(qrResponse);
+            console.log(data, 'api');
+            let qrResponse = this.formatQRResponse(data);
+            this.kycDataBinding(qrResponse);
         }, err => {
-          console.log(err);
-          this.errorHandler.qrScannerErr();
+            console.log(err);
+            this.errorHandler.qrScannerErr();
         })
-      }
+    }
 
-       _ocrScanner() {
-         this.selectSource(this._options.proofType);
+    _ocrScanner() {
+        this.selectSource(this._options.proofType);
 
-       
-      }
-    
-    
-      kycDataBinding(qrData) {    
+
+    }
+
+
+    kycDataBinding(qrData) {
         switch (this._options.proofType) {
-          case "02":
-            if (!!qrData.PrintLetterBarcodeData)
-               this.proofValue.next(qrData.PrintLetterBarcodeData._uid); 
-               
-            else
-              this.errorHandler.qrResFormatErr();
-            break;
-          case "05":
-            var responseStr = qrData;    
-            let arr = responseStr.split(',');
-            let DLNO = arr.filter(val => (val.toLowerCase().includes('dlno')))[0].split(':')[1];
-            this.proofValue.next(DLNO);
-            break;
-          default:
-            this.errorHandler.kycNotMatchErr();
+            case "02":
+                if (!!qrData.PrintLetterBarcodeData)
+                    this.proofValue.next(qrData.PrintLetterBarcodeData._uid);
+
+                else
+                    this.errorHandler.qrResFormatErr();
+                break;
+            case "05":
+                var responseStr = qrData;
+                let arr = responseStr.split(',');
+                let DLNO = arr.filter(val => (val.toLowerCase().includes('dlno')))[0].split(':')[1];
+                this.proofValue.next(DLNO);
+                break;
+            default:
+                this.errorHandler.kycNotMatchErr();
         }
-    
-      }
-    
+
+    }
+
 
 
 }
 
-export interface ScannerOptions{
-    scannerType:string;
-    proofType:string;
+export interface ScannerOptions {
+    scannerType: string;
+    proofType: string;
 }

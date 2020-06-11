@@ -33,16 +33,30 @@ export class PersonalDetailsComponent implements OnInit {
   ngOnInit() {
     this.validation_messages = this.errorHandling.personalvalid();
     this.personalDetails = this.formctrl.personalform();
+    console.log(this.personalDetails.controls, 'controls');
+
     this.titleList = this.master.getTitleList();
     this.nationalityList = this.master.getNationalityList();
     this.maritalStatusList = this.master.getMaritalStatusList();
-
+  }
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+  }
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+  }
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave');
+  }
+  ionViewDidLeave() {
+    console.log('ionViewDidleave');
   }
   ngAfterViewInit() {
     console.log('ngAfterViewInit');
     //console.log(Object.keys(this.personalDetails.controls)[0]);
     // this.sqlite.createtable("PERSONAL_DETAILS", "personalId", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
   }
+
 
   personalSave(data) {
     for (let key in data) {

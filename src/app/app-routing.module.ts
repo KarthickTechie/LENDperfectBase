@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'newapp', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
   {
     path: 'dashboard',
@@ -19,12 +19,27 @@ const routes: Routes = [
   {
     path: 'setting',
     loadChildren: () => import('./setting/setting.module').then(m => m.SettingPageModule)
-  },  {
+  },
+  {
     path: 'document-upload',
-    loadChildren: () => import('./document-upload/document-upload.module').then( m => m.DocumentUploadPageModule)
+    loadChildren: () => import('./document-upload/document-upload.module').then(m => m.DocumentUploadPageModule)
+  },
+  {
+    path: 'auditlog',
+    loadChildren: () => import('./auditlog/auditlog.module').then(m => m.AuditlogPageModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./view-gallery/view-gallery.module').then(m => m.ViewGalleryPageModule)
+  },
+  {
+    path: 'video',
+    loadChildren: () => import('./video-gallery/video-gallery.module').then(m => m.VideoGalleryPageModule)
   },
 
-  
+
+
+
 ];
 
 @NgModule({

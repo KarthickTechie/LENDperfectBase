@@ -8,6 +8,7 @@ import { AppDashboardPageRoutingModule } from './app-dashboard-routing.module';
 
 import { AppDashboardPage } from './app-dashboard.page';
 import { newApplicantModule } from '../newapplicant.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { newApplicantModule } from '../newapplicant.module';
     FormsModule,
     newApplicantModule,
     IonicModule,
-    AppDashboardPageRoutingModule
+    AppDashboardPageRoutingModule,
+    TranslateModule
   ],
   declarations: [AppDashboardPage]
 })

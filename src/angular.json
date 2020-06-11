@@ -66,6 +66,14 @@
                 }
               ]
             },
+            "sales": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sales.ts"
+                }
+              ]
+            },
             "ci": {
               "progress": false
             }
@@ -79,6 +87,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "sales": {
+              "browserTarget": "app:build:sales"
             },
             "ci": {
               "progress": false
@@ -128,7 +139,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {
@@ -154,6 +167,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "sales": {
+              "browserTarget": "app:build:sales"
             }
           }
         },
@@ -167,6 +183,10 @@
             "production": {
               "cordovaBuildTarget": "app:ionic-cordova-build:production",
               "devServerTarget": "app:serve:production"
+            },
+            "sales": {
+              "cordovaBuildTarget": "app:ionic-cordova-build:sales",
+              "devServerTarget": "app:serve:sales"
             }
           }
         }

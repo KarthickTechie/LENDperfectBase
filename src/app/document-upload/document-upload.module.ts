@@ -17,7 +17,7 @@ import { ProgressBarDirective } from './progress-bar.directive';
     IonicModule,
     DocumentUploadPageRoutingModule
   ],
-  declarations: [DocumentUploadPage, ProgressBarDirective, ProgressWidgetComponent],
+  declarations: [DocumentUploadPage, ProgressWidgetComponent],
   entryComponents: [ProgressWidgetComponent]
 })
 export class DocumentUploadPageModule { }

@@ -3,24 +3,81 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Existing Application</ion-title>
+    <ion-title>{{"Existing Application" | translate}}</ion-title>
   </ion-toolbar>
+  <ion-item-group class="filterItems">
+    <ion-item-divider sticky>
+
+      <ion-buttons slot="start" (click)="filterItems()">
+        <ion-icon name="funnel-outline"></ion-icon> <span>Filter</span>
+      </ion-buttons>
+
+      <ion-buttons slot="end" style="padding-right: 10px;" (click)="sortItems()">
+        <ion-icon name="options-outline"></ion-icon> <span>sort</span>
+      </ion-buttons>
+
+    </ion-item-divider>
+  </ion-item-group>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="filterHidden()">
 
 
-  <ion-card class="container2">
+  <ion-card class="container2" *ngFor="let app of applications | status:filterValue">
     <div class="left_content">
-      <img class="left_content_img" src="../../assets/img/round_headshot.png">
+      <img class="left_content_img" [src]="app.profile">
     </div>
     <div class="right_content">
-      <h2 class="right_content_text"><span><ion-icon name="person"></ion-icon></span>Chris Evans</h2>
-      <p class="right_content_text"><span><ion-icon name="document"></ion-icon></span>987654321</p>
-      <p class="right_content_text"><span><ion-icon name="thumbs-up"></ion-icon></span>Submitted</p>
+      <h6 class="right_content_text"><span>
+          <ion-icon name="person"></ion-icon>
+        </span>{{app.name}}</h6>
+      <h6 class="right_content_text"><span>
+          <ion-icon name="document"></ion-icon>
+        </span>{{app.document}}</h6>
+      <h6 class="right_content_text"><span>
+          <ion-icon name="thumbs-up"></ion-icon>
+        </span>{{app.status}}</h6>
       <ion-icon class="right_content_icon" name="arrow-forward-circle"></ion-icon>
     </div>
   </ion-card>
 
 
+
 </ion-content>
+
+
+<ion-list class="filterlist" *ngIf="filterShow">
+  <ion-radio-group [(ngModel)]="filterValue" (ionFocus)="filterChange($event.target.value)">
+    <ion-item no-padding>
+      <ion-label>{{"Submitted" | translate}}</ion-label>
+      <ion-radio slot="start" value="submitted"></ion-radio>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-label>{{"Not Submitted" | translate}}</ion-label>
+      <ion-radio slot="start" value="notsubmitted"></ion-radio>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-label>{{"Pending" | translate}}</ion-label>
+      <ion-radio slot="start" value="pending"></ion-radio>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-label>{{"Reset" | translate}}</ion-label>
+      <ion-radio slot="start" value="reset"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>
+
+<ion-list class="filterlist" style="right: 0;" *ngIf="sortShow">
+  <ion-radio-group [(ngModel)]="sortValue" (ionFocus)="sortChange($event.target.value)">
+    <ion-item no-padding>
+      <ion-label>A to Z</ion-label>
+      <ion-radio slot="start" value="ascending"></ion-radio>
+    </ion-item>
+    <ion-item no-padding>
+      <ion-label>Z to A</ion-label>
+      <ion-radio slot="start" value="descending"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>
+
+<div appAlert></div>

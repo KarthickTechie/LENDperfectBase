@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
-
 import { GlobalService } from '../global/global.service';
 import { AuthService } from '../auth.service';
 import { HandlingError } from "./../utility/ErrorHandling";
 import { Subscription } from 'rxjs';
+import { environment } from './../../environments/environment';
 
 
 @Component({
@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 })
 
 export class HomePage {
+  setting: any;
   logout: Subscription;
 
   pinInputType: string = "password";
@@ -51,15 +52,23 @@ export class HomePage {
     private errorHandling: HandlingError,
     public globalService: GlobalService
   ) {
+    this.setting = environment.settings;
     this.logoImg = this.setLogoImg.logoImg;
-
+    console.log(this.setting, 'yo mama');
   }
   ngOnInit() {
     this.logout = this.globalService.logout.subscribe(data => {
       if (data == 'logout') {
+        this.logout.unsubscribe()
         this.dologout();
       }
-    })
+    });
+    if (localStorage.getItem("loginpin")) {
+      this.setLoginInfo.logincheck = false;
+      this.setLoginInfo.loginpin = false;
+      this.setLoginInfo.loginset = true;
+      this.setLoginInfo.forgotPwd = false;
+    }
   }
 
   dologout() {
@@ -108,6 +117,7 @@ export class HomePage {
   login() {
     this.authService.loginservice(this.pin).then(loginservice => {
       this.router.navigate(["/dashboard"]);
+      localStorage.setItem('loginpin', this.pin);
     }, error => {
       this.errorHandling.getValidPin();
     });

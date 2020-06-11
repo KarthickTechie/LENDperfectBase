@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-crop-doc',
@@ -7,13 +7,19 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./crop-doc.component.scss'],
 })
 export class CropDocComponent implements OnInit {
-  @Input() doc: {doc:"",view:false};
+  @Input() doc: { doc: "", view: false };
 
-  constructor(public modalCtrl: ModalController) { 
+  constructor(public modalCtrl: ModalController, public platform: Platform) {
   }
 
-  ngOnInit() {}
-  
+  ngOnInit() {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.modalCtrl.dismiss({
+        'updateProfileIMAGE': false
+      });
+    })
+  }
+
   //Update Profile Piccture
   updateimage() {
     this.modalCtrl.dismiss({

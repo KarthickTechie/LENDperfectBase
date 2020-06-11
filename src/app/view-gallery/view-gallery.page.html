@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon size="large" slot="start" name="arrow-back" (click)="onClick()"></ion-icon>
+    <ion-title>Gallery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides #slider (ionSlideDidChange)="onSlideChanged($event)">
+    <ion-slide *ngFor="let item of dList; let i = index;trackBy:trackByName">
+      <div class="imgContainer">
+        <img [src]="item.webview" alt="">
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-icon *ngIf="this.enableAdd" size="large" slot="start" name="add"
+      (click)="this.addActionSheet(this.parentIndex,this.currentSlideIndex-1)"></ion-icon>
+    <ion-badge *ngIf="this.currentSlideIndex!==null"> {{currentSlideIndex}}/{{imgTotal}} </ion-badge>
+    <ion-icon size="large" slot="end" name="trash" (click)="delete(this.parentIndex,this.currentSlideIndex-1)">
+    </ion-icon>
+  </ion-toolbar>
+</ion-footer>

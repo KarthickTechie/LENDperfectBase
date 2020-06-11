@@ -1,0 +1,53 @@
+<!-- <ion-header>
+    
+  <ion-toolbar>
+    <ion-title>Audit Logs</ion-title>
+  </ion-toolbar>
+
+</ion-header> -->
+
+
+<ion-content padding>
+  <div class="viewport">
+    <form [formGroup]="auditLog" (ngSubmit)="auditgen(auditLog.value)">
+      <div class="newdate">
+        <ion-item>
+          <ion-label floating>{{"Start Date" | translate}}
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-datetime formControlName="startDate" displayFormat="DD/MM/YYYY" min="{{startmindate}}"
+            max="{{startmaxdate}}" pickerFormat="DD MMM YYYY" (ionChange)="calcendDate()">
+          </ion-datetime>
+        </ion-item>
+        <span
+          *ngIf="!auditLog.controls.startDate.valid && (auditLog.controls.startDate.dirty || auditLog.controls.startDate.touched)">
+          <span class="errText">{{"Select Start Date." | translate}}</span>
+        </span>
+      </div>
+
+      <div class="newdate">
+        <ion-item>
+          <ion-label floating>{{"End Date" | translate}}
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-datetime formControlName="endDate" displayFormat="DD/MM/YYYY" min="{{endmindate}}" max="{{endmaxdate}}"
+            pickerFormat="DD MMM YYYY">
+          </ion-datetime>
+        </ion-item>
+        <span
+          *ngIf="!auditLog.controls.endDate.valid && (auditLog.controls.endDate.dirty || auditLog.controls.endDate.touched)">
+          <span class="errText">{{"Select End Date." | translate}}</span>
+        </span>
+      </div>
+      <ion-row>
+        <ion-col>
+          <div class="buttspace roundbtn">
+            <ion-button shape="round" type="submit" color="primary" [disabled]="auditLog.invalid">
+              {{"Generate Log" | translate}}
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</ion-content>

@@ -1,13 +1,13 @@
 <div class="container">
-  <h2 class="title">Income Details</h2>
+  <h2 class="title">{{"Income Details" | translate}}</h2>
   <form [formGroup]="incomeDetails" (ngSubmit)="incomeSave(incomeDetails.value)">
 
     <div class="item">
       <ion-item>
-        <ion-label>Employment Category <span class="mandatory">*</span></ion-label>
+        <ion-label>{{"Employment Category" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-select interface="popover" formControlName="empCategoryType">
           <ion-select-option *ngFor="let empCategory of empCategoryList" [value]="empCategory.code">
-            {{empCategory.Name}}
+            {{empCategory.Name | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -15,14 +15,14 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Employer Name</ion-label>
+        <ion-label position="floating">{{"Employer Name" | translate}}</ion-label>
         <ion-input type=text formControlName="empName"></ion-input>
       </ion-item>
     </div>
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Date of Joining <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"Date of Joining" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-input type=date formControlName="doj" min="2000-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
         </ion-input>
       </ion-item>
@@ -30,10 +30,10 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Income Type <span class="mandatory">*</span></ion-label>
+        <ion-label>{{"Income Type" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-select interface="popover" formControlName="incomeType">
           <ion-select-option *ngFor="let incomeType of incomeTypeList" [value]="incomeType.code">
-            {{incomeType.Name}}
+            {{incomeType.Name | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -42,8 +42,8 @@
     <div class="item">
       <ion-card class="ccardkyc">
         <span class="titlesize">
-          <b>DESCRIPTION AMOUNT</b>
-         </span>
+          <b>{{"DESCRIPTION AMOUNT" | translate}}</b>
+        </span>
         <!--<span class="titleright">
           <b>AMOUNT</b>
         </span> -->
@@ -53,7 +53,7 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Gross Income <span> (Rs) </span>
+        <ion-label>{{"Gross Income" | translate}} <span> (Rs) </span>
           <span class="mandatory">*</span>
         </ion-label>
         <ion-input formControlName="grossIncome" type="tel" maxlength="10" placeholder="Amount"></ion-input>
@@ -65,7 +65,7 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Other Deduction <span> (Rs) </span>
+        <ion-label>{{"Other Deduction" | translate}} <span> (Rs) </span>
           <span class="mandatory">*</span>
         </ion-label>
         <ion-input formControlName="otherDeductions" type="tel" maxlength="10" placeholder="Amount"></ion-input>
@@ -76,7 +76,7 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Net Income After Deduction <span> (Rs) </span>
+        <ion-label>{{"Net Income After Deduction" | translate}} <span> (Rs) </span>
           <span class="mandatory">*</span>
         </ion-label>
         <ion-input formControlName="netIncome" type="tel" maxlength="10" placeholder="Amount"></ion-input>
@@ -88,7 +88,7 @@
     <div class="item">
       <ion-card class="ccardkyc" justify-content-center align-items-center>
         <span class="titlesize">
-          <b>OTHER INCOME</b>
+          <b>{{"OTHER INCOME" | translate}}</b>
         </span>
         <ion-icon class="btn-2" ios="ios-add-circle" md="md-add-circle" (click)="addincomefield()"></ion-icon>
       </ion-card>
@@ -104,7 +104,7 @@ statutory -->
 
     <div class="item">
       <div class="ion-text-center">
-        <ion-button [disabled]="incomeDetails.invalid" type="submit" shape="round">Save </ion-button>
+        <ion-button [disabled]="incomeDetails.invalid" type="submit" shape="round">{{"Save" | translate}} </ion-button>
       </div>
     </div>
   </form>

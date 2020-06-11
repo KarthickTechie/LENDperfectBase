@@ -1,0 +1,15 @@
+<div class="container">
+  <!-- <div class="imgs" *ngFor="let image of imageList">
+    <img [src]="image.webview" alt="">
+  </div> -->
+  <ion-slides>
+    <ion-slide *ngFor="let image of imageList ; let i = index ">
+      <img [src]="image.webview" alt="">
+
+      <ion-button class="img_btn1" fill="clear" (click)="onDelete(image.parentIndex,i)">Delete</ion-button>
+      <ion-badge class="img_badge" color="danger">{{i+1}} / {{imageList.length}}</ion-badge>
+      <ion-button class="img_btn2" fill="clear" (click)="close()">Close</ion-button>
+
+    </ion-slide>
+  </ion-slides>
+</div>

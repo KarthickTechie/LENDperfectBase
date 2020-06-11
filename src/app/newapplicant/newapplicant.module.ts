@@ -1,3 +1,10 @@
+import { SignatureComponent } from './signature/signature.component';
+import { GalleryDirective } from './gallery.directive';
+import { GalleryViewComponent } from './gallery-view/gallery-view.component';
+import { DocViewComponent } from './doc-view/doc-view.component';
+import { DocumentUploadPageModule } from './../document-upload/document-upload.module';
+import { ProgressBarDirective } from './../document-upload/progress-bar.directive';
+import { DocumentUploaderComponent } from './document-uploader/document-uploader.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
@@ -10,6 +17,7 @@ import { KycDetailsComponent } from './kyc-details/kyc-details.component';
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
 import { FormControlData } from '../newapplicant/formcontrol';
 import { KycScanOptionComponent } from './kyc-scan-option/kyc-scan-option.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
 
@@ -18,13 +26,20 @@ import { KycScanOptionComponent } from './kyc-scan-option/kyc-scan-option.compon
         IncomeDetailsComponent,
         KycDetailsComponent,
         LoanDetailsComponent,
-        KycScanOptionComponent
+        KycScanOptionComponent,
+        DocumentUploaderComponent,
+        ProgressBarDirective,
+        DocViewComponent,
+        GalleryDirective,
+        GalleryViewComponent,
+        SignatureComponent
     ],
     imports: [
         CommonModule,
         IonicModule,
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule,
+        SignaturePadModule
     ],
     providers: [FormControlData],
     exports: [
@@ -34,8 +49,10 @@ import { KycScanOptionComponent } from './kyc-scan-option/kyc-scan-option.compon
         IncomeDetailsComponent,
         KycDetailsComponent,
         LoanDetailsComponent,
-        KycScanOptionComponent
-    ]
+        KycScanOptionComponent,
+        DocumentUploaderComponent
+    ],
+    entryComponents: [GalleryViewComponent, SignatureComponent]
 })
 
 export class newApplicantModule { }

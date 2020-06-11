@@ -1,0 +1,121 @@
+.container{
+    width: 95vw;
+}
+
+.sc-ion-buttons-md-h {
+  display:block;
+}
+
+
+.docUpload {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // align-content: space-around;
+    // align-items: flex-start;
+    // justify-content: flex-start;
+  }
+  .docImg {
+    // width: 30vw;
+    // height: 30vh;
+    margin-top: 10px;
+    position: relative;
+  }
+  .imgFooter {
+    margin: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+  }
+  .imgFooter ion-badge:first-child {
+    float: left;
+    zoom: 1.1;
+  }
+  .imgFooter ion-badge:last-child {
+    float: right;
+    zoom: 1.1;
+  }
+  
+  @media only screen and (max-width: 420px) {
+    .docImg {
+      width: 46vw;
+      height: 30vh;
+      margin-top: 10px;
+      margin-right: 0px;
+      position: relative;
+    }
+  }
+
+
+  .card_container{
+    display:grid;
+    grid-template-columns: auto auto;
+  }
+
+  .segbar{
+    background: #313679;
+    width: 100%;
+    padding: 6px;
+    height: auto;
+    box-shadow: 5px 7px #d7d1d1;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .segbar span{
+    color: white;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-right: 3px;
+  }
+
+  .segbarWrap{
+    width: 100%;
+    padding: 6px;
+    height: auto;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    
+  }
+
+  .segbarWrap:nth-child(even) {
+    background: #d7d1d1;
+  }
+
+
+  .segbarWrap span{
+    color: #313679;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding-right: 3px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 5px;
+  }
+
+  .segbarbadge {
+    color: white;
+    font-size: 8px;
+    border-radius: 100%;
+    padding: 2px;
+    font-weight: bold;
+    position: absolute;
+    right: 28px;
+    top: 0px;
+    z-index: 2;
+  }
+
+  .textSize{
+    font-size: 1.1rem;
+    margin-top:0.5rem;
+    text-align: left;
+  }

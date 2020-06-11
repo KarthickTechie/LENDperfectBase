@@ -21,12 +21,12 @@ export class AppDashboardPage implements OnInit {
 
 
   imageResponse: any = [];
-  modal:any;
+  modal: any;
   profPic: any;
   profImg: boolean = false;
- 
 
-  constructor(private camera: Camera,public docChooser :DocChooser,public actionSheetController: ActionSheetController,public modalController: ModalController) {
+
+  constructor(private camera: Camera, public docChooser: DocChooser, public actionSheetController: ActionSheetController, public modalController: ModalController) {
     this.userdetail = 'personal'
   }
 
@@ -35,7 +35,8 @@ export class AppDashboardPage implements OnInit {
       { id: 'personal' },
       { id: 'income' },
       { id: 'kyc' },
-      { id: 'loan' }
+      { id: 'loan' },
+      { id: 'document' }
     ];
 
   }
@@ -64,77 +65,83 @@ export class AppDashboardPage implements OnInit {
   }
   takepic() { }
 
-async presentActionSheet() {
-  if (this.profImg == false) {
-  const actionSheet = await this.actionSheetController.create({
-    header: 'Chooser',
-    buttons: [{
-      text: 'Camera',
-      icon: 'camera',
-      handler: () => {
-        this.getProfilePic(1)
-      }
-    }, {
-      text: 'Gallery',
-      icon: 'image',
-      handler: () => {
-        this.getProfilePic(0)
-      }
-    }, {
-      text: 'Cancel',
-      icon: 'close',
-      role: 'cancel',
-      handler: () => {
-        console.log('Cancel clicked');
-        this.profImg = true;
-      }
-    }]
-  });
-  await actionSheet.present();
-}
-else{
-  this.modal = await this.modalController.create({
-    component: CropDocComponent,
-    cssClass: 'my-custom-modal-css',
-    componentProps: {
-      'doc': {doc:this.profPic,
-      view:true}
-    },showBackdrop:true, backdropDismiss: true
-  });
-  
-  await this.modal.present();
-  // console.log(await this.modal.onDidDismiss())
-  let updateImg = await this.modal.onDidDismiss();
-  if(updateImg.data.updateProfileIMAGE){
-    this.profImg = false;
-    this.presentActionSheet();
-  }
-}
-}
+  async presentActionSheet() {
+    if (this.profImg == false) {
+      const actionSheet = await this.actionSheetController.create({
+        header: 'Chooser',
+        buttons: [{
+          text: 'Camera',
+          icon: 'camera',
+          handler: () => {
+            this.getProfilePic(1)
+          }
+        }, {
+          text: 'Gallery',
+          icon: 'image',
+          handler: () => {
+            this.getProfilePic(0)
+          }
+        }, {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.profImg = true;
+          }
+        }]
+      });
+      await actionSheet.present();
+    }
+    else {
+      this.modal = await this.modalController.create({
+        component: CropDocComponent,
+        cssClass: 'my-custom-modal-css',
+        componentProps: {
+          'doc': {
+            doc: this.profPic,
+            view: true
+          }
+        }, showBackdrop: true, backdropDismiss: true
+      });
 
-// profile pic upload
-getProfilePic(srcTyp){
-  const options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.FILE_URI,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE,
-    correctOrientation: true,
-    // targetWidth: 500,
-    // targetHeight: 800,
-    allowEdit: true,
-    sourceType: srcTyp
+      await this.modal.present();
+      // console.log(await this.modal.onDidDismiss())
+      let updateImg = await this.modal.onDidDismiss();
+      console.log(updateImg, "update image");
+      if (updateImg.data) {
+        if (updateImg.data.updateProfileIMAGE) {
+          this.profImg = false;
+          this.presentActionSheet();
+        }
+
+      }
+    }
   }
-  
-  this.docChooser.getProfilePic(options).then(docs => {
-    // this.imageResponse = [];
-    // this.imageResponse.push(docs);
-    this.profPic = docs;
-    this.profImg = true;
-  }) .catch(error => {
-    console.log(error);
-  })
-}
+
+  // profile pic upload
+  getProfilePic(srcTyp) {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      // targetWidth: 500,
+      // targetHeight: 800,
+      allowEdit: true,
+      sourceType: srcTyp
+    }
+
+    this.docChooser.getProfilePic(options).then(docs => {
+      // this.imageResponse = [];
+      // this.imageResponse.push(docs);
+      this.profPic = docs;
+      this.profImg = true;
+    }).catch(error => {
+      console.log(error);
+    })
+  }
 
 
 

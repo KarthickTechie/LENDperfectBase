@@ -1,5 +1,5 @@
 import { SqliteProvider } from './global/sqlite';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, isDevMode } from '@angular/core';
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 
@@ -36,16 +36,22 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.translate.setDefaultLang('ti');
+      this.translate.setDefaultLang('en');
+      console.log(localStorage.getItem("useLang"), "from local storage");
+      if (localStorage.getItem("useLang")) {
+        this.translate.use(localStorage.getItem("useLang"));
+      }
     });
   }
 
   sideMenu() {
     this.navigate =
       [
-        { title: "New Applicant", url: "/newapp", icon: "person" },
+        { title: "Dashboard", url: "/dashboard", icon: "home" },
+        { title: "New Applicant", url: "/newapp", icon: "person-add" },
         { title: "Existing Applicant", url: "/existapp", icon: "person" },
-        { title: "Settings", url: "/setting", icon: "settings" }
+        { title: "Settings", url: "/setting", icon: "settings" },
+        { title: "Audit Log", url: "/auditlog", icon: "clipboard" },
       ]
   }
 
