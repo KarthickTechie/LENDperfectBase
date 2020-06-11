@@ -3,27 +3,47 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title>New Applicant
+    <ion-title>{{"New Applicant" | translate}}
       <span (click)="presentActionSheet()">
         <img src="assets/imgs/profile.png" class="navuserimg" *ngIf="!profPic">
         <img [src]="profPic" class="navuserimg" *ngIf="profPic">
       </span>
-     
+
     </ion-title>
   </ion-toolbar>
 
   <ion-segment [(ngModel)]="userdetail" (ionChange)="onSegmentChanged($event)">
     <ion-segment-button value="personal">
+      
       <ion-icon name="person" color="logo"></ion-icon>
+      <span *ngIf="personCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+      </span>
+      
     </ion-segment-button>
     <ion-segment-button value="income">
       <ion-icon name="document" color="logo"></ion-icon>
+      <span *ngIf="incomeCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+      </span>
     </ion-segment-button>
     <ion-segment-button value="kyc">
       <ion-icon name="journal" color="logo"></ion-icon>
+      <span *ngIf="kycCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+      </span>
     </ion-segment-button>
-    <ion-segment-button value="loan">
+    <ion-segment-button value="loan" *ngIf="showLoan">
       <ion-icon name="cash-outline" color="logo"></ion-icon>
+      <span *ngIf="loanCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+      </span>
+    </ion-segment-button>
+    <ion-segment-button value="document">
+      <ion-icon name="document" color="logo"></ion-icon>
+      <span *ngIf="documentCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+      </span>
     </ion-segment-button>
   </ion-segment>
 
@@ -37,16 +57,19 @@
   <div [ngSwitch]="userdetail">
     <ion-slides #mySlider (ionSlideDidChange)="onSlideChanged($event)">
       <ion-slide>
-        <app-personal-details></app-personal-details>
+        <app-personal-details (saveStatus)="showSubmittedTick($event)"></app-personal-details>
       </ion-slide>
       <ion-slide>
-        <app-income-details></app-income-details>
+        <app-income-details (saveStatus)="showSubmittedTick($event)"></app-income-details>
       </ion-slide>
       <ion-slide>
-        <app-kyc-details></app-kyc-details>
+        <app-kyc-details (saveStatus)="showSubmittedTick($event)"></app-kyc-details>
+      </ion-slide>
+      <ion-slide *ngIf="showLoan">
+        <app-loan-details (saveStatus)="showSubmittedTick($event)"></app-loan-details>
       </ion-slide>
       <ion-slide>
-        <app-loan-details></app-loan-details>
+        <app-document-uploader (saveStatus)="showSubmittedTick($event)"></app-document-uploader>
       </ion-slide>
     </ion-slides>
   </div>

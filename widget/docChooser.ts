@@ -1,3 +1,4 @@
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Injectable } from '@angular/core';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -17,7 +18,7 @@ export class DocChooser {
     imageResponse: any;
     options: any;
 
-    constructor(public webview: WebView, public file: File, public platform: Platform, public camera: Camera, private crop: Crop) {
+    constructor(public webview: WebView, public file: File, public platform: Platform, public camera: Camera, private crop: Crop, public permission: AndroidPermissions) {
         platform.ready().then(() => {
             this.checkAndCreateDir();
         });
@@ -34,51 +35,97 @@ export class DocChooser {
             })
         })
     }
-
+    async checkPermissions() {
+        let result = true;
+        const read = await this.permission.checkPermission(this.permission.PERMISSION.READ_EXTERNAL_STORAGE);
+        const write = await this.permission.checkPermission(this.permission.PERMISSION.WRITE_EXTERNAL_STORAGE);
+        const manage = await this.permission.checkPermission(this.permission.PERMISSION.MANAGE_EXTERNAL_STORAGE);
+        const camera = await this.permission.checkPermission(this.permission.PERMISSION.CAMERA);
+        console.log(camera, read, write, 'crw');
+        if (!read.hasPermission || !write.hasPermission || !camera.hasPermission) {
+            console.log('inside if');
+            const req = await this.permission.requestPermissions([this.permission.PERMISSION.READ_EXTERNAL_STORAGE, this.permission.PERMISSION.WRITE_EXTERNAL_STORAGE, this.permission.PERMISSION.CAMERA]);
+            console.log(req, 'req in docchoose');
+            result = req['hasPermission'];
+        }
+        return result;
+    }
     // multiple document upload
-    getDocs(options) {
+    getDocs(options): Promise<any[]> {
+
         return new Promise((resolve, reject) => {
             this.imageResponse = [];
             var self = this;
-            this.file.checkDir(this.file.externalApplicationStorageDirectory, 'photos').then(result => {
-                window.imagePicker.getPictures(
-                    function (results) {
-                        for (var i = 0; i < results.length; i++) {
-                            console.log('Image URI: ' + results[i]);
-                            let currentfilepath = results[i].split('tmp_')[0];
-                            let _fileExtention = results[i].substr(results[i].lastIndexOf(".") + 1);
-                            let fileName = results[i].substr(results[i].lastIndexOf("/") + 1, results[i].lastIndexOf(_fileExtention));
-                            let newFileName = new Date().getTime().toString() + i.toString() + '.jpg';
-                            self.file.moveFile(currentfilepath, fileName, self.file.externalApplicationStorageDirectory + 'photos/', newFileName).then(data => {
-                                // let movedprofPic = "file:///storage/emulated/0" + data.fullPath;
-                                self.imageResponse.push(self.webview.convertFileSrc(data.nativeURL));
-                                if (self.imageResponse.length == results.length) {
-                                    console.log(self.imageResponse);
-                                    resolve(self.imageResponse);
-                                }
-                            }, err => {
-                                console.log("move fail: " + JSON.stringify(err));
-                                reject(err)
-                            })
 
-                        }
-                    }, function (error) {
-                        console.log('Error: ' + error);
-                        reject(error);
-                    }, options
-                );
+            this.file.checkDir(this.file.externalApplicationStorageDirectory, 'photos').then(async result => {
+                if (await this.checkPermissions()) {
+                    window.imagePicker.getPictures(
+                        function (results) {
+                            for (var i = 0; i < results.length; i++) {
+                                console.log('Image URI: ' + results[i]);
+                                let currentfilepath = results[i].split('tmp_')[0];
+                                let _fileExtention = results[i].substr(results[i].lastIndexOf(".") + 1);
+                                let fileName = results[i].substr(results[i].lastIndexOf("/") + 1, results[i].lastIndexOf(_fileExtention));
+                                let newFileName = new Date().getTime().toString() + i.toString() + '.jpg';
+                                self.file.moveFile(currentfilepath, fileName, self.file.externalApplicationStorageDirectory + 'photos/', newFileName).then(data => {
+                                    // let movedprofPic = "file:///storage/emulated/0" + data.fullPath;
+                                    self.imageResponse.push({ webview: self.webview.convertFileSrc(data.nativeURL), native: data.nativeURL });
+                                    if (self.imageResponse.length == results.length) {
+                                        console.log(self.imageResponse);
+                                        resolve(self.imageResponse);
+                                    }
+                                }, err => {
+                                    console.log("move fail: " + JSON.stringify(err));
+                                    reject(err)
+                                })
+
+                            }
+                        }, function (error) {
+                            console.log('Error: ' + error);
+                            reject(error);
+                        }, options
+                    );
+                }
             }).catch(error => {
                 console.log(error);
             })
         });
     }
 
+
+
+    async docPicUpload(): Promise<any[]> {
+        const options: CameraOptions = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.FILE_URI,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE,
+            correctOrientation: true,
+            // targetWidth: 500,
+            // targetHeight: 800,
+            allowEdit: true,
+            sourceType: 1
+        }
+
+        const cameraImage = await this.camera.getPicture(options);
+        const fileName = cameraImage.substring(cameraImage.lastIndexOf('/') + 1);
+        const srcPath = cameraImage.substring(0, cameraImage.lastIndexOf('/') + 1);
+        // 
+        console.log(fileName, srcPath, "file name");
+        const fileMove = await this.file.moveFile(srcPath, fileName, this.file.externalApplicationStorageDirectory + '/photos', fileName);
+        console.log(fileMove, "moved file");
+        let convertFile = this.webview.convertFileSrc(fileMove.nativeURL);
+        console.log(cameraImage, 'cameraaaaaaaaa');
+        return [{ native: fileMove.nativeURL, webview: convertFile }];
+    }
     // plofile picture upload
     getProfilePic(options) {
+        console.log('object');
         return new Promise((resolve, reject) => {
             this.file.checkDir(this.file.externalApplicationStorageDirectory, 'photos').then(result => {
                 this.camera.getPicture(options).then((imageData) => {
                     this.moveFile(imageData).then(result => {
+                        console.log(result, 'before resolve');
                         resolve(result)
                     }).catch(error => {
                         console.log("Image Move", `Unable to Move Image ${error}`);
@@ -115,10 +162,10 @@ export class DocChooser {
     }
 
     //Image Croping
-    CropImg(docs,img) {
+    CropImg(docs: any[], img): Promise<any> {
         return new Promise((resolve, reject) => {
             let filename = img.substr(img.lastIndexOf("/") + 1);
-            this.crop.crop(this.file.externalApplicationStorageDirectory + 'photos/' + filename, { quality: 100}).then(newImage => {
+            this.crop.crop(this.file.externalApplicationStorageDirectory + 'photos/' + filename, { quality: 100 }).then(newImage => {
                 console.log('new image path is: ' + newImage.split('?')[0]);
                 // resolve(this.webview.convertFileSrc(newImage.split('?')[0]));
                 this.moveFile(newImage.split('?')[0]).then(result => {
@@ -138,5 +185,5 @@ export class DocChooser {
             console.log(error);
         });
     }
-      
+
 }

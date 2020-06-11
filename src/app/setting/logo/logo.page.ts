@@ -40,7 +40,7 @@ export class LogoPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["/setting"], { relativeTo: this.activatedRoute })
+    this.router.navigate(["/setting"])
   }
 
 

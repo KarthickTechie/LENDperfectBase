@@ -1,7 +1,9 @@
+import { environment } from './../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { DataService } from '../providers/data.service';
 import { KeytextService } from '../keytext.service';
+
 
 @Component({
   selector: 'app-setting',
@@ -9,7 +11,7 @@ import { KeytextService } from '../keytext.service';
   styleUrls: ['./setting.page.scss'],
 })
 export class SettingPage implements OnInit {
-
+  settings: any;
   navigate: navigateInfo[];
   labelText = KeytextService.labelDeta.settingInfo;
 
@@ -17,13 +19,22 @@ export class SettingPage implements OnInit {
     public router: Router, public activatedRoute: ActivatedRoute,
     public dataService: DataService
   ) {
+    this.settings = environment.settings;
+    if (this.settings) {
+      this.navigate =
+        [
+          { labelName: "Logo", url: "logo", icon: "logo-buffer" },
+          { labelName: "Themes", url: "theme", icon: "color-fill" },
+          { labelName: "Language", url: "language", icon: "language" }
+        ]
+    } else {
+      this.navigate =
+        [
+          { labelName: "Themes", url: "theme", icon: "color-fill" },
+          { labelName: "Language", url: "language", icon: "language" }
+        ]
+    }
 
-    this.navigate =
-      [
-        { labelName: "Logo", url: "logo", icon: "logo-buffer" },
-        { labelName: "Themes", url: "theme", icon: "color-fill" },
-        { labelName: "Language", url: "language", icon: "language" }
-      ]
   }
 
   ngOnInit() {

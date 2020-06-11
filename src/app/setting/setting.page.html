@@ -6,13 +6,13 @@
     <ion-buttons slot="end" class='homeIcon' [routerLink]="['/home']">
       <ion-icon name="home"></ion-icon>
     </ion-buttons>
-    <ion-title>{{labelText.heading}}</ion-title>
+    <ion-title>{{"labelText.settingheading" | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item routerLink="/document-upload">
+    <!-- <ion-item routerLink="/document-upload">
       <ion-avatar slot="start">
         <p>
           <ion-icon name="cloud-upload"></ion-icon>
@@ -21,7 +21,7 @@
       <ion-label>Upload Test
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item *ngFor="let list of navigate" (click)="settingPage(list.url)">
       <ion-avatar slot="start">
@@ -29,7 +29,7 @@
           <ion-icon [name]="list.icon"></ion-icon>
         </p>
       </ion-avatar>
-      <ion-label>{{list.labelName}}
+      <ion-label>{{list.labelName | translate}}
       </ion-label>
       <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>

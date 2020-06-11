@@ -103,4 +103,6 @@
     <plugin name="cordova-plugin-crop" spec="^0.4.0" />
     <plugin name="cordova-plugin-image-picker" spec="1.1.3" />
     <engine name="android" spec="^8.1.0" />
+    <allow-navigation href="http://localhost:8100" sessionid="c19a6cbf" />
+    <allow-navigation href="http://localhost:8101" sessionid="c110ed73" />
 </widget>

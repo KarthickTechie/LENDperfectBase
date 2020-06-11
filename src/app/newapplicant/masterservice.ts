@@ -11,78 +11,114 @@ export class MasterData {
 
     }
 
-    getPersonalTable() {
+    getLoginTable() {
         return {
-            title: "TEXT",
-            firstName: "TEXT",
-            middleName: "TEXT",
-            lastName: "TEXT",
-            gender: "TEXT",
-            mobileNumber: "TEXT",
-            email: "TEXT",
-            dob: "TEXT",
-            nationality: "TEXT",
-            company: "TEXT",
-            ad_type: "TEXT",
-            samePermanentAdd: "TEXT",
-            permanentAddress1: "TEXT",
-            residentialAddress1: "TEXT",
-            customerCategory: "TEXT",
-            custNationality: "TEXT",
-            stlCustomer: "TEXT",
-            custType: "TEXT",
-            bankingWith: "TEXT",
-            vipFlag: "TEXT",
-            incomeAssign: "TEXT",
-            cbrbResult: "TEXT",
-            alEthiadBureau: "TEXT",
-            accNo: "TEXT",
-            passportNo: "TEXT",
-            eidaNo: "TEXT",
-            rimNo: "TEXT",
-            poBoxNo: "TEXT"
+            // id: "INTEGER PRIMARYKEY AUTOINCREMENT",
+            userName: "VARCHAR(30) NOT NULL DEFAULT ''",
+            password: "VARCHAR(30) NOT NULL DEFAULT ''",
+            organisationLevel: "TEXT",
+            organisationcode: "TEXT",
+            organisationName: "TEXT",
+            loginDate: "DATETIME"
         }
     }
 
+    getStateTable(){
+        return{
+        // id: "INTEGER PRIMARY KEY AUTOINCREMENT",
+		stateCode: "TEXT",
+		stateName: "TEXT"
+        }
+    }
+
+getCityTable(){
+    return{
+        // id: "INTEGER PRIMARY KEY AUTOINCREMENT",
+		stateCode: "TEXT",
+		cityCode: "TEXT",
+		cityName: "TEXT"
+    }
+}
+
+getStaticMasterTable(){
+    return {
+        // id: "INTEGER PRIMARY KEY AUTOINCREMENT",
+		masterDataSeqId: "TEXT",
+		staticDataDesc: "TEXT"
+    }
+}
+    getRootTable() {
+        return {
+            // id: "INTEGER PRIMARYKEY AUTO_INCREMENT",
+            createdDate: "DATETIME",
+            deviceId: "VARCHAR(30)",
+            createdUser: "VARCHAR(30)",
+            referenceNumber: "VARCHAR(40)",
+            submitStatus: "VARCHAR(5) DEFAULT 'N'",
+            submitDate: "DATETIME"
+        }
+    }
+
+    getPersonalTable() {
+        return {
+            // id: "INTEGER PRIMARYKEY AUTO_INCREMENT",
+            refId: "INTEGER NOT NULL DEFAULT ''",
+            title: "VARCHAR(10) NOT NULL DEFAULT ''",
+            firstName: "VARCHAR(30) NOT NULL DEFAULT ''",
+            middleName: "VARCHAR(30) NOT NULL DEFAULT ''",
+            lastName: "VARCHAR(30) NOT NULL DEFAULT ''",
+            gender: "VARCHAR(30) NOT NULL DEFAULT ''",
+            mobileNumber: "BIGINT NOT NULL DEFAULT ''",
+            email: "VARCHAR(50) NOT NULL DEFAULT ''",
+            dob: "DATETIME NOT NULL DEFAULT ''",
+            nationality: "VARCHAR(40) NOT NULL DEFAULT ''",
+            addressType: "VARCHAR(20)",
+            samePermanentAdd: "VARCHAR(20) NOT NULL DEFAULT ''",
+            permanentAddress: "VARCHAR(100) NOT NULL DEFAULT ''",
+            residentialAddress: "VARCHAR(100) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)",
+            profileImage:"TEXT NOT NULL DEFAULT ''"
+        }
+
+    }
     getLoadTable() {
         return {
-            product: "TEXT",
-            interesttype: "TEXT",
-            producttype: "TEXT",
-            loan_amount_range: "TEXT",
-            amount: "TEXT",
-            tenure: "TEXT",
-            moratorium: "TEXT",
-            mclr: "TEXT",
-            loanpurpose: "TEXT",
-            repaymentMode: "TEXT",
-            repaymentType: "TEXT",
-            proposalType: "TEXT",
-            amortization: "TEXT"
+            refId: "INTEGER NOT NULL DEFAULT ''",
+            id: "INTEGER NOT NULL DEFAULT ''",
+            amountRequested: "VARCHAR(20) NOT NULL DEFAULT ''",
+            interestType: "VARCHAR(20) NOT NULL DEFAULT ''",
+            tenure: "VARCHAR(20) NOT NULL DEFAULT ''",
+            moratorium: "VARCHAR(20)",
+            repaymentMode: "VARCHAR(30) NOT NULL DEFAULT ''",
+            repaymentType: "VARCHAR(30) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)"
+
         }
     }
 
     getKycTable() {
         return {
-            kycProofType: "TEXT",
-            kycIdType: "TEXT",
-            kycIdvalue: "TEXT",
+            refId: "INTEGER NOT NULL DEFAULT ''",
+            id: "INTEGER NOT NULL DEFAULT ''",
+            proofType: "VARCHAR(30) NOT NULL DEFAULT ''",
+            proofDocument: "VARCHAR(30) NOT NULL DEFAULT ''",
+            proofvalue: "VARCHAR(30) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)",
         }
     }
 
     getIncomeTable() {
         return {
-            empCategoryType: "TEXT",
-            empName: "TEXT",
-            doj: "TEXT",
-            incomeType: "TEXT",
-            grossIncome: "TEXT",
-            statutory: "TEXT",
-            otherDeductions: "TEXT",
-            netIncome: "TEXT",
-            eosb: "TEXT",
-            lengthService: "TEXT",
-            otherincomes: "TEXT"
+            refId: "INTEGER NOT NULL DEFAULT ''",
+            id: "INTEGER NOT NULL DEFAULT ''",
+            empCategoryType: "VARCHAR(30) NOT NULL DEFAULT ''",
+            empName: "VARCHAR(40)",
+            doj: "DATETIME NOT NULL DEFAULT ''",
+            incomeType: "VARCHAR(40) NOT NULL DEFAULT ''",
+            grossIncome: "VARCHAR(30) NOT NULL DEFAULT ''",
+            otherDeductions: "VARCHAR(30) NOT NULL DEFAULT ''",
+            netIncome: "VARCHAR(30) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)",
         }
     }
 

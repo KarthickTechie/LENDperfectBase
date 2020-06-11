@@ -2,11 +2,16 @@ ion-toolbar {
     text-align: center;
     
 }
+
+ion-segment-button{
+  min-width: 72px;
+}
 .navuserimg {
     width: 30px;
     height: 30px;
     padding: 2px;
     float: right;
+    border-radius: 100%;
   }
   
   ion-slides {
@@ -23,12 +28,7 @@ ion-toolbar {
     text-align: center;
   }
   
-  .navuserimg {
-    width: 30px;
-    height: 30px;
-    padding: 2px;
-    float: right;
-  }
+  
   
   .docUpload {
     display: flex;
@@ -67,4 +67,17 @@ ion-toolbar {
       position: relative;
     }
   }
+
+  ion-segment-button {
+    position: relative;
+  }
+  .greentik {
+    color: #006400 !important;
+    position: absolute;
+    font-size: 18px !important;
+    top: 5px;
+    right: -13px;
+    z-index: 1;
+    font-weight: bold;
+}
   

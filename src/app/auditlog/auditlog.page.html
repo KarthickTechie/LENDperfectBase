@@ -1,0 +1,10 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title center color="primary" class="txtcenter">{{"Audit Log" | translate}}</ion-title>
+    <ion-icon class="back" slot="start" size="large" name="arrow-back" routerLink="/dashboard"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-audit-manager [URL]="uploadURL"></app-audit-manager>
+</ion-content>

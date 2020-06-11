@@ -1,15 +1,15 @@
-<ion-content>
+<div class="container">
   <img src="{{doc.doc}}">
-  <ion-row text-center>
-    <ion-col *ngIf="doc.view" no-padding style="text-align: center;">
-      <ion-button icon-left clear large no-padding no-margin style="color: #fff;" (click)="updateimage()">
-        Update <ion-icon style="padding: 2px 0px 0px 5px" name="create"></ion-icon>
-      </ion-button>
-    </ion-col>
-    <ion-col no-padding style="text-align: center;">
-      <ion-button icon-left clear large no-padding no-margin style="color: #fff;" (click)="close()">
-        Close <ion-icon style="padding: 2px 2px 0px 5px" name="close-circle"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-</ion-content>
+
+  <div class="update" *ngIf="doc.view" no-padding style="text-align: center;">
+    <ion-button (click)="updateimage()">
+      Update <ion-icon name="create"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="close" no-padding style="text-align: center;">
+    <ion-button (click)="close()">
+      Close <ion-icon name="close-circle"></ion-icon>
+    </ion-button>
+  </div>
+
+</div>

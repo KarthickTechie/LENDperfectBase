@@ -1,0 +1,39 @@
+ion-title {
+    text-align: center;
+    ion-icon {
+        vertical-align: middle;
+    }
+}
+
+.container2{
+    display: grid;
+    grid-template-columns: 125px auto; 
+    padding: 5px;
+     }
+  
+  .left_content{
+    // background-color:turquoise;
+  }
+  
+  .left_content_img{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 9px;
+    top:5px;
+    border: 2px solid white;
+    border-radius: 100%;
+  }
+  .right_content{
+    background-color: white;
+    padding: 10px;
+  }
+  
+  .right_content_text{
+    margin-left: 10px;
+    margin: 0px;
+    line-height: 24px;
+    ion-icon{
+    margin-right: 0.5rem;
+    }
+  }

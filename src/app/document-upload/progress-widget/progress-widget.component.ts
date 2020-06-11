@@ -36,7 +36,9 @@ export class ProgressWidgetComponent {
     ZipSuccess: false
   }
 
+  constructor() {
 
+  }
   ngOnChanges(changes: SimpleChanges) {
   }
 

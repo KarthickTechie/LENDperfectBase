@@ -1,11 +1,11 @@
-import { JJzip } from '@ionic-native/ionic-native-j-jzip/ngx';
+import { JJzip } from 'ionic-native-j-jzip/ngx';
 import { ProgressBarDirective } from '../document-upload/progress-bar.directive';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { File, Entry } from '@ionic-native/file/ngx';
 import { HttpClient, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Injectable, ComponentFactoryResolver, ComponentRef, ComponentFactory, ViewContainerRef, Directive, OnDestroy } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, ComponentRef, ComponentFactory, ViewContainerRef, Directive, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { map, catchError } from "rxjs/operators";
-import { of, Subscription } from 'rxjs';
+import { of, Subscription, Observable, Subject } from 'rxjs';
 import { FileTransfer, FileTransferObject, FileUploadOptions, FileTransferError, FileUploadResult } from '@ionic-native/file-transfer/ngx';
 import { ProgressWidgetComponent } from '../document-upload/progress-widget/progress-widget.component';
 import { Network } from '@ionic-native/network/ngx';
@@ -35,6 +35,45 @@ export class DocUploadService implements OnDestroy {
     public compFactoryResolver: ComponentFactoryResolver,
     public errorHandling: ErrorHandlingService,
   ) { }
+  async copyfiles(files) {
+    let arr = []
+    for (let i = 0; i < files.length; i++) {
+      const copyResult = await this.file.copyFile(files[i].native.substring(0, files[i].native.lastIndexOf("/")), files[i].native.substring(files[i].native.length - 18), this.file.externalApplicationStorageDirectory
+        + "/photos/upload", files[i].native.substring(files[i].native.length - 18));
+      arr.push(copyResult);
+    }
+    return arr;
+  }
+  async uploadDocument(progressBar: ProgressBarDirective, options: DocumentUploadOptions): Promise<FileUploadResult | FileTransferError | DocUploadResponse[]> {
+    switch (options.uploadType) {
+      case "zip":
+        let uploadDir = await this.file.createDir(this.file.externalApplicationStorageDirectory + "/photos", "upload", true);
+        console.log(uploadDir, "directory");
+        let copy = await this.copyfiles(options.file)
+        console.log(copy, 'hahahahahahaha');
+        try {
+          const zip = await this.zipUpload(progressBar);
+          return zip;
+        } catch (error) {
+          this.errorHandling.errorLog(new Error(JSON.stringify(error)));
+          return error;
+        }
+      case "single":
+        let encodedImage: any[];
+        try {
+          encodedImage = await this.imageEncoding(options.file);
+        } catch (error) {
+          this.errorHandling.errorLog(new Error(JSON.stringify(error)));
+        }
+        try {
+          const single = await this.singleDocUpload(encodedImage, progressBar);
+          return single;
+        } catch (error) {
+          this.errorHandling.errorLog(new Error(JSON.stringify(error)));
+        }
+    }
+  }
+
   networkStatusCheck() {
     this.netChange = this.network.onChange().subscribe(obs => {
       this.networkStatus = this.network.type;
@@ -100,53 +139,14 @@ export class DocUploadService implements OnDestroy {
     return resArr;
   }
 
-  async uploadDocument(progressBar: ProgressBarDirective, options: DocumentUploadOptions): Promise<FileUploadResult | FileTransferError | DocUploadResponse[]> {
-    switch (options.uploadType) {
-      case "zip":
-        try {
-          const zip = await this.zipUpload(progressBar);
-          return zip;
-        } catch (error) {
-          this.errorHandling.errorLog(new Error(JSON.stringify(error)));
-          return error;
-        }
-      case "single":
-        let encodedImage: any[];
-        try {
-          encodedImage = await this.imageEncoding();
-        } catch (error) {
-          this.errorHandling.errorLog(new Error(JSON.stringify(error)));
-        }
-        try {
-          const single = await this.singleDocUpload(encodedImage, progressBar);
-          return single;
-        } catch (error) {
-          this.errorHandling.errorLog(new Error(JSON.stringify(error)));
-        }
-    }
-  }
-
-  async imageEncoding() {
-    let fileListArray: Entry[];
+  async imageEncoding(files) {
+    let fileListArray = files;
     let base64Encoded: string;
     const base64Arr = [];
-    try {
-      fileListArray = await this.file.listDir(this.file.externalApplicationStorageDirectory, 'files');
-      fileListArray.filter(list => {
-        if (!list.isDirectory) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    }
-    catch (error) {
-      this.errorHandling.errorLog(new Error(JSON.stringify(error)));
-    }
     for (let i = 0; i < fileListArray.length; i++) {
       try {
-        base64Encoded = await this.base64.encodeFile(fileListArray[i].nativeURL);
-        base64Arr.push({ name: fileListArray[i].name, data: base64Encoded });
+        base64Encoded = await this.base64.encodeFile(fileListArray[i].native);
+        base64Arr.push({ name: fileListArray[i].native.substring(fileListArray[i].native.length - 18), data: base64Encoded });
       }
       catch (error) {
         this.errorHandling.errorLog(new Error(JSON.stringify(error)));
@@ -161,7 +161,7 @@ export class DocUploadService implements OnDestroy {
     hostViewContainer.clear();
     const componentRef: ComponentRef<ProgressWidgetComponent> = hostViewContainer.createComponent(alertComp);
     componentRef.instance.startProgress();
-    const PathToFileInString: string = this.file.externalApplicationStorageDirectory + "errors";
+    const PathToFileInString: string = this.file.externalApplicationStorageDirectory + "photos/upload";
     const PathToResultZip: string = this.file.externalApplicationStorageDirectory;
     const localFile = `Ionic${Date.now()}.zip`;
     try {
@@ -207,6 +207,23 @@ export class DocUploadService implements OnDestroy {
     return uploadSuccess;
   }
 
+  //Gallery
+  @Output() deleteImage: EventEmitter<any> = new EventEmitter(false);
+  galleryDelete(parentIndex, childIndex, add = false, camera = false) {
+    this.deleteImage.emit({ parentIndex, childIndex, add, camera });
+  }
+
+  galleryObservable = new Subject<any>();
+
+  galleryView(listArray: any[], parentIndex: number, ) {
+    console.log(listArray, parentIndex, "inside doc service");
+    this.galleryObservable.next({ listArray, parentIndex });
+    // this.galleryObservable = Observable.create(observer => {
+    //   observer.next({ listArray, parentIndex });
+    // })
+  }
+
+
   ngOnDestroy() {
     this.netChange.unsubscribe();
   }
@@ -215,9 +232,11 @@ export class DocUploadService implements OnDestroy {
 export interface DocumentUploadOptions {
   uploadType: string;
   endPoint: string;
+  file?: any[];
 }
 
 export interface DocUploadResponse {
   index: number;
   response: HttpResponse<object> | HttpErrorResponse;
+
 }

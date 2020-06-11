@@ -13,36 +13,103 @@
 .container2{
   display: grid;
   grid-template-columns: 125px auto; 
-  height: 150px;
-  border:2px solid turquoise;
+  padding-bottom: 26px;
+  // height: 150px;
+  // border:2px solid turquoise;
 }
 
 .left_content{
-  background-color:turquoise;
+  // background-color:turquoise;
 }
 
 .left_content_img{
   width: 100px;
+  height: 100px;
   position: relative;
   left: 9px;
-  top:25px;
+  top:15px;
   border: 2px solid white;
-  border-radius: 50px;
+  border-radius: 100%;
 }
 .right_content{
   background-color: white;
+  padding: 10px;
 }
 
 .right_content_text{
-  color:turquoise !important;
+  // color:turquoise !important;
   margin-left: 10px;
+  margin: 0px;
+  line-height: 24px;
+  ion-icon{
+margin-right: 0.5rem;
+  }
 }
 
 .right_content_icon{
   font-size: 48px;
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     right: 0;
-    color: turquoise;
+    // color: turquoise;
 }
 
+.filterItems {
+  // border-bottom: 1px solid var(--ion-color-primary);  
+  border: 1px solid var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07)))); 
+  --color:  var(--ion-color-primary);
+  background: #fff; 
+}
+.filterItems span {
+  font-size: 16px;
+  margin-left: 5px;
+}
+ion-item-divider {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.0125em;
+  --color: var(--ion-color-primary);
+  min-height: 36px;
+}
+
+.filterlist {
+  width: 140px;
+  border: 1px solid var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07))));
+  padding: 0;
+  position: absolute;
+  top: 96px;
+}
+
+.filterlist ion-item {
+  --inner-padding-start: 0;
+  --padding-start: -1px;
+  --max-height: 10px;
+  padding: 0;
+  margin: 0;
+  --min-height: 10px;
+}
+.filterlist ion-label {
+padding: 0;
+margin: 0;
+padding-left: 10px;
+font-size: 13px;
+}
+.filterlist ion-radio {
+  padding: 0;
+  margin: 3px;
+  font-size: 13px;
+}
+
+.existPlaceholder{
+  height:50px;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:auto;
+  position: absolute;
+}
+.existPlaceholder h2{
+  color: darkgray;font-weight: bold;text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

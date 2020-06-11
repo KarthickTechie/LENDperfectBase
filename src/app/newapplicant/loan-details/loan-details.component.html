@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="title">Loan Details</h2>
+  <h2 class="title">{{"Loan Details" | translate}}</h2>
   <form [formGroup]="loanDetails" (ngSubmit)="loanSave(loanDetails.value)">
     <!-- <ion-item>
       <ion-label>Loan Type</ion-label>
@@ -12,42 +12,44 @@
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Amount Requested <span> (Rs) </span> <span class="mandatory">*</span>
+        <ion-label position="floating">{{"Amount Requested" | translate}} <span> (Rs) </span> <span
+            class="mandatory">*</span>
         </ion-label>
-        <ion-input formControlName="amount" type="tel" maxlength="13"></ion-input>
+        <ion-input formControlName="amountRequested" type="tel" maxlength="13"></ion-input>
       </ion-item>
     </div>
 
     <div class="item">
       <ion-item>
-        <ion-label>Interest Type <span class="mandatory">*</span></ion-label>
-        <ion-select interface="action-sheet" formControlName="interesttype">
+        <ion-label>{{"Interest Type" | translate}} <span class="mandatory">*</span></ion-label>
+        <ion-select interface="action-sheet" formControlName="interestType">
           <ion-select-option *ngFor="let product of interestTypeList" [value]="product.code">
-            {{product.Name}}</ion-select-option>
+            {{product.Name | translate}}</ion-select-option>
         </ion-select>
       </ion-item>
     </div>
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Periodicity of Installments (Months) <span class="mandatory">*</span></ion-label>
+        <ion-label position="floating">{{"Periodicity of Installments (Months)" | translate}} <span
+            class="mandatory">*</span></ion-label>
         <ion-input type=tel formControlName="tenure"></ion-input>
       </ion-item>
     </div>
 
     <div class="item">
       <ion-item>
-        <ion-label position="floating">Moratorium (Months) </ion-label>
+        <ion-label position="floating">{{"Moratorium (Months)" | translate}} </ion-label>
         <ion-input type=tel formControlName="moratorium"></ion-input>
       </ion-item>
     </div>
 
     <div class="item">
       <ion-item>
-        <ion-label> Repayment Type <span class="mandatory">*</span></ion-label>
+        <ion-label> {{"Repayment Type" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-select interface="action-sheet" formControlName="repaymentType">
           <ion-select-option *ngFor="let repaymentType of repaymenttypeList" [value]="repaymentType.code">
-            {{repaymentType.Name}}
+            {{repaymentType.Name | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -55,10 +57,10 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>Mode of Repayment <span class="mandatory">*</span></ion-label>
+        <ion-label>{{"Mode of Repayment" | translate}} <span class="mandatory">*</span></ion-label>
         <ion-select interface="action-sheet" formControlName="repaymentMode">
           <ion-select-option *ngFor="let repaymentMode of repaymentModeList" [value]="repaymentMode.code">
-            {{repaymentMode.Name}}
+            {{repaymentMode.Name | translate}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -74,7 +76,7 @@
 
     <div class="item">
       <div class="buttspace roundbtn" class="ion-text-center">
-        <ion-button [disabled]="loanDetails.invalid" type="submit" shape="round">Save </ion-button>
+        <ion-button [disabled]="loanDetails.invalid" type="submit" shape="round">{{"Save" | translate}} </ion-button>
       </div>
     </div>
 

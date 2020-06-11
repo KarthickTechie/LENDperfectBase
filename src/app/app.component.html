@@ -3,9 +3,9 @@
     <ion-content>
       <div class="userdetails">
 
-        <div class="ion-text-end power">
+        <!-- <div class="ion-text-end power">
           <ion-icon name="power" (click)="logout()"></ion-icon>
-        </div>
+        </div> -->
 
         <div class="userdet">
           <ion-avatar class="avatarImg">
@@ -21,22 +21,27 @@
         <ion-menu-toggle>
           <ion-item [routerLink]="pages.url" routerDirection="forward" class="no-padding">
             <ion-icon [name]="pages.icon" slot="start"></ion-icon>
-            {{pages.title}}
+            {{pages.title | translate}}
           </ion-item>
         </ion-menu-toggle>
       </ion-list>
 
 
     </ion-content>
-    <!-- <ion-footer style="box-shadow: 0 5px 5px 5px #333;">
-        <ion-toolbar (click)="logout()">
-          <ion-menu-toggle>
-            <ion-title class="profiletitle">Logout
-              <ion-icon name="log-out" style="float:right;"></ion-icon>
-            </ion-title>
-          </ion-menu-toggle>
-        </ion-toolbar>
-      </ion-footer> -->
+    <ion-footer style="box-shadow: 0 5px 5px 5px #333;">
+      <ion-toolbar>
+        <ion-menu-toggle>
+          <div class="container">
+            <ion-icon size="large" name="call-outline"></ion-icon>
+            <ion-icon size="large" name="log-out" (click)="logout()"></ion-icon>
+          </div>
+          <!-- <ion-title class="profiletitle">Logout -->
+          <!-- <ion-icon name="phone"></ion-icon>
+          <ion-icon name="log-out" (click)="logout()" style="float:right;"></ion-icon> -->
+          <!-- </ion-title> -->
+        </ion-menu-toggle>
+      </ion-toolbar>
+    </ion-footer>
   </ion-menu>
   <ion-router-outlet id="content1"></ion-router-outlet>
 

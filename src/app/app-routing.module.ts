@@ -19,12 +19,26 @@ const routes: Routes = [
   {
     path: 'setting',
     loadChildren: () => import('./setting/setting.module').then(m => m.SettingPageModule)
-  },  {
+  },
+  {
     path: 'document-upload',
-    loadChildren: () => import('./document-upload/document-upload.module').then( m => m.DocumentUploadPageModule)
+    loadChildren: () => import('./document-upload/document-upload.module').then(m => m.DocumentUploadPageModule)
+  },
+  {
+    path: 'auditlog',
+    loadChildren: () => import('./auditlog/auditlog.module').then(m => m.AuditlogPageModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./view-gallery/view-gallery.module').then(m => m.ViewGalleryPageModule)
+  },
+  {
+    path: 'existappdetails',
+    loadChildren: () => import('./existing-application-details/existing-application-details.module').then(m => m.ExistingApplicationDetailsPageModule)
   },
 
-  
+
+
 ];
 
 @NgModule({

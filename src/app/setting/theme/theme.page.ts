@@ -37,12 +37,21 @@ export class ThemePage implements OnInit {
     public router: Router, public activatedRoute: ActivatedRoute, public dataService: DataService) {
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.setTheme.primaryColor = localStorage.getItem('themePrimary') ? localStorage.getItem('themePrimary') : "#CCCCCC";
+    this.setTheme.secondaryColor = localStorage.getItem('themeSecondary') ? localStorage.getItem('themeSecondary') : "#CCCCCC";
+    this.setTheme.accentColor = localStorage.getItem('themeAccent') ? localStorage.getItem('themeAccent') : "#CCCCCC";
+    this.setTheme.textColor = localStorage.getItem('themeText') ? localStorage.getItem('themeText') : "#CCCCCC";
+  }
 
 
   changeTheme() {
     this.alertPage.getAlertControl(AlertComponent, this.alertMessage, "Appling Theme");
     this.themeService.setTheme({ primary: this.setPrimaryColor.nativeElement.value, secondary: this.setSecondaryColor.nativeElement.value, tertiary: this.setAccentColor.nativeElement.value, dark: this.setTextColor.nativeElement.value });
+    localStorage.setItem('themePrimary', this.setPrimaryColor.nativeElement.value);
+    localStorage.setItem('themeSecondary', this.setSecondaryColor.nativeElement.value);
+    localStorage.setItem('themeAccent', this.setAccentColor.nativeElement.value);
+    localStorage.setItem('themeText', this.setTextColor.nativeElement.value);
   }
 
   goBack() {
