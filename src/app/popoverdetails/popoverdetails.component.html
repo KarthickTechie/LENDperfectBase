@@ -1,0 +1,169 @@
+<ion-header>
+  <ion-icon class="close" name="close-circle-outline" (click)="closeInfo()"></ion-icon>
+  <h2 *ngIf="detailsview == 'applicant'">Application/Documents</h2>
+  <h2 *ngIf="detailsview != 'applicant'">Cibil check</h2>
+</ion-header>
+<ion-content *ngIf="detailsview == 'applicant'">
+
+  <div *ngIf="viewApplication == 'A'">
+    <div class="image"><img class="img" [src]="appProfile" /></div>
+    <div class="bodyhead" *ngFor="let item of appItems">
+      <h3>{{item.firstName}}</h3>
+      <ion-card class="headdetails">
+        <div class="headleft">Loan: {{item.amountRequested}}</div>
+        <div class="headright">Mobile: {{item.mobileNumber}}</div>
+        <div class="headleft">Interest: {{item.interestType}}</div>
+        <div class="headright">Periods: {{item.tenure}}</div>
+      </ion-card>
+    </div>
+
+    <ion-card class="headdetails">
+      <h6>Applicant Details
+        <ion-icon name="chevron-down-circle-outline" *ngIf="!applicantview" (click)="showAppDetails()"></ion-icon>
+        <ion-icon name="chevron-up-circle-outline" *ngIf="applicantview" (click)="showAppDetails()"></ion-icon>
+      </h6>
+
+      <div *ngIf="applicantview">
+        <h5 *ngIf="appItems.length == 0">No Data Found</h5>
+        <div *ngIf="appItems.length != 0">
+          <ion-list *ngFor="let item of appItems | keys">
+            
+              <ion-row>
+                <ion-col style="padding-left:10px">{{item.key}}</ion-col>
+                <ion-col>: {{item.value}}</ion-col>
+              </ion-row>
+
+          </ion-list>
+        </div>
+      </div>
+    </ion-card>
+
+    <ion-card class="headdetails" *ngFor="let coApp of coAppItems; let i=index;">
+      <h6>Co-Applicant Details
+        <ion-badge>{{i+1}}</ion-badge>
+        <ion-icon name="chevron-down-circle-outline" *ngIf="!coApp.enable" (click)="coApp.enable = !coApp.enable"></ion-icon>
+        <ion-icon name="chevron-up-circle-outline" *ngIf="coApp.enable" (click)="coApp.enable = !coApp.enable"></ion-icon>
+      </h6>
+      <div *ngIf="coApp.enable">
+        <ion-list *ngFor="let item of coAppItems[i] | keys">
+          
+            <ion-row>
+              <ion-col style="padding-left:10px">{{item.key}}</ion-col>
+              <ion-col>: {{item.value}}</ion-col>
+            </ion-row>
+          
+        </ion-list>
+      </div>
+    </ion-card>
+
+
+    <ion-card class="headdetails" *ngFor="let guran of gauItems;let i=index">
+      <h6>Gaurantor Details
+        <ion-badge>{{i+1}}</ion-badge>
+        <ion-icon name="chevron-down-circle-outline" *ngIf="!guran.enable" (click)="guran.enable = !guran.enable"></ion-icon>
+        <ion-icon name="chevron-up-circle-outline" *ngIf="guran.enable" (click)="guran.enable = !guran.enable"></ion-icon>
+      </h6>
+      <div *ngIf="guran.enable">
+        <ion-list *ngFor="let item of gauItems[i] | keys">
+          
+          <ion-row>
+            <ion-col style="padding-left:10px">{{item.key}}</ion-col>
+            <ion-col>: {{item.value}}</ion-col>
+          </ion-row>
+        
+      </ion-list>
+      </div>
+    </ion-card>
+
+
+  </div>
+
+  <div *ngIf="viewApplication != 'A'">
+    <ion-card class="documents">Total Documents
+      <ion-badge>{{totalImageCount}}</ion-badge>
+    </ion-card>
+
+    <ion-card class="documents">Personal Pictures
+      <ion-badge>{{profilePic.length ? profilePic.length : 0}}</ion-badge>
+    </ion-card>
+    <div class="imageview">
+      <h5 *ngIf="profilePic.length == 0">No Image Found</h5>
+      <div class="img" *ngIf="profilePic.length != 0"><img [src]="profile.profileImage" *ngFor="let profile of profilePic" /></div>
+    </div>
+
+    <ion-card class="documents">Other Documents
+      <ion-badge>{{otherDoc.length ? otherDoc.length : 0 }}</ion-badge>
+    </ion-card>
+    <div class="imageview">
+      <h5 *ngIf="otherDoc.length == 0">No Image Found</h5>
+      <div class="img" *ngIf="otherDoc.length != 0"><img [src]="profile.imagePath" *ngFor="let profile of otherDoc" /></div>
+    </div>
+
+
+    <!-- <ion-card class="documents">Personal Pictures
+      <ion-badge>{{personalPicCount}}</ion-badge>
+    </ion-card>
+    <div class="imageview">
+      <h5 *ngIf="profilePic.length == 0">No Image Found</h5>
+      <div class="img" *ngIf="profilePic.length != 0"><img [src]="profile.profile" *ngFor="let profile of profilePic" /></div>
+    </div> -->
+
+
+  </div>
+
+</ion-content>
+
+
+
+<ion-footer class="segment" *ngIf="detailsview == 'applicant'">
+  <ion-segment [(ngModel)]="viewApplication" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="A">{{"View Application"}}</ion-segment-button>
+    <ion-segment-button value="D">{{"View Documents"}}</ion-segment-button>
+  </ion-segment>
+</ion-footer>
+
+
+<div *ngIf="detailsview != 'applicant'">
+  <ion-card style="height: 130px;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="cibilview">
+          <div>
+            <ion-icon name="person-outline"></ion-icon> <span class="cibilname">Rajesh</span></div>
+          <div>
+            <ion-icon name="person-circle-outline"></ion-icon> <span class="cibilapp">Applicant</span></div>
+          <div>
+            <ion-icon name="call-outline"></ion-icon> <span class="cibilinfo">9626468953</span></div>
+          <div>
+            <ion-icon name="calendar-outline"></ion-icon> <span class="cibilinfo">13/06/2020</span></div>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <div class="meter">
+            <ion-icon *ngIf="!showMeter && !showProgress" name="speedometer-outline"></ion-icon>
+            <ion-spinner *ngIf="showMeter && !showProgress" name="bubbles"></ion-spinner>
+          </div>
+          <div class="single-chart" *ngIf="showProgress">
+            <svg viewBox="0 0 36 36" class="circular-chart blue">
+              <path class="circle-bg"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path class="circle"
+                stroke-dasharray="70, 100"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.820"
+              />
+              <text x="18" y="20.35" class="percentage">70%</text>
+            </svg>
+          </div>
+          <div class="btnres">
+            <ion-button size="small" (click)="showMeter = !showMeter">Send Request</ion-button>
+            <ion-button size="small" (click)="showProgress = true;">Check Response</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</div>
