@@ -59,9 +59,7 @@ function CSSTextGenerator(colors) {
   const shadeRatio = 0.1;
   const tintRatio = 0.1;
 
-  console.log('clor', secondary);
-  console.log('clor dark', dark);
-
+  
   return `
   --ion-text-color: ${dark};
   --ion-item-color: ${dark};

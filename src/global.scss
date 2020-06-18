@@ -109,3 +109,71 @@
     // contain: strict;
 }
   
+.popOver {
+    ion-backdrop {
+        background: rgba(0,0,0,0.75) !important;
+    }
+    .popover-wrapper {
+        .popover-arrow::after {
+            background: black !important;
+        }
+        .popover-content {
+            max-width: 35vw;
+            width: auto;
+            text-align: left;
+            border: 1px solid #ccc;
+            background: #fff !important;
+        }
+    }
+}
+
+.popOverInfo {
+    ion-backdrop {
+    background: rgba(0,0,0,0.75) !important;
+    }
+    .popover-wrapper {
+        .popover-arrow::after {
+        background: black !important;
+        }
+        .popover-content {
+        max-width: 45vw;
+        width: auto;
+        text-align: left;
+        border: 1px solid #ccc;
+        background: #fff !important;
+        }
+    }
+}
+
+.popInfoDeta {
+    .popover-wrapper {
+        .popover-arrow::after {
+        background: black !important;
+        }
+        .popover-content {
+            width: 95vw;
+            min-height: calc(97vh);
+            text-align: left;
+            border: 1px solid #ccc;
+            background: #fff !important;
+            margin: 0 auto;
+            top: 11px !important;
+            overflow: unset !important;
+        }
+    }
+}
+
+
+
+
+.sign-modal .modal-wrapper{
+    height: 50vh;
+    width: 98vw;
+    .container{
+        #b1{
+            position: absolute;
+        }
+        #b2{position: absolute;right: 0;}
+    }
+   
+}

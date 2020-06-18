@@ -7,7 +7,7 @@
 
 <ion-content>
   <ion-slides #slider (ionSlideDidChange)="onSlideChanged($event)">
-    <ion-slide *ngFor="let item of dList; let i = index;">
+    <ion-slide *ngFor="let item of dList; let i = index;trackBy:trackByName">
       <div class="imgContainer">
         <img [src]="item.webview" alt="">
       </div>
@@ -16,7 +16,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-icon size="large" slot="start" name="add"
+    <ion-icon *ngIf="this.enableAdd" size="large" slot="start" name="add"
       (click)="this.addActionSheet(this.parentIndex,this.currentSlideIndex-1)"></ion-icon>
     <ion-badge *ngIf="this.currentSlideIndex!==null"> {{currentSlideIndex}}/{{imgTotal}} </ion-badge>
     <ion-icon size="large" slot="end" name="trash" (click)="delete(this.parentIndex,this.currentSlideIndex-1)">

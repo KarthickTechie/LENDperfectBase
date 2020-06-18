@@ -28,7 +28,6 @@ export class LanguagePage implements OnInit {
   }
 
   radioChange(e) {
-    console.log(e.target.value, "translateion");
     this.language = e.target.value;
   }
 
