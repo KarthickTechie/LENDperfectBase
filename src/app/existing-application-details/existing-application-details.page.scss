@@ -37,3 +37,18 @@ ion-title {
     margin-right: 0.5rem;
     }
   }
+
+
+  .existPlaceholder{
+    height:50px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    position: absolute;
+  }
+  .existPlaceholder h2{
+    color: darkgray;font-weight: bold;text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }

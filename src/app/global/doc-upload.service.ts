@@ -2,7 +2,7 @@ import { JJzip } from 'ionic-native-j-jzip/ngx';
 import { ProgressBarDirective } from '../document-upload/progress-bar.directive';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { File, Entry } from '@ionic-native/file/ngx';
-import { HttpClient, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpErrorResponse, HttpResponse, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Injectable, ComponentFactoryResolver, ComponentRef, ComponentFactory, ViewContainerRef, Directive, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { map, catchError } from "rxjs/operators";
 import { of, Subscription, Observable, Subject } from 'rxjs';
@@ -207,6 +207,19 @@ export class DocUploadService implements OnDestroy {
     return uploadSuccess;
   }
 
+  uiProgress(processBar, stat = 0, create = false) {
+    const progressComponent: ComponentFactory<ProgressWidgetComponent> = this.compFactoryResolver.resolveComponentFactory(ProgressWidgetComponent);
+    const hostViewContainer: ViewContainerRef = processBar.viewContainerRef;
+    hostViewContainer.clear();
+    const componentRef: ComponentRef<ProgressWidgetComponent> = hostViewContainer.createComponent(progressComponent);
+    componentRef.instance.docUpload = true;
+    componentRef.instance.zipUpload = false;
+    componentRef.instance.imgStartCount = 0;
+    componentRef.instance.imgTotalCount = 1;
+
+    
+  }
+  
   //Gallery
   @Output() deleteImage: EventEmitter<any> = new EventEmitter(false);
   galleryDelete(parentIndex, childIndex, add = false, camera = false) {
@@ -218,9 +231,6 @@ export class DocUploadService implements OnDestroy {
   galleryView(listArray: any[], parentIndex: number, ) {
     console.log(listArray, parentIndex, "inside doc service");
     this.galleryObservable.next({ listArray, parentIndex });
-    // this.galleryObservable = Observable.create(observer => {
-    //   observer.next({ listArray, parentIndex });
-    // })
   }
 
 

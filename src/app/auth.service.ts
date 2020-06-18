@@ -23,6 +23,7 @@ export class AuthService {
 
   userservice(userInfo) {
     let promise = new Promise((resolve, reject) => {
+      localStorage.setItem('username',userInfo.username);
       (userInfo.username && userInfo.password) ? resolve('success') : reject('error');
     });
     return promise;
@@ -51,7 +52,7 @@ export class AuthService {
 
   loginservice(pin) {
     let promise = new Promise((resolve, reject) => {
-      (pin == localStorage.getItem('setPin')) ? resolve('success') : reject('error')
+      (pin == localStorage.getItem('setPin')) ? resolve(localStorage.getItem('username')) : reject('error')
     });
     return promise;
   }

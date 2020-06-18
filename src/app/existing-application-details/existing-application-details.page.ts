@@ -88,7 +88,7 @@ export class ExistingApplicationDetailsPage implements OnInit {
         this.global.setId("");
         this.global.setProfileImage("");
         this.global.setEditSaveStatus("");
-        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute,queryParams: {dataInsert:"true" }});
       }else{
         this.global.presentAlert("Alert","Maxmimum limit exceeds");
       }
@@ -99,7 +99,7 @@ export class ExistingApplicationDetailsPage implements OnInit {
         this.global.setId("");
         this.global.setProfileImage("");
         this.global.setEditSaveStatus("");
-        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute,queryParams: {dataInsert:"true" }});
       }else{
         this.global.presentAlert("Alert","Maxmimum limit exceeds");
       }

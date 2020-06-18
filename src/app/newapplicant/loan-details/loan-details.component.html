@@ -17,6 +17,14 @@
         </ion-label>
         <ion-input formControlName="amountRequested" type="tel" maxlength="13"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.amountRequested">
+          <div class="mandatory"
+            *ngIf="loanDetails.get('amountRequested').hasError(validation.type) && (loanDetails.get('amountRequested').dirty || loanDetails.get('amountRequested').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -27,6 +35,14 @@
             {{product.Name | translate}}</ion-select-option>
         </ion-select>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.interestType">
+          <div class="mandatory"
+            *ngIf="loanDetails.get('interestType').hasError(validation.type) && (loanDetails.get('interestType').dirty || loanDetails.get('interestType').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -35,6 +51,14 @@
             class="mandatory">*</span></ion-label>
         <ion-input type=tel formControlName="tenure"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.tenure">
+          <div class="mandatory"
+            *ngIf="loanDetails.get('tenure').hasError(validation.type) && (loanDetails.get('tenure').dirty || loanDetails.get('tenure').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -42,6 +66,14 @@
         <ion-label position="floating">{{"Moratorium (Months)" | translate}} </ion-label>
         <ion-input type=tel formControlName="moratorium"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.moratorium">
+          <div class="mandatory"
+            *ngIf="loanDetails.get('moratorium').hasError(validation.type) && (loanDetails.get('moratorium').dirty || loanDetails.get('moratorium').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -53,6 +85,14 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.repaymentType">
+          <div class="mandatory"
+            *ngIf="loanDetails.get('repaymentType').hasError(validation.type) && (loanDetails.get('repaymentType').dirty || loanDetails.get('repaymentType').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -64,6 +104,14 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.repaymentMode">
+          <div class="mandatory"
+            *ngIf="loanDetails.get('repaymentMode').hasError(validation.type) && (loanDetails.get('repaymentMode').dirty || loanDetails.get('repaymentMode').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <!-- product

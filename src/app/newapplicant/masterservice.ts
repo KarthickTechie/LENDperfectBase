@@ -14,12 +14,13 @@ export class MasterData {
     getLoginTable() {
         return {
             // id: "INTEGER PRIMARYKEY AUTOINCREMENT",
-            userName: "VARCHAR(30) NOT NULL DEFAULT ''",
+            // userName: "VARCHAR(30) NOT NULL DEFAULT ''",
             password: "VARCHAR(30) NOT NULL DEFAULT ''",
-            organisationLevel: "TEXT",
-            organisationcode: "TEXT",
-            organisationName: "TEXT",
-            loginDate: "DATETIME"
+            // organisationLevel: "TEXT",
+            // organisationcode: "TEXT",
+            // organisationName: "TEXT",
+            loginDate: "DATETIME",
+            // constraint:"CONSTRAINT constraint_name UNIQUE (userName)"
         }
     }
 
@@ -119,6 +120,31 @@ getStaticMasterTable(){
             otherDeductions: "VARCHAR(30) NOT NULL DEFAULT ''",
             netIncome: "VARCHAR(30) NOT NULL DEFAULT ''",
             applicantType: "VARCHAR(20)",
+        }
+    }
+
+    getDocumentTable(){
+        return {
+            refId:"INTEGER NOT NULL DEFAULT ''",
+            id:"INTEGER NOT NULL DEFAULT ''",
+            otherDocumentType:"VARCHAR(40) NOT NULL DEFAULT ''",
+            otherDescription:"VARCHAR(50) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)",
+            // imagePath:"VARCHAR(50) NOT NULL DEFAULT ''",
+            // imageName:"VARCHAR(50) NOT NULL DEFAULT ''",
+        }
+    }
+
+    getImageDocumentTable(){
+        return{
+            refId:"INTEGER NOT NULL DEFAULT ''",
+            id:"INTEGER NOT NULL DEFAULT ''",
+            otherDocumentType:"VARCHAR(40) NOT NULL DEFAULT ''",
+            otherDescription:"VARCHAR(50) NOT NULL DEFAULT ''",
+            imagePath:"VARCHAR(100) NOT NULL DEFAULT ''",
+            imageNativePath:"VARCHAR(100) NOT NULL DEFAULT ''",
+            name:"VARCHAR(40) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)",   
         }
     }
 

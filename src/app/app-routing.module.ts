@@ -36,8 +36,10 @@ const routes: Routes = [
     path: 'existappdetails',
     loadChildren: () => import('./existing-application-details/existing-application-details.module').then(m => m.ExistingApplicationDetailsPageModule)
   },
-
-
+  {
+    path: 'video',
+    loadChildren: () => import('./video-gallery/video-gallery.module').then(m => m.VideoGalleryPageModule)
+  },
 
 ];
 

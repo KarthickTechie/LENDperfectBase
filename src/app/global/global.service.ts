@@ -4,8 +4,6 @@ import { AlertController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MenuController, LoadingController } from '@ionic/angular';
-
-
 import { Subject } from 'rxjs'
 
 
@@ -14,17 +12,24 @@ import { Subject } from 'rxjs'
 })
 export class GlobalService {
   logout = new Subject();
+
+  filterItems = new Subject<any>();
+  popoverInfo = new Subject<any>();
+  popoverclose = new Subject<any>();
+  dataInsert = new Subject<any>();
+
+
   alertCtrl = new AlertController();
   applicantType: any;
-  refId:any;
-  id:any;
-  profileImage:any;
-  checkSave:any;
-  loading:any;
-  isLoading:boolean = false;
+  refId: any;
+  id: any;
+  profileImage: any;
+  checkSave: any;
+  loading: any;
+  isLoading: boolean = false;
   @Output() saveStatus = new EventEmitter();
 
-  constructor(public translate: TranslateService, public router: Router,public loadingController:LoadingController) { }
+  constructor(public translate: TranslateService, public router: Router, public loadingController: LoadingController) { }
 
 
   setApplicantType(value) {
@@ -34,48 +39,45 @@ export class GlobalService {
   getApplicantType() {
     return this.applicantType;
   }
-  
-  setRefId(value){
-this.refId = value;
+
+  setRefId(value) {
+    this.refId = value;
   }
 
-  getRefId(){
+  getRefId() {
     return this.refId;
   }
 
-  setId(value){
-this.id = value;
+  setId(value) {
+    this.id = value;
   }
 
-  getId(){
+  getId() {
     return this.id;
   }
 
-  setProfileImage(image){
+  setProfileImage(image) {
     this.profileImage = image;
 
   }
 
-  getProfileImage(){
+  getProfileImage() {
     return this.profileImage;
   }
 
-  setEditSaveStatus(value){
-this.checkSave = value;
+  setEditSaveStatus(value) {
+    this.checkSave = value;
   }
 
-getEditSaveStatus(){
-  return this.checkSave;
-}
+  getEditSaveStatus() {
+    return this.checkSave;
+  }
 
   async presentAlert(title: string, subtitle: string, msg?: string) {
     // console.log(this.translate.instant(subtitle, "tesssssssssssssssst"));
     let header, subHeader;
     this.translate.get([title, subtitle, msg]).subscribe(async res => {
-      console.log(res, "language response");
-
       let key = Object.keys(res);
-
       let alert = await this.alertCtrl.create({
         header: res[key[0]],
         subHeader: res[key[1]],
@@ -121,7 +123,6 @@ getEditSaveStatus(){
       spinner: 'circles'
     }).then(a => {
       a.present().then(() => {
-        console.log('presented');
         if (!this.isLoading) {
           a.dismiss().then(() => console.log('abort presenting'));
         }
@@ -134,23 +135,35 @@ getEditSaveStatus(){
     return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
 
+  filterEmit(value, data) {
+    this.filterItems.next({ value, data });
+  }
 
-//   async confirmAlertSave(title, subtitle,tick) {
-//     let alert = await this.alertCtrl.create({
-//       header: title,
-//       message: subtitle,
-//       buttons: [
-//          {
-//           text: 'OK',
-//           handler: () => {
-//         this.saveStatus.emit({value:"personTick",slide:"Y"});
-                        
-//           }
-//         }
-//       ]
-//     });
-//     await alert.present();
-//   }
+  infoDetails(value) {
+    this.popoverInfo.next(value);
+  }
+  infoClose(value) {
+    this.popoverclose.next(value);
+  }
+  dataInsertForm(value) {
+    this.dataInsert.next(value);
+  }
+
+  // async confirmAlertSave(title, subtitle,tick) {
+  //   let alert = await this.alertCtrl.create({
+  //     header: title,
+  //     message: subtitle,
+  //     buttons: [
+  //        {
+  //         text: 'OK',
+  //         handler: () => {
+  //       this.saveStatus.emit({value:"personTick",slide:"Y"});
+
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await alert.present();
+  // }
 }
 
-  

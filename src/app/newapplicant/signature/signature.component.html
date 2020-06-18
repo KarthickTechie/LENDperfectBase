@@ -1,0 +1,7 @@
+<div class="container">
+  <signature-pad id="sign" [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+    (onEndEvent)="this.isDrawingDone=true">
+  </signature-pad>
+  <ion-button id="b1" slot="start" (click)="drawClear()" [disabled]="!isClearable">Clear</ion-button>
+  <ion-button id="b2" slot="end" (click)="drawComplete()" [disabled]="!isDrawingDone">Done</ion-button>
+</div>

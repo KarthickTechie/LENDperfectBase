@@ -13,6 +13,11 @@ import { AlertComponent } from '../setting/alert/alert.component';
 import { ShareModule } from './../setting/share.module';
 import { StatusPipe } from './status.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { PopoverComponent } from '../popover/popover.component';
+import { PopoverinfoComponent } from '../popoverinfo/popoverinfo.component';
+import { PopoverdetailsComponent } from '../popoverdetails/popoverdetails.component';
+import { PipesModule } from '../pipes/pipes.module';
+
 
 @NgModule({
   imports: [
@@ -21,11 +26,11 @@ import { TranslateModule } from '@ngx-translate/core';
     ShareModule,
     IonicModule,
     ExistingApplicationPageRoutingModule,
-    SettingPageModule, TranslateModule
+    SettingPageModule, TranslateModule,PipesModule
   ],
   providers: [AlertPage],
-  declarations: [ExistingApplicationPage, StatusPipe],
-  entryComponents: [],
+  declarations: [ExistingApplicationPage, StatusPipe, PopoverComponent,PopoverinfoComponent, PopoverdetailsComponent],
+  entryComponents: [PopoverComponent,PopoverinfoComponent, PopoverdetailsComponent],
 
 })
 export class ExistingApplicationPageModule { }

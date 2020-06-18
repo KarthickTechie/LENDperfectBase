@@ -2,7 +2,7 @@ import { File } from '@ionic-native/file/ngx';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonFab } from '@ionic/angular';
-import {GlobalService} from '../global/global.service';
+import { GlobalService } from '../global/global.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
   @ViewChild('fab', { static: false }) fab: IonFab;
 
 
-  constructor(public router: Router, public activatedRoute: ActivatedRoute, public file: File,public global:GlobalService) { }
+  constructor(public router: Router, public activatedRoute: ActivatedRoute, public file: File, public global: GlobalService) { }
 
 
   ngOnInit() {
@@ -25,22 +25,9 @@ export class DashboardPage implements OnInit {
     this.items = [{ label: "Submitted" }, { label: "Non Submitted" }, { label: "Pending" }]
   }
 
-  // async record() {
-  //   console.log('object');
-  //   let index;
-  //   const video = await this.mediaCap.captureVideo({ duration: 10, quality: 1 });
-  //   index = video[0].fullPath.lastIndexOf('/') + 1;
-  //   let filePath = video[0].fullPath.substring(0, index);
-  //   let fileName = video[0].fullPath.substring(index);
-  //   const move = await this.file.moveFile(filePath, fileName, this.file.externalApplicationStorageDirectory, fileName);
-  //   console.log(video, 'capture video');
-  // }
-
-  onInput(e) {
-
-  }
-
   openExistingPage() {
+    localStorage.setItem("filter", "");
+    localStorage.setItem("sort", "");
     this.router.navigate(['/existapp'], { relativeTo: this.activatedRoute });
   }
   newApplicant() {
@@ -49,7 +36,7 @@ export class DashboardPage implements OnInit {
     this.global.setId("");
     this.global.setProfileImage("");
     this.global.setEditSaveStatus("");
-    this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute, queryParams: { dataInsert: "true" } });
   }
 
   doSearch() {

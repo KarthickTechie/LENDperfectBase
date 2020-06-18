@@ -9,6 +9,7 @@ import { DocChooser } from 'widget/docChooser';
 import { CropDocComponent } from 'src/app/Components/crop-doc/crop-doc.component';
 
 
+
 @Component({
   selector: 'app-app-dashboard',
   templateUrl: './app-dashboard.page.html',
@@ -19,7 +20,7 @@ export class AppDashboardPage implements OnInit {
   userdetail: string;
   @ViewChild('mySlider', { static: false }) slider: IonSlides;
   @ViewChild(IonContent, { static: true }) content: IonContent;
-
+  datainsert: any;
   slides: any;
 
 
@@ -30,29 +31,34 @@ export class AppDashboardPage implements OnInit {
   profImg: boolean = false;
   value = new Subject<any>();
   showLoan: boolean = true;
-  applicantType:any;
+  applicantType: any;
   personCheck: boolean = false;
-incomeCheck: boolean = false;
-kycCheck: boolean = false;
-loanCheck: boolean = false;
-documentCheck: boolean = false;
+  incomeCheck: boolean = false;
+  kycCheck: boolean = false;
+  loanCheck: boolean = false;
+  documentCheck: boolean = false;
+  dataInsertion : boolean;
+  applicantTitle = "New Applicant";
 
-  constructor(private camera: Camera, public docChooser: DocChooser, public actionSheetController: ActionSheetController, 
-    public modalController: ModalController,public activateRoute: ActivatedRoute,public global:GlobalService) {
+  constructor(private camera: Camera, public docChooser: DocChooser, public actionSheetController: ActionSheetController,
+    public modalController: ModalController, public activateRoute: ActivatedRoute, public global: GlobalService) {
     this.userdetail = 'personal'
   }
 
   ngOnInit() {
     // this.applicantType = this.activateRoute.snapshot.queryParamMap.get("applicantType");
-    this.profPic = this.global.getProfileImage();
-    console.log(this.profPic,"profile picccccccccs")
-    if(this.profPic){
-      this.profImg = true;
+    if(this.activateRoute.snapshot.queryParamMap.get("dataInsert")){
+    this.dataInsertion = true;
     }else{
+      this.dataInsertion = false;
+    }
+    this.profPic = this.global.getProfileImage();
+    if (this.profPic) {
+      this.profImg = true;
+    } else {
       this.profImg = false;
     }
-    console.log(this.global.getApplicantType(),"applicant Type");
-    if(this.global.getApplicantType() == "C"){
+    if (this.global.getApplicantType() == "C" || this.global.getApplicantType() == "G") {
       this.showLoan = false;
       this.slides = [
         { id: 'personal' },
@@ -60,7 +66,7 @@ documentCheck: boolean = false;
         { id: 'kyc' },
         { id: 'document' }
       ];
-    }else{
+    } else {
       this.showLoan = true;
       this.slides = [
         { id: 'personal' },
@@ -71,10 +77,18 @@ documentCheck: boolean = false;
       ];
     }
 
+    if(this.global.getApplicantType() == "A"){
+      this.applicantTitle = "New Applicant";
+    }else if(this.global.getApplicantType() == "C"){
+      this.applicantTitle = " Co-Applicant";
+    }else{
+      this.applicantTitle = "Gurantor";
+    }
+
   }
 
   segmentChanged(event: any) {
-    console.log("Event", event);
+    // ("Event", event);
   }
 
   onSegmentChanged(segmentButton) {
@@ -90,8 +104,8 @@ documentCheck: boolean = false;
     const currentSlide = await this.slides[cSlide];
     this.userdetail = currentSlide.id;
     this.value.next(this.userdetail);
-      
-    
+
+
     this.scrollToTop();
   }
 
@@ -121,7 +135,6 @@ documentCheck: boolean = false;
           icon: 'close',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
             this.profImg = true;
           }
         }]
@@ -141,9 +154,7 @@ documentCheck: boolean = false;
       });
 
       await this.modal.present();
-      // console.log(await this.modal.onDidDismiss())
       let updateImg = await this.modal.onDidDismiss();
-      console.log(updateImg, "update image");
       if (updateImg.data) {
         if (updateImg.data.updateProfileIMAGE) {
           this.profImg = false;
@@ -185,42 +196,45 @@ documentCheck: boolean = false;
     switch (value) {
       case "personTick":
         this.personCheck = true;
-        if(slide == "Y"){
+        if (slide == "Y") {
           this.slider.slideTo(1);
         }
         break;
       case "incomeTick":
         this.incomeCheck = true;
-        if(slide == "Y"){
+        if (slide == "Y") {
           this.slider.slideTo(2);
         }
         break;
       case "kycTick":
         this.kycCheck = true;
-        if(slide == "Y" && this.global.getApplicantType() == "A"){
+        if (slide == "Y" && this.global.getApplicantType() == "A") {
           this.slider.slideTo(3);
         }
-        else if(slide == "N"){
+        else if (slide == "N") {
           this.slider.slideTo(0);
         }
-        else{
+        else {
           this.slider.slideTo(4);
         }
         break;
       case "loanTick":
         this.loanCheck = true;
-        if(slide == "Y"){
+        if (slide == "Y") {
           this.slider.slideTo(4);
-        }else{
+        } else {
           this.slider.slideTo(0);
         }
         break;
       case "documentTick":
         this.documentCheck = true;
         break;
-        
+
     }
   }
 
+  dataInsertChange(event) {
+    this.global.dataInsertForm(this.datainsert);
+  }
 
 }

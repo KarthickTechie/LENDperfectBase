@@ -1,3 +1,5 @@
+import { MasterData } from './newapplicant/masterservice';
+import { Subscription } from 'rxjs';
 import { SqliteProvider } from './global/sqlite';
 import { Component, ViewEncapsulation, isDevMode } from '@angular/core';
 import { Router } from "@angular/router";
@@ -8,7 +10,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalService } from './global/global.service';
-import {MasterData} from './newapplicant/masterservice';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,8 @@ import {MasterData} from './newapplicant/masterservice';
 export class AppComponent {
 
   navigate: any;
+  databaseReady : Subscription;
+
 
   constructor(
     public alertCtrl: AlertController,
@@ -27,7 +30,8 @@ export class AppComponent {
     public translate: TranslateService,
     public router: Router,
     public globalService: GlobalService,
-    public master: MasterData
+    public master:MasterData,
+
   ) {
     this.initializeApp();
     this.sideMenu();
@@ -39,17 +43,21 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.translate.setDefaultLang('en');
-      console.log(localStorage.getItem("useLang"), "from local storage");
       if (localStorage.getItem("useLang")) {
         this.translate.use(localStorage.getItem("useLang"));
       }
-//       debugger;
-// setTimeout(() => {
-//   this.sqlite.createtable("ORIG_APPLICATION","app_id",Object.keys(this.master.getRootTable()),Object.values(this.master.getRootTable()))
-//     this.sqlite.createtable("PERSONAL_DETAILS", "personalId", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
-// }, 5000);
-      
-    
+
+
+      this.databaseReady =  this.sqlite.databaseReady.subscribe(data=>{
+        this.sqlite.createtable("loginDetails", "id", Object.keys(this.master.getLoginTable()), Object.values(this.master.getLoginTable()));
+        this.sqlite.createtable("applicationDetails", "id", Object.keys(this.master.getRootTable()), Object.values(this.master.getRootTable()));
+      this.sqlite.createtable("personalDetails", "id", Object.keys(this.master.getPersonalTable()), Object.values(this.master.getPersonalTable()));
+      this.sqlite.createtable("incomeDetails", "incomeId", Object.keys(this.master.getIncomeTable()), Object.values(this.master.getIncomeTable()));
+      this.sqlite.createtable("loanDetails", "loanId", Object.keys(this.master.getLoadTable()), Object.values(this.master.getLoadTable()));
+      this.sqlite.createtable("kycDetails", "kycId", Object.keys(this.master.getKycTable()), Object.values(this.master.getKycTable()));
+      this.sqlite.createtable("documentDetails", "docId", Object.keys(this.master.getDocumentTable()), Object.values(this.master.getDocumentTable()));
+      this.sqlite.createtable("documentImageDetails", "imageId", Object.keys(this.master.getImageDocumentTable()), Object.values(this.master.getImageDocumentTable()));
+    });
     });
   }
 
@@ -71,6 +79,10 @@ export class AppComponent {
 
   settingDetails() {
     // this.router.navigate('/setting');
+  }
+
+  ngOnDestroy() {
+    this.databaseReady.unsubscribe();
   }
 
 }

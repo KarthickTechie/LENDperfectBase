@@ -1,4 +1,6 @@
+import { VideoPlayer } from "@ionic-native/video-player/ngx";
 import { MediaCapture } from "@ionic-native/media-capture/ngx";
+import { StreamingMedia } from "@ionic-native/streaming-media/ngx";
 import { SqliteProvider } from './global/sqlite';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +33,8 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { KeyValuesPipe } from './popoverdetails/key-values.pipe';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,7 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [AppComponent, CropDocComponent],
+  declarations: [AppComponent, CropDocComponent, KeyValuesPipe],
   entryComponents: [CropDocComponent],
   imports: [
     BrowserModule,
@@ -55,7 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }), HttpClientModule,
     DocumentUploadPageModule,
-
+    SignaturePadModule
   ],
   providers: [
     StatusBar,
@@ -73,7 +77,7 @@ export function createTranslateLoader(http: HttpClient) {
     Device,
     FileTransfer,
     HTTP,
-    Crop, JJzip, AndroidPermissions, MediaCapture,
+    Crop, JJzip, AndroidPermissions, MediaCapture, StreamingMedia, VideoPlayer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [TranslateModule],

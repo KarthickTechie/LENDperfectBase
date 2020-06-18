@@ -47,7 +47,7 @@ export class FormControlData {
         return this.formbuilder.group({
             empCategoryType: ['', Validators.compose([Validators.required])],
             empName: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(30)])],
-            doj: [''],
+            doj: ['', Validators.compose([Validators.required])],
             incomeType: ['', Validators.compose([Validators.required])],
             grossIncome: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(13), Validators.pattern('[0-9]*'), Validators.required])],
             // statutory: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(10), Validators.pattern('[0-9]*'), Validators.required])],
@@ -94,7 +94,7 @@ export class FormControlData {
     otherDocumnetForm() {
         return this.formbuilder.group({
             otherDocumentType: ['', Validators.compose([Validators.required])],
-            otherDescription: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*')])]
+            otherDescription: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*'),Validators.required])]
         });
     }
 

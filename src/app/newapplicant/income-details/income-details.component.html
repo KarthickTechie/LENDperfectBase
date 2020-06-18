@@ -11,6 +11,14 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.empCategoryType">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('empCategoryType').hasError(validation.type) && (incomeDetails.get('empCategoryType').dirty || incomeDetails.get('empCategoryType').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -18,6 +26,14 @@
         <ion-label position="floating">{{"Employer Name" | translate}}</ion-label>
         <ion-input type=text formControlName="empName"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.empName">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('empName').hasError(validation.type) && (incomeDetails.get('empName').dirty || incomeDetails.get('empName').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -26,6 +42,14 @@
         <ion-input type=date formControlName="doj" min="2000-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
         </ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.doj">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('doj').hasError(validation.type) && (incomeDetails.get('doj').dirty || incomeDetails.get('doj').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -37,6 +61,14 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.incomeType">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('incomeType').hasError(validation.type) && (incomeDetails.get('incomeType').dirty || incomeDetails.get('incomeType').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
     <div class="item">
@@ -53,11 +85,19 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>{{"Gross Income" | translate}} <span> (Rs) </span>
+        <ion-label position="floating">{{"Gross Income" | translate}} <span> (Rs) </span>
           <span class="mandatory">*</span>
         </ion-label>
         <ion-input formControlName="grossIncome" type="tel" maxlength="10" placeholder="Amount"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.grossIncome">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('grossIncome').hasError(validation.type) && (incomeDetails.get('grossIncome').dirty || incomeDetails.get('grossIncome').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
 
@@ -65,22 +105,38 @@
 
     <div class="item">
       <ion-item>
-        <ion-label>{{"Other Deduction" | translate}} <span> (Rs) </span>
+        <ion-label position="floating">{{"Other Deduction" | translate}} <span> (Rs) </span>
           <span class="mandatory">*</span>
         </ion-label>
         <ion-input formControlName="otherDeductions" type="tel" maxlength="10" placeholder="Amount"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.otherDeductions">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('otherDeductions').hasError(validation.type) && (incomeDetails.get('otherDeductions').dirty || incomeDetails.get('otherDeductions').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
 
 
     <div class="item">
       <ion-item>
-        <ion-label>{{"Net Income After Deduction" | translate}} <span> (Rs) </span>
+        <ion-label position="floating">{{"Net Income After Deduction" | translate}} <span> (Rs) </span>
           <span class="mandatory">*</span>
         </ion-label>
         <ion-input formControlName="netIncome" type="tel" maxlength="10" placeholder="Amount"></ion-input>
       </ion-item>
+      <div>
+        <ng-container *ngFor="let validation of validation_messages.netIncome">
+          <div class="mandatory"
+            *ngIf="incomeDetails.get('netIncome').hasError(validation.type) && (incomeDetails.get('netIncome').dirty || incomeDetails.get('netIncome').touched)">
+            <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+          </div>
+        </ng-container>
+      </div>
     </div>
 
 

@@ -1,10 +1,17 @@
-import { SqliteProvider } from './../global/sqlite';
-import { GlobalService } from './../global/global.service';
+import { ErrorHandlingService } from './../error-handling.service';
+import { PopoverController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import { SqliteProvider } from './../global/sqlite';
+import { GlobalService } from './../global/global.service';
 import { AlertComponent } from '../setting/alert//alert.component';
 import { AlertDirective } from './../setting/alert.directive';
 import { AlertPage } from "../setting/alert.page";
+import { PopoverComponent } from '../popover/popover.component';
+import { PopoverinfoComponent } from '../popoverinfo/popoverinfo.component';
+import { PopoverdetailsComponent } from '../popoverdetails/popoverdetails.component';
 
 
 
@@ -21,70 +28,33 @@ export class ExistingApplicationPage implements OnInit {
   filterValue: any;
   sortValue: any;
   @ViewChild(AlertDirective, { static: false }) alertMessage: AlertDirective;
+  filtersubscrip: Subscription;
+  popoverInfo: Subscription;
+  popoverClose: Subscription;
 
-  applications=[];
-    // { name: 'Chris', document: 9629919298, status: 'submitted', profile: "assets/imgs/round_headshot.png" },
-    // { name: 'Smith', document: 6542136987, status: 'notsubmitted', profile: "assets/imgs/person1.jpg" },
-    // { name: 'Taylor', document: 7852145226, status: 'pending', profile: "assets/imgs/person2.png" }
-  
+  applications = [];
+
   constructor(public alertPage: AlertPage,
-    public router: Router, public activatedRoute: ActivatedRoute,public sqlite: SqliteProvider,
-  ) { 
-    
+    public router: Router, public activatedRoute: ActivatedRoute, public sqlite: SqliteProvider, public popoverController: PopoverController, public global: GlobalService,public errorLogService: ErrorHandlingService
+  ) {
+
   }
 
   ngOnInit() {
-    console.log("ngoninit existing page");
     this.getApplicants();
   }
 
-  filterItems() {
-
-    this.filterShow = true;
-    // this.sortShow = false;
-  }
-  sortItems() {
-    console.log(this.sortShow, "sortitems start");
-    this.sortShow = true;
-    // this.filterShow = false;
-    console.log(this.sortShow, "sortitems end");
+  existingApp(applicant) {
+    console.log(applicant, "before navigation");
+    console.log(JSON.stringify(applicant), "stringify before navigation");
+    this.router.navigate(['/existappdetails'], { relativeTo: this.activatedRoute, queryParams: { existApplicant: JSON.stringify(applicant), refId: applicant.refId } });
   }
 
-  filterHidden() {
-    this.filterShow = false;
-    this.sortShow = false;
-  }
 
-  filterChange(e) {
-    this.filterShow = false;
-    this.alertPage.getAlertControl(AlertComponent, this.alertMessage, "Appling filters");
-    this.filterValue = e;
-    console.log('Event...', e);
-
-  }
-
-  // sortChange(e) {
-  //   this.alertPage.getAlertControl(AlertComponent, this.alertMessage, "Appling Sort");
-
-  // }
-  sortChange(value) {
-    this.sortShow = false;
-    this.sortValue = value;
-    console.log(value, "sorting");
-    if (value == "ascending") {
-      let array = [...this.applications];
-      this.applications = array.sort(this.compareValues('name', 'asc'));
-      console.log(this.applications, "ascending sort");
-      // this.sortShow = false;
-    }
-    if (value == "descending") {
-      let array = [...this.applications];
-      this.applications = array.sort(this.compareValues('name', "desc"));
-      console.log(this.applications, "descending sort");
-      // this.sortShow = false;
-
-    }
-    // this.alertPage.getAlertControl(AlertComponent, this.alertMessage, "Applying Sort");
+  async getApplicants() {
+    let data = await this.sqlite.getAllApplicants();
+    console.log(data, "Existing page getall details");
+    this.applications = data;
   }
 
   compareValues(key, order = 'asc') {
@@ -110,23 +80,110 @@ export class ExistingApplicationPage implements OnInit {
     };
   }
 
-  radioChecked() {
-    console.log("evemt")
-    this.filterShow = false;
-    this.sortShow = false;
+  async presentPopover(ev, filter) {
+    try {
+      const popover = await this.popoverController.create({
+        component: PopoverComponent,
+        componentProps: { filterItems: (filter == 'filter') ? true : false, sortItems: (filter == 'sort') ? true : false },
+        cssClass: 'popOver',
+        event: ev,
+        mode: 'ios',
+        translucent: true,
+        showBackdrop: true,
+        animated: true,
+      });
+      console.log('outside filter', filter);
+  
+      this.filtersubscrip = this.global.filterItems.subscribe(data => {
+        if (data.data == 'filter') {
+          this.filterValue = data.value;
+          localStorage.setItem('filter', data.value);
+        }
+  
+        if (data.data == 'sort') {
+          this.sortValue = data.data.value;
+          localStorage.setItem('sort', data.value);
+          if (this.sortValue == "ascending") {
+            let array = [...this.applications];
+            this.applications = array.sort(this.compareValues('name', 'asc'));
+          } else {
+            let array = [...this.applications];
+            this.applications = array.sort(this.compareValues('name', "desc"));
+          }
+        }
+  
+        popover.dismiss();
+      })
+      return await popover.present();
+  
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
+    }
+    
   }
 
-  existingApp(applicant) {
-    console.log(applicant,"before navigation");
-    console.log(JSON.stringify(applicant),"stringify before navigation");
-    this.router.navigate(['/existappdetails'], { relativeTo: this.activatedRoute,queryParams:{existApplicant:JSON.stringify(applicant),refId:applicant.refId} });
+  async moreInfo(ev,applicant) {
+    try {
+      ev.stopPropagation()
+    const popover = await this.popoverController.create({
+      component: PopoverinfoComponent,
+      componentProps: {},
+      cssClass: 'popOverInfo',
+      event: ev,
+      // mode: 'ios',
+      translucent: true,
+      showBackdrop: true,
+      animated: true,
+    });
+
+    this.popoverInfo = this.global.popoverInfo.subscribe(data => {
+
+      if (data) {
+        this.popoverInfoDetails(data,applicant);
+        popover.dismiss();
+      }
+
+    });
+    return await popover.present();
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
+      
+    }
+    
+  }
+
+  async popoverInfoDetails(data,applicant) {
+    try {
+      const popoverDetails = await this.popoverController.create({
+        component: PopoverdetailsComponent,
+        componentProps: { data: data,applicant:applicant },
+        cssClass: 'popInfoDeta',
+        // event: ev,
+        // mode: 'ios',
+        translucent: true,
+        showBackdrop: true,
+        animated: true,
+      });
+  
+      this.popoverClose = this.global.popoverclose.subscribe(data => {
+        popoverDetails.dismiss();
+      })
+      return await popoverDetails.present();
+      
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
+      
+    }
+    
+
+  }
+
+  ngOnDestroy() {
+    this.filtersubscrip ? this.filtersubscrip.unsubscribe() : '';
+    this.popoverInfo ? this.popoverInfo.unsubscribe() : '';
+    this.popoverClose ? this.popoverClose.unsubscribe() : '';
   }
 
 
-  async getApplicants(){
-let data = await this.sqlite.getAllApplicants();
-console.log(data,"Existing page getall details");
-this.applications = data;
-  }
 
 }

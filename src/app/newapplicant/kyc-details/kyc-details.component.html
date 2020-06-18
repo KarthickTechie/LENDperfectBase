@@ -20,10 +20,10 @@
       </ion-item>
 
       <div>
-        <ng-container *ngFor="let validation of errorMessage.kycProofType">
+        <ng-container *ngFor="let validation of errorMessage.proofType">
           <div class="mandatory"
             *ngIf="kycDetails.get('proofType').hasError(validation.type) && (kycDetails.get('proofType').dirty || kycDetails.get('proofType').touched)">
-            <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
+            <p class="errText marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -41,10 +41,10 @@
       </ion-item>
 
       <div>
-        <ng-container *ngFor="let validation of errorMessage.kycIdType">
+        <ng-container *ngFor="let validation of errorMessage.proofDocument">
           <div class="mandatory"
             *ngIf="kycDetails.get('proofDocument').hasError(validation.type) && (kycDetails.get('proofDocument').dirty || kycDetails.get('proofDocument').touched)">
-            <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
+            <p class="errText marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>
@@ -61,10 +61,10 @@
       </ion-item>
 
       <div>
-        <ng-container *ngFor="let validation of errorMessage.kycIdvalue">
+        <ng-container *ngFor="let validation of errorMessage.proofvalue">
           <div class="mandatory"
             *ngIf="kycDetails.get('proofvalue').hasError(validation.type) && (kycDetails.get('proofvalue').dirty || kycDetails.get('proofvalue').touched)">
-            <p class="errText marginLR0pxTB5px">{{validation.message}}</p>
+            <p class="errText marginLR0pxTB5px">{{validation.message | translate}}</p>
           </div>
         </ng-container>
       </div>

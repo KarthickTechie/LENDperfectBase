@@ -3,7 +3,8 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{"New Applicant" | translate}}
+    <ion-title>{{applicantTitle}}
+      <ion-toggle *ngIf="dataInsertion" style="position: absolute;top: -5px;" [(ngModel)]="datainsert" (ionChange)="dataInsertChange($event)"></ion-toggle>
       <span (click)="presentActionSheet()">
         <img src="assets/imgs/profile.png" class="navuserimg" *ngIf="!profPic">
         <img [src]="profPic" class="navuserimg" *ngIf="profPic">
@@ -14,12 +15,12 @@
 
   <ion-segment [(ngModel)]="userdetail" (ionChange)="onSegmentChanged($event)">
     <ion-segment-button value="personal">
-      
+
       <ion-icon name="person" color="logo"></ion-icon>
       <span *ngIf="personCheck">
         <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
       </span>
-      
+
     </ion-segment-button>
     <ion-segment-button value="income">
       <ion-icon name="document" color="logo"></ion-icon>

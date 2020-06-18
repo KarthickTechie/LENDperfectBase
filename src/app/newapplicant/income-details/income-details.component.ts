@@ -1,13 +1,15 @@
-import { Subscription } from 'rxjs';
-import { SqliteProvider } from './../../global/sqlite';
+import { ErrorHandlingService } from './../../error-handling.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { FormControlData } from "../formcontrol";
+import { SqliteProvider } from './../../global/sqlite';
 import { MasterData } from "../masterservice";
 import { HandlingError } from "../../utility/ErrorHandling";
 import { GlobalService } from "../../global/global.service";
 import { AppDashboardPage } from '../app-dashboard/app-dashboard.page';
+import { keyInsert } from './../keyinsert';
 
 
 @Component({
@@ -24,29 +26,33 @@ export class IncomeDetailsComponent implements OnInit {
   incomeTypeList: any;
   incomeList: any;
   refId: any;
-  id:any;
+  id: any;
   incomeId: any;
   applicantType: any;
-  slideCheck : Subscription;
+  slideCheck: Subscription;
   @Output() saveStatus = new EventEmitter();
+  keyInsertSub: Subscription;
 
   constructor(public formctrl: FormControlData, public formBuilder: FormBuilder, public master: MasterData,
-    public sqlite: SqliteProvider, private errorHandling: HandlingError, public global: GlobalService, public dashboard: AppDashboardPage) {
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      this.refId = this.global.getRefId();
-      this.id = this.global.getId();
-      this.applicantType = this.global.getApplicantType();
-      if (this.refId) {
-        this.getIncomeDetails();
-      } else {
-        this.refId = "";
-      }
-
-
+    public sqlite: SqliteProvider, private errorHandling: HandlingError, public global: GlobalService, public dashboard: AppDashboardPage, public keyinsert: keyInsert,
+    public errorLogService: ErrorHandlingService) {
+    this.refId = this.global.getRefId();
+    this.id = this.global.getId();
+    this.applicantType = this.global.getApplicantType();
+    (this.refId) ? this.getIncomeDetails() : this.refId = "";
   }
 
 
   ngOnInit() {
+
+    this.keyInsertSub = this.global.dataInsert.subscribe(data => {
+      if (data) {
+        this.incomeDetails = this.keyinsert.incomeform();
+      } else {
+        this.incomeDetails = this.formctrl.incomeform();
+      }
+    })
+
     this.incomeDetails = this.formctrl.incomeform();
     this.validation_messages = this.errorHandling.incomevalid();
     this.empCategoryList = this.master.getempCategoryList();
@@ -56,28 +62,11 @@ export class IncomeDetailsComponent implements OnInit {
       if (slide == "income") {
         this.refId = this.global.getRefId();
         this.applicantType = this.global.getApplicantType();
-        // if(this.applicantType == "A"){
-          this.id = this.global.getId();
-        // }
-        
+        this.id = this.global.getId();
       }
     })
-    
-
-  }
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit income details');
-    // console.log(Object.keys(this.personalDetails.controls)[0]);
-    
   }
 
-  ionViewDidEnter() {
-    console.log("ionViewDidEnteriiiiiiiiiiiicccccccccccccccccccccccccccccccccccccccc");
-  }
-
-  ionViewWillEnter() {
-    console.log("ionviewwillenter");
-  }
 
   getToday(): string {
     var yesterday = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0];
@@ -98,55 +87,75 @@ export class IncomeDetailsComponent implements OnInit {
   }
 
   async incomeSave(incomeValues) {
-    let saveStatus;
-    saveStatus =  this.global.getEditSaveStatus();
-    console.log(saveStatus,"income save status............");
-    // .forEach(element => {
-    //   if (element == "personalSaved") {
-    //     saveStatus = "personalSaved";
-    //   }
-    // });a
-    if(saveStatus == "personalSaved"){
-      this.global.globalLodingPresent("Please wait...");
-      if (this.incomeId) {
-        const update = await this.sqlite.updateDetails("incomeDetails", incomeValues, this.refId,this.id);
-        this.global.globalLodingDismiss();
-        this.saveStatus.emit({value:"incomeTick",slide:"Y"});
-        this.global.presentAlert("Alert","Income Details updated successfully!");
-
-      } else {
-        const insert = await this.sqlite.insertDetails("incomeDetails", incomeValues, this.applicantType, this.refId,this.id);
-        this.incomeId = insert.insertId;
-        this.saveStatus.emit({value:"incomeTick",slide:"Y"});
-        this.global.globalLodingDismiss();
-        this.global.presentAlert("Alert","Income Details saved successfully!");
-      }
-    }else{
-      this.global.presentAlert("Alert","Please fill personal details first!");
+    try {
+      let saveStatus;
+    saveStatus = this.global.getEditSaveStatus();
+    (saveStatus == "personalSaved") ? await this.incomeSaveDetails(incomeValues) : this.global.presentAlert("Alert", "Please fill personal details first!");
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
     }
+    
+  }
 
+
+  async incomeSaveDetails(incomeValues) {
+    try {
+      this.global.globalLodingPresent("Please wait...");
+      (this.incomeId) ? await this.incomeUpdateDetails(incomeValues) : await this.incomeInsertDetails(incomeValues);  
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));     
+    }
+    
+  }
+
+  async incomeUpdateDetails(incomeValues) {
+    try {   
+      const update = await this.sqlite.updateDetails("incomeDetails", incomeValues, this.refId, this.id);
+      this.global.globalLodingDismiss();
+      this.saveStatus.emit({ value: "incomeTick", slide: "Y" });
+      this.global.presentAlert("Alert", "Income Details updated successfully!");
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
+    }
+  }
+
+  async incomeInsertDetails(incomeValues) {
+    try {
+      const insert = await this.sqlite.insertDetails("incomeDetails", incomeValues, this.applicantType, this.refId, this.id);
+      this.incomeId = insert.insertId;
+      this.saveStatus.emit({ value: "incomeTick", slide: "Y" });
+      this.global.globalLodingDismiss();
+      this.global.presentAlert("Alert", "Income Details saved successfully!");
+      
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
+    }
   }
 
   async getIncomeDetails() {
-    console.log(this.refId,"inside getincome details");
-    let getIncomeData = await this.sqlite.getDetails("incomeDetails", this.refId,this.id);
-    debugger;
-    if(getIncomeData.length){
-    for (let value in this.incomeDetails.controls) {
-      if (getIncomeData[0].hasOwnProperty(value)) {
-        this.incomeDetails.get(value).setValue(getIncomeData[0][value]);
-      }
+    try {
+      let getIncomeData = await this.sqlite.getDetails("incomeDetails", this.refId, this.id);
+      if (getIncomeData.length) {
+        for (let value in this.incomeDetails.controls) {
+          if (getIncomeData[0].hasOwnProperty(value)) {
+            this.incomeDetails.get(value).setValue(getIncomeData[0][value]);
+          }
+        }
+        this.refId = getIncomeData[0].refId;
+        this.id = getIncomeData[0].id;
+        this.incomeId = getIncomeData[0].incomeId;
+        this.saveStatus.emit({ value: "incomeTick", slide: "N" });
+      } 
+    } catch (error) {
+      this.errorLogService.errorLog(new Error(JSON.stringify(error)));
     }
-    this.refId = getIncomeData[0].refId;
-    this.id = getIncomeData[0].id;
-    this.incomeId = getIncomeData[0].incomeId;
-    this.saveStatus.emit({value:"incomeTick",slide:"N"});
-
+    
   }
-}
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.slideCheck.unsubscribe();
+    this.keyInsertSub ? this.keyInsertSub.unsubscribe() : "";
+
   }
 
 
