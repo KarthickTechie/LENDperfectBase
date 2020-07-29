@@ -31,8 +31,8 @@ export class PopoverdetailsComponent implements OnInit {
   existingData: any;
   appProfile: any;
   otherDoc = [];
-  showSpinner:boolean = false;
-  showIcon:boolean = true;
+  showSpinner: boolean = false;
+  showIcon: boolean = true;
 
   constructor(public global: GlobalService, public NavParams: NavParams, public sqlite: SqliteProvider) {
     this.detailsview = this.NavParams.get("data");
@@ -98,7 +98,7 @@ export class PopoverdetailsComponent implements OnInit {
   }
 
 
-  checkBureau(){
+  checkBureau() {
     this.showSpinner = true;
     this.showIcon = false;
   }
@@ -110,44 +110,44 @@ export class PopoverdetailsComponent implements OnInit {
     this.showMeter = true;
     // this.chart();
     // if (this.showMeter) {
-      // var animId = document.getElementById('circleAnim_container');
-      // console.log('annimated', animId)
-      // animId.classList.add('svg');
-      // var bar = new ProgressBar.SemiCircle(circleAnim_container, {
-      //   strokeWidth: 15,
-      //   color: "teal",
-      //   trailColor: '#eee',
-      //   trailWidth: 13,
-      //   easing: 'easeInOut',
-      //   duration: 4000,
-      //   svgStyle: null,
-      //   text: {
-      //     value: '',
-      //     alignToBottom: true
-      //   },
-      //   from: { color: '#4000ff' },
-      //   to: { color: ' #0080ff' },
-      //   // Set default step function for all animate calls
-      //   step: (state, bar) => {
-      //     bar.path.setAttribute('stroke', state.color);
-      //     var value = Math.round(bar.value() * 100);
-      //     if (value === 0) {
-      //       bar.setText('');
-      //     } else {
-      //       bar.setText(value + "");
-      //     }
-      //     bar.text.style.color = "#0080ff";
-      //   }
-      // });
-      // bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-      // bar.text.style.fontSize = '1.4rem';
-      // bar.animate(0.100);
+    // var animId = document.getElementById('circleAnim_container');
+    // console.log('annimated', animId)
+    // animId.classList.add('svg');
+    // var bar = new ProgressBar.SemiCircle(circleAnim_container, {
+    //   strokeWidth: 15,
+    //   color: "teal",
+    //   trailColor: '#eee',
+    //   trailWidth: 13,
+    //   easing: 'easeInOut',
+    //   duration: 4000,
+    //   svgStyle: null,
+    //   text: {
+    //     value: '',
+    //     alignToBottom: true
+    //   },
+    //   from: { color: '#4000ff' },
+    //   to: { color: ' #0080ff' },
+    //   // Set default step function for all animate calls
+    //   step: (state, bar) => {
+    //     bar.path.setAttribute('stroke', state.color);
+    //     var value = Math.round(bar.value() * 100);
+    //     if (value === 0) {
+    //       bar.setText('');
+    //     } else {
+    //       bar.setText(value + "");
+    //     }
+    //     bar.text.style.color = "#0080ff";
+    //   }
+    // });
+    // bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+    // bar.text.style.fontSize = '1.4rem';
+    // bar.animate(0.100);
     // }
   }
 
 
-  async chart(){
-    var bar =await new ProgressBar.SemiCircle(circleAnim_container, {
+  async chart() {
+    var bar = await new ProgressBar.SemiCircle(circleAnim_container, {
       strokeWidth: 15,
       color: "teal",
       trailColor: '#eee',
@@ -178,7 +178,7 @@ export class PopoverdetailsComponent implements OnInit {
     bar.animate(0.90);
   }
 
-  
+
 
   async getFullDetails() {
     let allDetails = await this.sqlite.getAllDetails(this.refId, "A");

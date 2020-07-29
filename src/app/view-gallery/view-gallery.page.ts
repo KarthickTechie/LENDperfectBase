@@ -33,42 +33,42 @@ export class ViewGalleryPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.listArraySub = this.docUpload.galleryObservable.subscribe(async val => {
-      
+
       if (val.profile) {
         this.showProfile = true;
         this.profilePic = val.listArray[0]
       } else {
-        if(val.listArray.length != 0){
-        this.dList = val.listArray;
-        if (val.listArray[0].name == "Signature") {
-          this.enableAdd = false;
-        }
-        this.parentIndex = val.parentIndex;
+        if (val.listArray.length != 0) {
+          this.dList = val.listArray;
+          if (val.listArray[0].name == "Signature") {
+            this.enableAdd = false;
+          }
+          this.parentIndex = val.parentIndex;
 
-        this.imgTotal = val.listArray.length;
-        let len = await this.slider.length();
+          this.imgTotal = val.listArray.length;
+          let len = await this.slider.length();
 
-        console.log(await this.slider.length(), "len");
-        console.log(await this.slider.isBeginning(), "begining");
-        console.log(await this.slider.length(), "length");
-        if (len == 0) {
+          console.log(await this.slider.length(), "len");
+          console.log(await this.slider.isBeginning(), "begining");
+          console.log(await this.slider.length(), "length");
+          if (len == 0) {
+            this.currentSlideIndex = null;
+            await this.slider.update()
+          } else {
+            this.currentSlideIndex = await this.slider.getActiveIndex() + 1;
+          }
+        } else {
           this.currentSlideIndex = null;
           await this.slider.update()
-        } else {
-          this.currentSlideIndex = await this.slider.getActiveIndex() + 1;
         }
-      }else{
-        this.currentSlideIndex = null;
-            await this.slider.update()
       }
-      }
-    
+
     })
   }
 
 
-  ngAfterViewInit(){
-  
+  ngAfterViewInit() {
+
   }
 
   close() {
@@ -80,8 +80,8 @@ export class ViewGalleryPage implements OnInit, OnDestroy {
   }
 
 
-   test() {
-    
+  test() {
+
   }
 
 
