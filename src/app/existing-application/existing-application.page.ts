@@ -1,7 +1,7 @@
 import { ErrorHandlingService } from './../error-handling.service';
 import { PopoverController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { SqliteProvider } from './../global/sqlite';
@@ -12,6 +12,8 @@ import { AlertPage } from "../setting/alert.page";
 import { PopoverComponent } from '../popover/popover.component';
 import { PopoverinfoComponent } from '../popoverinfo/popoverinfo.component';
 import { PopoverdetailsComponent } from '../popoverdetails/popoverdetails.component';
+import * as moment from 'moment';
+
 
 
 
@@ -22,6 +24,7 @@ import { PopoverdetailsComponent } from '../popoverdetails/popoverdetails.compon
 })
 export class ExistingApplicationPage implements OnInit {
 
+  @ViewChild('view', {static: false}) view: ElementRef;
 
   filterShow: boolean = false;
   sortShow: boolean = false;
@@ -35,7 +38,8 @@ export class ExistingApplicationPage implements OnInit {
   applications = [];
 
   constructor(public alertPage: AlertPage,
-    public router: Router, public activatedRoute: ActivatedRoute, public sqlite: SqliteProvider, public popoverController: PopoverController, public global: GlobalService,public errorLogService: ErrorHandlingService
+ public render: Renderer2,
+    public router: Router, public activatedRoute: ActivatedRoute, public sqlite: SqliteProvider, public popoverController: PopoverController, public global: GlobalService, public errorLogService: ErrorHandlingService
   ) {
 
   }
@@ -43,17 +47,23 @@ export class ExistingApplicationPage implements OnInit {
   ngOnInit() {
     this.getApplicants();
   }
+  
+  ionViewDidEnter() {
+    this.getApplicants();
+  }
 
   existingApp(applicant) {
     console.log(applicant, "before navigation");
     console.log(JSON.stringify(applicant), "stringify before navigation");
-    this.router.navigate(['/existappdetails'], { relativeTo: this.activatedRoute, queryParams: { existApplicant: JSON.stringify(applicant), refId: applicant.refId } });
+    // this.router.navigate(['/existappdetails'], { relativeTo: this.activatedRoute, queryParams: { existApplicant: JSON.stringify(applicant), refId: applicant.refId },skipLocationChange:true });
+    this.router.navigate(['/existappdetails'], { relativeTo: this.activatedRoute, queryParams: { existApplicant: JSON.stringify(applicant), refId: applicant.refId }, skipLocationChange: true });
   }
 
 
   async getApplicants() {
     let data = await this.sqlite.getAllApplicants();
     console.log(data, "Existing page getall details");
+
     this.applications = data;
   }
 
@@ -84,7 +94,7 @@ export class ExistingApplicationPage implements OnInit {
     try {
       const popover = await this.popoverController.create({
         component: PopoverComponent,
-        componentProps: { filterItems: (filter == 'filter') ? true : false, sortItems: (filter == 'sort') ? true : false },
+        componentProps: { filterItems: (filter == 'filter') ? true : false, sortItems: (filter == 'sort') ? true : false, viewItems: (filter == 'view') ? true : false },
         cssClass: 'popOver',
         event: ev,
         mode: 'ios',
@@ -93,70 +103,137 @@ export class ExistingApplicationPage implements OnInit {
         animated: true,
       });
       console.log('outside filter', filter);
-  
+
       this.filtersubscrip = this.global.filterItems.subscribe(data => {
+        
+        if(data.data == 'view') {
+          if(data.value == 'list') {
+            this.render.removeClass(this.view.nativeElement, "girdcontainer");
+            this.render.addClass(this.view.nativeElement, "listcontainer");
+            localStorage.setItem('view', data.value);
+          } else {
+            this.render.removeClass(this.view.nativeElement, "listcontainer");
+            this.render.addClass(this.view.nativeElement, "girdcontainer");
+            localStorage.setItem('view', data.value);
+          }
+        }
+        
+        
         if (data.data == 'filter') {
           this.filterValue = data.value;
           localStorage.setItem('filter', data.value);
         }
-  
+
         if (data.data == 'sort') {
-          this.sortValue = data.data.value;
+          this.sortValue = data.value;
           localStorage.setItem('sort', data.value);
-          if (this.sortValue == "ascending") {
-            let array = [...this.applications];
-            this.applications = array.sort(this.compareValues('name', 'asc'));
-          } else {
-            let array = [...this.applications];
-            this.applications = array.sort(this.compareValues('name', "desc"));
+          // if (this.sortValue == "ascending") {
+          // let array = [...this.applications];
+          // this.applications = array.sort(this.compareValues('name', 'asc'));
+          // } else {
+          //   let array = [...this.applications];
+          //   this.applications = array.sort(this.compareValues('name', "desc"));
+          // }
+          let array = [...this.applications];
+          console.log(this.applications, "sorting");
+          let timeStamp = moment(array[0].createdDate).format('x');
+          console.log(timeStamp, "timestamp");
+          let arrCpy = array.slice();
+          arrCpy.map((val, index) => {
+            array[index].createdDate = +moment(val.createdDate).format('x');
+          })
+          console.log(array, "hehahehaheha");
+          console.log(this.sortValue, "hehahehaheha");
+
+          switch (this.sortValue) {
+            case 'ascending':
+              this.applications = array.sort(this.compareValues('firstName', 'asc'));
+              console.log(this.applications, "ascending");
+              break;
+
+            case 'descending':
+              //let array = [...this.applications];
+              this.applications = array.sort(this.compareValues('firstName', 'desc'));
+              console.log(this.applications, "descending");
+
+              break;
+
+            case 'fromNewest':
+              this.applications = array.sort(function (a, b) {
+                // Turn your strings into dates, and then subtract them
+                // to get a value that is either negative, positive, or zero.
+                return b.createdDate - a.createdDate;
+              });
+              console.log(this.applications, "neweset");
+              break;
+            case 'fromOldest':
+              this.applications = array.sort(function (a, b) {
+                // Turn your strings into dates, and then subtract them
+                // to get a value that is either negative, positive, or zero.
+                return +new Date(a.createdDate) - +new Date(b.createdDate);
+              });
+              console.log(this.applications, "oldest");
+
+              break;
+            default:
+              break;
           }
         }
-  
+
         popover.dismiss();
       })
       return await popover.present();
-  
+
     } catch (error) {
       this.errorLogService.errorLog(new Error(JSON.stringify(error)));
     }
-    
+
   }
 
-  async moreInfo(ev,applicant) {
+  async moreInfo(ev, applicant) {
+    console.log(ev, applicant, "moreinfo");
     try {
       ev.stopPropagation()
-    const popover = await this.popoverController.create({
-      component: PopoverinfoComponent,
-      componentProps: {},
-      cssClass: 'popOverInfo',
-      event: ev,
-      // mode: 'ios',
-      translucent: true,
-      showBackdrop: true,
-      animated: true,
-    });
+      const popover = await this.popoverController.create({
+        component: PopoverinfoComponent,
+        componentProps: {},
+        cssClass: 'popOverInfo',
+        event: ev,
+        mode: 'ios',
+        translucent: true,
+        showBackdrop: true,
+        animated: true,
+      });
 
-    this.popoverInfo = this.global.popoverInfo.subscribe(data => {
+      this.popoverInfo = this.global.popoverInfo.subscribe(data => {
 
-      if (data) {
-        this.popoverInfoDetails(data,applicant);
-        popover.dismiss();
-      }
+        if (data) {
+          console.log(data, "mmmmmmmmmmm");
+          if (data == "details") {
+            this.router.navigate(['/detailsview'], { queryParams: { applicant: JSON.stringify(applicant) }, skipLocationChange: true });
+            popover.dismiss();
+          } else {
+            this.router.navigate(['/cibilcheck'], { skipLocationChange: true });
+            popover.dismiss();
+          }
 
-    });
-    return await popover.present();
+          // this.popoverInfoDetails(data,applicant);
+        }
+
+      });
+      return await popover.present();
     } catch (error) {
       this.errorLogService.errorLog(new Error(JSON.stringify(error)));
-      
+
     }
-    
+
   }
 
-  async popoverInfoDetails(data,applicant) {
+  async popoverInfoDetails(data, applicant) {
     try {
       const popoverDetails = await this.popoverController.create({
         component: PopoverdetailsComponent,
-        componentProps: { data: data,applicant:applicant },
+        componentProps: { data: data, applicant: applicant },
         cssClass: 'popInfoDeta',
         // event: ev,
         // mode: 'ios',
@@ -164,19 +241,20 @@ export class ExistingApplicationPage implements OnInit {
         showBackdrop: true,
         animated: true,
       });
-  
+
       this.popoverClose = this.global.popoverclose.subscribe(data => {
         popoverDetails.dismiss();
       })
       return await popoverDetails.present();
-      
+
     } catch (error) {
       this.errorLogService.errorLog(new Error(JSON.stringify(error)));
-      
+
     }
-    
+
 
   }
+
 
   ngOnDestroy() {
     this.filtersubscrip ? this.filtersubscrip.unsubscribe() : '';

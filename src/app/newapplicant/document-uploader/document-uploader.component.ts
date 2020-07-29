@@ -1,6 +1,6 @@
 import { ErrorHandlingService } from './../../error-handling.service';
 import { HandlingError } from './../../utility/ErrorHandling';
-import { AppDashboardPage } from './../app-dashboard/app-dashboard.page';
+import { AppDashboardPage } from './../app-dashboard.page';
 import { SqliteProvider } from './../../global/sqlite';
 import { SignatureComponent } from './../signature/signature.component';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
@@ -31,7 +31,7 @@ import { keyInsert } from './../keyinsert';
   templateUrl: './document-uploader.component.html',
   styleUrls: ['./document-uploader.component.scss'],
 })
-export class DocumentUploaderComponent implements OnInit, AfterViewInit {
+export class DocumentUploaderComponent implements OnInit {
   @ViewChild(GalleryDirective, { static: false }) gallery: GalleryDirective;
   @ViewChild(ProgressBarDirective, { static: false }) progressBar: ProgressBarDirective;
   @ViewChild(IonBackButtonDelegate, { static: false }) backButton: IonBackButtonDelegate;
@@ -55,7 +55,7 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
   imgTotal = 0;
   isRecorded = false;
   isSigned = false;
-  signatureImage = { name: '', native: '', webview: '', docType: '', docDescription: '' };
+  signatureImage = { name: '', native: '', webview: '', docType: '' };
   refId: any;
   id: any;
   docId: any;
@@ -63,6 +63,9 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
   slideCheck: Subscription;
   @Output() saveStatus = new EventEmitter();
   keyInsertSub: Subscription;
+  dataConnect: boolean;
+  networkType: any;
+  gallerysub: Subscription;
 
 
   constructor(private camera: Camera, public location: Location, public docChooser: DocChooser, public actionSheetController: ActionSheetController,
@@ -89,6 +92,14 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    window.addEventListener("online", () => {
+      this.dataConnect = navigator["onLine"];
+      this.networkType = navigator['network'];
+    })
+    window.addEventListener("offline", () => {
+      this.dataConnect = navigator["onLine"];
+      this.networkType = navigator['network'];
+    })
 
     this.keyInsertSub = this.global.dataInsert.subscribe(data => {
       if (data) {
@@ -102,7 +113,7 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
 
 
     this.errorMessage = this.errorHandling.otherDocumentFormValidation();
-    this.docUploadService.galleryObservable.subscribe(async val => {
+    this.gallerysub = this.docUploadService.galleryObservable.subscribe(async val => {
       this.pi = val.parentIndex;
       this.imgTotal = val.listArray.length;
     })
@@ -113,19 +124,8 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
         this.getDocs(val.parentIndex, true, val.childIndex);
       }
     })
-    this.location.onUrlChange((url: string, state: unknown) => {
-      this.getDocumentDetails();
-      this.changeDet.detach();
-      this.changeDet.detectChanges();
+    this.getDocumentDetails();
 
-      // let test = this.dlist.slice();
-      // this.dlist = [];
-      // console.log(test,"test id");
-      // this.dlist = test;
-      // console.log(this.dlist,"dlist inisde url");
-
-      // setInterval(() => { this.imgTotal = this.dlist[this.pi].imgs.length; }, 100)
-    })
 
     this.slideCheck = this.dashboard.value.subscribe(slide => {
       if (slide == "document") {
@@ -134,20 +134,15 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
         this.id = this.global.getId();
       }
     })
-  }
-  ngAfterViewInit() {
-  }
 
 
-  ionViewDidEnter() {
+    this.global.documentStatus.subscribe(data => {
+      if (data) {
+        this.docUploadCount();
+      }
+    })
   }
 
-
-  onClick() {
-  }
-
-  deleteFile() {
-  }
 
   // multiple document upload
   async getDocs(listIndex, remove = false, childIndex, camera = false, sign = false) {
@@ -158,14 +153,19 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
     };
     if (remove) {
       try {
+        this.sqlite.uploadDocEntryDelete(this.dlist[listIndex].imgs[childIndex].docType, this.applicantType, this.refId, this.id, this.dlist[listIndex].imgs[childIndex].name);
         let delArr = this.dlist[listIndex].imgs.splice(childIndex, 1);
+        console.log(this.dlist[listIndex].imgs[childIndex], "remove");
         if (this.dlist[listIndex].otherDocumentType == 'Signature') {
+          this.sqlite.documentImageDelete(this.dlist[listIndex].otherDocumentType, this.applicantType, this.refId, this.id);
           this.isSigned = false;
         }
         this.docUploadService.galleryView(this.dlist[listIndex].imgs, listIndex);
         let delIndex = this.imageResponse.findIndex(val => val.webview == delArr[0].webview);
         if (delIndex !== -1) {
+
           this.imageResponse.splice(delIndex, 1);
+          console.log(this.dlist[listIndex], "ttttttttttttttttt");
           this.arrangeImages(this.imageResponse);
         }
 
@@ -187,14 +187,17 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
           this.dlist[listIndex].length = this.dlist[listIndex].imgs.length;
           this.docUploadService.galleryView(this.dlist[listIndex].imgs, listIndex);
           this.imageResponse = this.imageResponse.concat(docs);
-          this.isSelected = true;
+          this.sqlite.uploadDocInsertion(docs[0], this.applicantType, this.refId, this.id);
+
+          // this.isSelected = true;
         } else if (sign) {
           this.dlist[listIndex].imgs.push(this.signatureImage);
           this.docUploadService.galleryView(this.dlist[listIndex].imgs, listIndex);
           this.signatureImage.docType = this.dlist[listIndex].otherDocumentType;
-          this.signatureImage.docDescription = this.dlist[listIndex].otherDescription;
+          // this.signatureImage.docDescription = this.dlist[listIndex].otherDescription;
+          this.sqlite.uploadDocInsertion(this.signatureImage, this.applicantType, this.refId, this.id);
           this.imageResponse = this.imageResponse.concat([this.signatureImage]);
-          this.isSelected = true;
+          // this.isSelected = true;
         }
         else {
           const docs = await this.docChooser.getDocs(options);
@@ -209,9 +212,18 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
           // this.docUploadService.tempArray = this.dlist;
           this.docUploadService.galleryView(this.dlist[listIndex].imgs, listIndex);
           this.imageResponse = this.imageResponse.concat(docs);
-          this.isSelected = true;
+          // this.isSelected = true;
+          console.log(docs, "selected docs");
+          for (let image of docs) {
+            this.sqlite.uploadDocInsertion(image, this.applicantType, this.refId, this.id);
+          }
         }
+        // for (let image of this.imageResponse) {
+        //   this.sqlite.uploadDocEntryDelete(image.docType, this.applicantType, this.refId, this.id, image.name);
+        //   this.sqlite.uploadDocInsertion(image, this.applicantType, this.refId, this.id);
+        // }
         this.arrangeImages(this.imageResponse);
+        this.docUploadCount();
       } catch (error) {
         console.log(error, 'getDocs functon err');
       }
@@ -260,8 +272,9 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
 
 
   async viewDoc(document, parentIndex) {
+    console.log(document, "iamge view");
     if (document.length) {
-      this.router.navigate(['gallery']).then(val => {
+      this.router.navigate(['gallery'], { skipLocationChange: true }).then(val => {
         if (val) {
           this.docUploadService.galleryView(document, parentIndex);
         }
@@ -271,46 +284,68 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
     }
   }
 
+  async docUploadCount() {
+    let uploadDocument = await this.sqlite.getUploadDoc(this.applicantType, this.refId, this.id, 'N');
+    console.log(uploadDocument, "uploaddoucment");
+    (uploadDocument.length !== 0) ? this.isSelected = true : this.isSelected = false;
+
+  }
+
   async docUpload(): Promise<FileUploadResult | FileTransferError | DocUploadResponse[]> {
-    const upload = await this.docUploadService.uploadDocument(this.progressBar, { uploadType: "single", endPoint: "", file: this.imageResponse });
-    return upload;
+    let uploadDocument = await this.sqlite.getUploadDoc(this.applicantType, this.refId, this.id, 'N');
+    let successDoc = await this.sqlite.getUploadDoc(this.applicantType, this.refId, this.id, 'Y');
+    if (this.dataConnect) {
+      const upload = await this.docUploadService.uploadDocument(this.progressBar, { uploadType: "single", endPoint: "", file: uploadDocument, successCount: (successDoc.length >= 1) ? successDoc : [] });
+      return upload;
+    } else {
+      this.global.presentAlert("Alert", "Please enable network connection!");
+    }
   }
 
 
   otherDocumentSave(docValue) {
-
-    let docName = docValue.otherDocumentType;
-    let docNameIndex = this.dlist.findIndex(val => val.otherDocumentType == docName);
-    let aadharIndex = this.dlist.map(val => val.otherDocumentType).lastIndexOf('Aadhar Document');
-    if (this.dlist.length != 0) {
-      if (this.dlist.findIndex(val => val.otherDocumentType == docValue.otherDocumentType) !== -1) {
-        this.globalService.presentAlert("Alert", `${docValue.otherDocumentType} already saved`);
-      } else {
-        docValue.index = this.trickIndex;
-        this.trickIndex++;
-        docValue.length = 0;
-        docValue.imgs = [];
-        this.sqlite.documentInsertion(docValue, this.applicantType, this.refId, this.id);
-        this.dlist.push(docValue);
-        if (this.otherDocument.valid) {
-          this.documentType = docValue.otherDocumentType;
-          this.documnetDescription = docValue.otherDescription;
+    if (docValue) {
+      let saveStatus;
+      saveStatus = this.global.getEditSaveStatus();
+      if (saveStatus == "personalSaved") {
+        let docName = docValue.otherDocumentType;
+        let docNameIndex = this.dlist.findIndex(val => val.otherDocumentType == docName);
+        let aadharIndex = this.dlist.map(val => val.otherDocumentType).lastIndexOf('Aadhar Document');
+        if (this.dlist.length != 0) {
+          if (this.dlist.findIndex(val => val.otherDocumentType == docValue.otherDocumentType) !== -1) {
+            this.globalService.presentAlert("Alert", `${docValue.otherDocumentType} already saved`);
+          } else {
+            docValue.index = this.trickIndex;
+            this.trickIndex++;
+            docValue.length = 0;
+            docValue.imgs = [];
+            this.sqlite.documentInsertion(docValue, this.applicantType, this.refId, this.id);
+            this.dlist.push(docValue);
+            if (this.otherDocument.valid) {
+              this.documentType = docValue.otherDocumentType;
+              // this.documnetDescription = docValue.otherDescription;
+            }
+          }
+        } else {
+          docValue.index = this.trickIndex;
+          this.trickIndex++;
+          docValue.length = 0;
+          docValue.imgs = [];
+          this.sqlite.documentInsertion(docValue, this.applicantType, this.refId, this.id);
+          this.dlist.push(docValue);
+          if (this.otherDocument.valid) {
+            this.documentType = docValue.otherDocumentType;
+            // this.documnetDescription = docValue.otherDescription;
+          }
         }
+
+        this.otherDocument.reset();
+      } else {
+        this.global.presentAlert("Alert", "Please fill personal details first!");
       }
     } else {
-      docValue.index = this.trickIndex;
-      this.trickIndex++;
-      docValue.length = 0;
-      docValue.imgs = [];
-      this.sqlite.documentInsertion(docValue, this.applicantType, this.refId, this.id);
-      this.dlist.push(docValue);
-      if (this.otherDocument.valid) {
-        this.documentType = docValue.otherDocumentType;
-        this.documnetDescription = docValue.otherDescription;
-      }
+      this.global.presentAlert("Alert", "Please select document!");
     }
-
-    this.otherDocument.reset();
   }
 
   async docActionSheet(docIndex, remove, index, document) {
@@ -463,9 +498,9 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
               text: 'Yes',
               handler: () => {
                 let deletedVideo = this.dlist[docIndex].imgs.pop();
-                this.sqlite.documentImageDelete(this.dlist[docIndex].otherDocumentType, this.applicantType, this.refId, this.id);
+                this.sqlite.docEntryDelete(this.dlist[docIndex].otherDocumentType, this.applicantType, this.refId, this.id);
+                this.getDocumentDetails();
 
-                this.isRecorded = false;
               }
             }
           ]
@@ -477,63 +512,111 @@ export class DocumentUploaderComponent implements OnInit, AfterViewInit {
       }
     } else {
       if (play) {
-        this.streaming.playVideo(this.dlist[index].imgs[0].webview, { successCallback: () => console.log('object'), errorCallback: e => console.log(e), controls: true, shouldAutoClose: true });
+        if (this.dlist[index].imgs.length) {
+          this.streaming.playVideo(this.dlist[index].imgs[0].webview, { successCallback: () => console.log('object'), errorCallback: e => console.log(e), controls: true, shouldAutoClose: true });
+        } else {
+          this.global.presentAlert('Alert', 'Please add video to view');
+        }
       } else {
-        let lastIndex;
-        const video = await this.mediaCap.captureVideo({ duration: 60, quality: 1 });
-        lastIndex = video[0].fullPath.lastIndexOf('/') + 1;
-        let filePath = video[0].fullPath.substring(0, lastIndex);
-        let fileName = video[0].fullPath.substring(lastIndex);
-        const move = await this.file.moveFile(filePath, fileName, this.file.externalApplicationStorageDirectory, fileName);
-        let webViewLink = this.webView.convertFileSrc(move.nativeURL);
-        this.dlist[docIndex].imgs.push({ name: fileName, native: move.nativeURL, webview: webViewLink });
-        this.isRecorded = true;
-        // this.sqlite.documentImageDelete(image.docType,this.applicantType, this.refId, this.id);
-        this.sqlite.documentImageInsertion(this.dlist[docIndex], this.applicantType, this.refId, this.id);
+        if (this.dlist[index].imgs.length) {
+          this.global.presentAlert('Alert', 'Video already added!');
+        } else {
+          let lastIndex;
+          const video = await this.mediaCap.captureVideo({ duration: 60, quality: 1 });
+          lastIndex = video[0].fullPath.lastIndexOf('/') + 1;
+          let filePath = video[0].fullPath.substring(0, lastIndex);
+          let fileName = video[0].fullPath.substring(lastIndex);
+          const move = await this.file.moveFile(filePath, fileName, this.file.externalApplicationStorageDirectory, fileName);
+          let webViewLink = this.webView.convertFileSrc(move.nativeURL);
+          this.dlist[docIndex].imgs.push({ name: fileName, webview: move.nativeURL, webviews: webViewLink });
+          this.isRecorded = true;
+          // this.sqlite.documentImageDelete(image.docType,this.applicantType, this.refId, this.id);
+          this.sqlite.documentImageInsertion(this.dlist[docIndex], this.applicantType, this.refId, this.id);
+        }
       }
     }
   }
 
 
   async signature(docIndex, remove, index) {
-    const signModal = await this.modalController.create({
-      component: SignatureComponent,
-      cssClass: 'sign-modal',
-      showBackdrop: true,
-      backdropDismiss: false
-    });
-    await signModal.present()
-    const value = await signModal.onDidDismiss();
-    if (value.data.signature) {
-      this.isSigned = true;
-      this.signatureImage.name = 'Signature';
-      this.signatureImage.native = value.data.image;
-      this.signatureImage.webview = value.data.image;
-      this.getDocs(docIndex, false, index, false, true);
+    console.log(this.dlist[index], "insign");
+    if (this.dlist[index].imgs.length) {
+      this.global.presentAlert('Alert', 'Signature already added!');
+    } else {
+      const signModal = await this.modalController.create({
+        component: SignatureComponent,
+        cssClass: 'sign-modal',
+        showBackdrop: true,
+        backdropDismiss: false
+      });
+      await signModal.present()
+      const value = await signModal.onDidDismiss();
+      if (value.data.signature) {
+        this.isSigned = true;
+        this.signatureImage.name = 'Signature';
+        this.signatureImage.native = value.data.image;
+        this.signatureImage.webview = value.data.image;
+        console.log(this.signatureImage, "signature");
+        this.getDocs(docIndex, false, index, false, true);
+      }
     }
   }
 
   async getDocumentDetails() {
     let getDoc = await this.sqlite.getDocuments(this.refId, this.id, this.applicantType);
     let imageRes = await this.sqlite.getImageResponse(this.refId, this.id, this.applicantType);
+    console.log(imageRes, "imageresoponse");
     (imageRes) ? this.imageResponse = imageRes : this.imageResponse = [];
     this.dlist = [];
+    console.log(getDoc, "inside doc page");
     if (getDoc.length) {
       this.dlist = await getDoc;
-      (getDoc[0].otherDocumentType == "Video") ? this.isRecorded = true : this.isRecorded = false;
+      for (let others in getDoc) {
+        (getDoc[others].otherDocumentType == "Video") ? this.isRecorded = true : this.isRecorded = false;
+        (getDoc[others].otherDocumentType == "Signature") ? this.isSigned = true : this.isSigned = false;
+      }
       this.saveStatus.emit({ value: "documentTick", slide: "N" });
       this.refId = getDoc[0].refId;
       this.id = getDoc[0].id;
-
+    } else {
+      this.saveStatus.emit({ value: "documentTick", slide: "Y" });
     }
+    this.docUploadCount();
+
   }
 
   deleteSign() {
 
   }
 
+  async documentDelete(docType) {
+    let alert = await new AlertController().create({
+      header: "Alert",
+      message: `Are you sure want to delete ${docType}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('cancel');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            this.sqlite.docEntryDelete(docType, this.applicantType, this.refId, this.id);
+            this.sqlite.uploadDocEntryDelete(docType, this.applicantType, this.refId, this.id);
+            this.getDocumentDetails();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   ngOnDestroy() {
     this.keyInsertSub ? this.keyInsertSub.unsubscribe() : "";
+    this.gallerysub ? this.gallerysub.unsubscribe() : "";
   }
 
 }

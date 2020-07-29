@@ -3,7 +3,8 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { AlertController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { MenuController, LoadingController } from '@ionic/angular';
+import { MenuController, LoadingController, ToastController } from '@ionic/angular';
+import { Device } from "@ionic-native/device/ngx";
 import { Subject } from 'rxjs'
 
 
@@ -17,7 +18,7 @@ export class GlobalService {
   popoverInfo = new Subject<any>();
   popoverclose = new Subject<any>();
   dataInsert = new Subject<any>();
-
+  profileUpdate = new Subject<any>();
 
   alertCtrl = new AlertController();
   applicantType: any;
@@ -28,8 +29,13 @@ export class GlobalService {
   loading: any;
   isLoading: boolean = false;
   @Output() saveStatus = new EventEmitter();
+  _scanTypeSelected = new Subject<any>();
+  documentStatus = new Subject<any>();
 
-  constructor(public translate: TranslateService, public router: Router, public loadingController: LoadingController) { }
+
+  constructor(public translate: TranslateService, public router: Router, public loadingController: LoadingController, public toastController: ToastController, public device: Device) {
+
+  }
 
 
   setApplicantType(value) {
@@ -73,6 +79,10 @@ export class GlobalService {
     return this.checkSave;
   }
 
+  getDeviceId() {
+    return this.device.uuid;
+  }
+
   async presentAlert(title: string, subtitle: string, msg?: string) {
     // console.log(this.translate.instant(subtitle, "tesssssssssssssssst"));
     let header, subHeader;
@@ -82,14 +92,15 @@ export class GlobalService {
         header: res[key[0]],
         subHeader: res[key[1]],
         message: (res[key[2]]) ? res[key[2]] : '',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
       await alert.present();
+      
     })
 
   }
 
-  async confirmAlert(title, subtitle) {
+  async confirmAlert(title, subtitle, page?) {
     let alert = await new AlertController().create({
       header: title,
       message: subtitle,
@@ -104,9 +115,15 @@ export class GlobalService {
         }, {
           text: 'Sure',
           handler: () => {
-            new MenuController().close();
-            this.logout.next('logout');
-            this.router.navigate(["/home"])
+            if (page == 'dashboard') {
+              navigator["app"].exitApp();
+
+            } else {
+
+              new MenuController().close();
+              this.logout.next('logout');
+              this.router.navigate(["/home"])
+            }
             //localStorage.setItem('logout', 'success');
           }
         }
@@ -148,6 +165,17 @@ export class GlobalService {
   dataInsertForm(value) {
     this.dataInsert.next(value);
   }
+
+
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+
 
   // async confirmAlertSave(title, subtitle,tick) {
   //   let alert = await this.alertCtrl.create({

@@ -8,7 +8,7 @@ import { SqliteProvider } from './../../global/sqlite';
 import { MasterData } from "../masterservice";
 import { HandlingError } from "../../utility/ErrorHandling";
 import { GlobalService } from "../../global/global.service";
-import { AppDashboardPage } from '../app-dashboard/app-dashboard.page';
+import { AppDashboardPage } from '../app-dashboard.page';
 import { keyInsert } from './../keyinsert';
 
 

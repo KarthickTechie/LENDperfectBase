@@ -1,38 +1,58 @@
 <ion-app>
   <ion-menu side="start" menuId="first" contentId="content1">
     <ion-content>
-      <div class="userdetails">
+      <!-- <div class="userdetails"> -->
 
         <!-- <div class="ion-text-end power">
           <ion-icon name="power" (click)="logout()"></ion-icon>
         </div> -->
 
-        <div class="userdet">
+        <!-- <div class="userdet">
           <ion-avatar class="avatarImg">
             <img src="assets/imgs/userpro.png">
           </ion-avatar>
 
-          <div class="name">erika costell</div>
-          <div class="custId">@erika123</div>
+          <div class="name">Karthick</div>
+          <div class="custId">@kart123</div>
 
         </div>
       </div>
       <ion-list lines="none" *ngFor="let pages of navigate">
         <ion-menu-toggle>
-          <ion-item [routerLink]="pages.url" routerDirection="forward" class="no-padding">
+          <ion-item [routerLink]="pages.url" routerDirection="root" skipLocationChange class="no-padding">
             <ion-icon [name]="pages.icon" slot="start"></ion-icon>
             {{pages.title | translate}}
           </ion-item>
         </ion-menu-toggle>
+      </ion-list> -->
+
+      <div class="menu-header-bg"></div>
+      <div class="header-content">
+        <img src="../assets/imgs/userpro.png" alt="">
+        <ion-label>
+          <h2>Karthick</h2>
+          <p>@erika123</p>
+        </ion-label>
+      </div>
+
+      <ion-list class="menu-items" lines="none" *ngFor="let pages of navigate">
+        <ion-menu-toggle>
+          <ion-item [routerLink]="pages.url" routerLinkActive="active" routerDirection="root" skipLocationChange>
+            <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+            {{pages.title | translate}}
+          </ion-item>
+        </ion-menu-toggle>
+
       </ion-list>
 
-
     </ion-content>
+
+
     <ion-footer style="box-shadow: 0 5px 5px 5px #333;">
       <ion-toolbar>
         <ion-menu-toggle>
           <div class="container">
-            <ion-icon size="large" name="call-outline"></ion-icon>
+            <a style="text-align: center;" href="tel:9940362579"><ion-icon size="large" name="call-outline"></ion-icon></a>
             <ion-icon size="large" name="log-out" (click)="logout()"></ion-icon>
           </div>
           <!-- <ion-title class="profiletitle">Logout -->

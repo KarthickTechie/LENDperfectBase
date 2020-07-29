@@ -1,4 +1,6 @@
-import { GlobalService } from './../../global/global.service';
+import { SqliteProvider } from './../global/sqlite';
+import { DocUploadService } from './../global/doc-upload.service';
+import { GlobalService } from '../global/global.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -37,19 +39,39 @@ export class AppDashboardPage implements OnInit {
   kycCheck: boolean = false;
   loanCheck: boolean = false;
   documentCheck: boolean = false;
-  dataInsertion : boolean;
+  dataInsertion: boolean;
   applicantTitle = "New Applicant";
-
+  updatePic = false;
+  docView: boolean = false;
   constructor(private camera: Camera, public docChooser: DocChooser, public actionSheetController: ActionSheetController,
-    public modalController: ModalController, public activateRoute: ActivatedRoute, public global: GlobalService) {
-    this.userdetail = 'personal'
+    public modalController: ModalController, public activateRoute: ActivatedRoute, public global: GlobalService, public router: Router,
+    public docUpLoadService: DocUploadService, public sqlite: SqliteProvider) {
+    this.userdetail = 'personal';
+    this.global.profileUpdate.subscribe(data => {
+      console.log(data, "dashboard");
+      if (data.first) {
+        this.updatePic = data.update;
+        this.profImg = false;
+        this.presentActionSheet();
+      }
+    })
+
+    
+if(!this.docView && !this.activateRoute.snapshot.queryParamMap.get("loader")){
+  this.global.globalLodingPresent("Please wait...");
+}
+
   }
 
   ngOnInit() {
+
+    if (this.activateRoute.snapshot.queryParamMap.get("gallery")) {
+      this.userdetail = "document";
+    }
     // this.applicantType = this.activateRoute.snapshot.queryParamMap.get("applicantType");
-    if(this.activateRoute.snapshot.queryParamMap.get("dataInsert")){
-    this.dataInsertion = true;
-    }else{
+    if (this.activateRoute.snapshot.queryParamMap.get("dataInsert")) {
+      this.dataInsertion = true;
+    } else {
       this.dataInsertion = false;
     }
     this.profPic = this.global.getProfileImage();
@@ -77,14 +99,37 @@ export class AppDashboardPage implements OnInit {
       ];
     }
 
-    if(this.global.getApplicantType() == "A"){
+    if (this.global.getApplicantType() == "A") {
       this.applicantTitle = "New Applicant";
-    }else if(this.global.getApplicantType() == "C"){
+    } else if (this.global.getApplicantType() == "C") {
       this.applicantTitle = " Co-Applicant";
-    }else{
+    } else {
       this.applicantTitle = "Gurantor";
     }
+    console.log(this.global.getRefId(), "refid dashboard");
+    console.log(this.global.getId(), "id dashboard");
+    console.log(this.global.getApplicantType(), "applicantType dashboard");
 
+    this.activateRoute.queryParamMap.subscribe(data => {
+      console.log(data, "dashboard");
+      console.log(data['gallery'], "dashboard");
+      if (data['params'].document) {
+        console.log(data['params'].document, "inside if");
+        this.userdetail = "document";
+        this.docView = true;
+        // this.slider.slideTo(4);
+
+      } else {
+        this.docView = false;
+      }
+    })
+
+
+  
+  }
+
+  ionViewDidEnter() {
+    
   }
 
   segmentChanged(event: any) {
@@ -117,18 +162,21 @@ export class AppDashboardPage implements OnInit {
   async presentActionSheet() {
     if (this.profImg == false) {
       const actionSheet = await this.actionSheetController.create({
-        header: 'Chooser',
+        header: 'Chooser',backdropDismiss:true,
         buttons: [{
           text: 'Camera',
           icon: 'camera',
           handler: () => {
             this.getProfilePic(1)
+            actionSheet.dismiss([], 'selected').then(val => console.log(val)).catch(err => console.log(err))
+
           }
         }, {
           text: 'Gallery',
           icon: 'image',
           handler: () => {
             this.getProfilePic(0)
+            actionSheet.dismiss([], 'selected').then(val => console.log(val)).catch(err => console.log(err))
           }
         }, {
           text: 'Cancel',
@@ -140,28 +188,33 @@ export class AppDashboardPage implements OnInit {
         }]
       });
       await actionSheet.present();
-    }
-    else {
-      this.modal = await this.modalController.create({
-        component: CropDocComponent,
-        cssClass: 'my-custom-modal-css',
-        componentProps: {
-          'doc': {
-            doc: this.profPic,
-            view: true
-          }
-        }, showBackdrop: true, backdropDismiss: true
-      });
-
-      await this.modal.present();
-      let updateImg = await this.modal.onDidDismiss();
-      if (updateImg.data) {
-        if (updateImg.data.updateProfileIMAGE) {
-          this.profImg = false;
-          this.presentActionSheet();
+    } else {
+      this.router.navigate(['/gallery'], { skipLocationChange: true }).then(val => {
+        if (val) {
+          this.sqlite.updateProfileImage(this.profPic,this.global.getApplicantType(),this.global.getRefId(),this.global.getId());
+          this.docUpLoadService.galleryView([this.profPic], 0, true);
         }
+      });
+      // this.modal = await this.modalController.create({
+      //   component: CropDocComponent,
+      //   cssClass: 'my-custom-modal-css',
+      //   componentProps: {
+      //     'doc': {
+      //       doc: this.profPic,
+      //       view: true
+      //     }
+      //   }, showBackdrop: true, backdropDismiss: true
+      // });
 
-      }
+      // await this.modal.present();
+      // let updateImg = await this.modal.onDidDismiss();
+      // if (updateImg.data) {
+      //   if (updateImg.data.updateProfileIMAGE) {
+      //     this.profImg = false;
+      //     this.presentActionSheet();
+      //   }
+
+      // }
     }
   }
 
@@ -184,6 +237,7 @@ export class AppDashboardPage implements OnInit {
       // this.imageResponse.push(docs);
       this.profPic = docs;
       this.global.setProfileImage(docs);
+      this.docUpLoadService.galleryView([this.profPic], 0, true);
       this.profImg = true;
     }).catch(error => {
       console.log(error);
@@ -223,11 +277,23 @@ export class AppDashboardPage implements OnInit {
         if (slide == "Y") {
           this.slider.slideTo(4);
         } else {
-          this.slider.slideTo(0);
+          // this.slider.slideTo(0);
         }
         break;
       case "documentTick":
-        this.documentCheck = true;
+        if (slide == "N") {
+          this.documentCheck = true;
+        } else {
+          this.documentCheck = false;
+        }
+        if (this.docView) {
+          if (this.global.getApplicantType() == "A") {
+            this.slider.slideTo(4);
+          } else {
+            this.slider.slideTo(3);
+          }
+        this.global.globalLodingDismiss();
+        }
         break;
 
     }

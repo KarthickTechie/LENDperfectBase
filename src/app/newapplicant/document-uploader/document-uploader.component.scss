@@ -1,6 +1,4 @@
-.container{
-    width: 95vw;
-}
+
 
 .sc-ion-buttons-md-h {
   display:block;
@@ -109,13 +107,40 @@
     padding: 2px;
     font-weight: bold;
     position: absolute;
-    right: 28px;
     top: 0px;
     z-index: 2;
   }
 
-  .textSize{
-    font-size: 1.1rem;
-    margin-top:0.5rem;
-    text-align: left;
+.textSize {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+@media only screen and (max-width: 412px) {
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    font-size: 14px;
   }
+  .segbarbadge{
+    right: 28px;
+  }
+  .container{
+    width: 95vw;
+}
+}
+@media only screen and (min-width: 413px) {
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    font-size: 110%;
+  }
+  .segbarbadge{
+    right: 50px;
+  }
+  .container{
+    width: 95vw;
+    height: 100vh;
+}
+}
+
+

@@ -42,7 +42,7 @@ export class ErrorHandlingService {
     return arr;
   }
 
-  async errorLog(refErr: Error) {
+  async errorLog(refErr:Error | ReferenceError | TypeError) {
     let checkfile: boolean;
     try {
       checkfile = await this.file.checkFile(this.file.externalApplicationStorageDirectory + "errors/", "errorlog.txt");
@@ -61,6 +61,7 @@ export class ErrorHandlingService {
           fileWriter.onwriteend = (evt) => {
             this.file.readAsText(this.file.externalApplicationStorageDirectory + 'errors/', 'errorLog.txt').then(val => {
             }).catch(err => console.log(err));
+            this.errorLog(refErr);
           };
         },
           err => console.log(err));
@@ -78,9 +79,10 @@ export class ErrorHandlingService {
       try {
         filewrite = await this.file.writeExistingFile(this.file.externalApplicationStorageDirectory + 'errors/', 'errorLog.txt', `
         ${textContent}
-        ${Date()}
-        ${refErr.stack}`);
-      } catch (error) {
+
+        *****------*****
+         ${Date()}
+        ${refErr.stack}`);      } catch (error) {
         console.log(error);
       }
     }

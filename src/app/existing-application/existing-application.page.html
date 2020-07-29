@@ -4,6 +4,11 @@
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
     <ion-title>{{"Existing Application" | translate}}</ion-title>
+
+    <ion-buttons slot="end" style="padding-right: 4px;" (click)="presentPopover($event, 'view')">
+      <ion-icon name="options-outline" style="zoom: 1.1"></ion-icon> <span style="padding-left: 6px;font-size: 110%;">view</span>
+    </ion-buttons>
+
   </ion-toolbar>
   <ion-item-group class="filterItems">
     <ion-item-divider sticky>
@@ -22,43 +27,47 @@
 
 <ion-content>
 
+
   <div *ngIf="applications.length != 0">
-    <div *ngFor="let app of applications | status:filterValue as count">
-      <div class="existPlaceholder" *ngIf="!app">
+    <ng-container *ngIf="( applications | status : filterValue) as result">
+      <div class="girdcontainer" #view>
+        <div class="profilehead" (click)="existingApp(app)" *ngFor="let app of result">
+          <ion-card class="profileinfo">
+            <ion-card class="profileimg"><img [src]="app.profileImage" /></ion-card>
+            <ion-icon class="moredetails" (click)="moreInfo($event,app)" name="ellipsis-vertical-outline"></ion-icon>
+            <div class="profilebody">
+              <h6 class="right_content_text">
+                <span>
+                <ion-icon name="person"></ion-icon>
+              </span>{{app.firstName}}</h6>
+              <h6 class="right_content_text"><span>
+                <ion-icon name="cart-outline"></ion-icon>
+              </span>{{app.interestType}}</h6>
+              <h6 *ngIf="app.submitStatus == 'N'" class="right_content_text"><span>
+                <ion-icon name="thumbs-down"></ion-icon>
+              </span>Not Submitted</h6>
+              <h6 *ngIf="app.submitStatus == 'Y'" class="right_content_text"><span>
+                <ion-icon name="thumbs-up"></ion-icon>
+              </span>Submitted</h6>
+              <h6 class="right_content_text"><span>
+                <ion-icon name="cash"></ion-icon>
+              </span>{{app.amountRequested}}</h6>
+              <h6 *ngIf="app.submitStatus == 'N'" class="right_content_text">{{app.referenceNumber}}</h6>
+            </div>
+          </ion-card>
+        </div>
+      </div>
+      <div class="existPlaceholder" *ngIf="result.length == 0">
         <h2>No Records found</h2>
       </div>
-      <ion-card class="container2" (click)="existingApp(app)" *ngIf="app">
-        <div class="left_content">
-          <img class="left_content_img" [src]="app.profileImage">
-        </div>
-        <div class="right_content">
-          <h6 class="right_content_text"><span>
-              <ion-icon name="person"></ion-icon>
-            </span>{{app.firstName}}</h6>
-          <h6 class="right_content_text"><span>
-              <ion-icon name="cart-outline"></ion-icon>
-            </span>{{app.interestType}}</h6>
-          <h6 *ngIf="app.submitStatus == 'N'" class="right_content_text"><span>
-              <ion-icon name="thumbs-down"></ion-icon>
-            </span>Not Submitted</h6>
-          <h6 *ngIf="app.submitStatus == 'Y'" class="right_content_text"><span>
-              <ion-icon name="thumbs-up"></ion-icon>
-            </span>Submitted</h6>
-          <h6 class="right_content_text"><span>
-              <ion-icon name="cash"></ion-icon>
-            </span>{{app.amountRequested}}</h6>
-          <h6 *ngIf="app.submitStatus == 'N'" class="right_content_text">{{app.referenceNumber}}</h6>
-
-          <ion-icon class="moredetails" (click)="moreInfo($event,app)" name="ellipsis-horizontal-outline"></ion-icon>
-
-        </div>
-      </ion-card>
-    </div>
+    </ng-container>
   </div>
-  
+
+
   <div class="existPlaceholder" *ngIf="applications.length == 0">
     <h2>No Records found</h2>
   </div>
+
 
 
 </ion-content>

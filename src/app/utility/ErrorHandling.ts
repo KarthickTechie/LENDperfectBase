@@ -84,6 +84,12 @@ export class HandlingError {
     chooseProofDocument() {
         this.global.presentAlert(`Alert`, `Please Select KYC Proof Type and Proof Document`);
     }
+    backupListExceeds() {
+        this.global.presentAlert(`Alert`, `Maximum 10 Applications can be select to Back-up process`);
+    }
+    backupListMinCount() {
+        this.global.presentAlert(`Alert`, `Maximum 1 Application needed to start the Back-up process`);
+    }
 
 
     personalvalid() {
@@ -208,14 +214,16 @@ export class HandlingError {
 
     kycFormValidation() {
         return {
-            kycProofType: [
+            proofType: [
                 { type: "required", message: "Select Proof Type." },
             ],
-            kycIdType: [
+            proofDocument: [
                 { type: "required", message: "Select Proof Document." },
             ],
-            kycIdvalue: [
+            proofvalue: [
                 { type: "required", message: "Enter Proof Value." },
+                { type: "pattern", message: "Enter Valid Proof Value." }
+
             ]
         }
     }
@@ -270,10 +278,11 @@ export class HandlingError {
 
     otherDocumentFormValidation() {
         return {
-            otherDocument: [
+            otherDocumentType: [
                 { type: "required", message: "Select Document Type." }
             ],
             otherDescription: [
+                { type: "required", message: "Enter Document Description." },
                 { type: "pattern", message: "Enter Valid Document Description." }
             ]
         }

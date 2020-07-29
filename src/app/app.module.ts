@@ -1,3 +1,5 @@
+import { ViewGalleryPageModule } from './view-gallery/view-gallery.module';
+import { HandlingError } from './utility/ErrorHandling';
 import { VideoPlayer } from "@ionic-native/video-player/ngx";
 import { MediaCapture } from "@ionic-native/media-capture/ngx";
 import { StreamingMedia } from "@ionic-native/streaming-media/ngx";
@@ -25,6 +27,7 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { CropDocComponent } from './Components/crop-doc/crop-doc.component';
 import { DocumentUploadPageModule } from './document-upload/document-upload.module';
 import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
@@ -35,6 +38,9 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { HTTP } from '@ionic-native/http/ngx';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { KeyValuesPipe } from './popoverdetails/key-values.pipe';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -59,7 +65,8 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }), HttpClientModule,
     DocumentUploadPageModule,
-    SignaturePadModule
+    SignaturePadModule,
+    ViewGalleryPageModule
   ],
   providers: [
     StatusBar,
@@ -77,7 +84,15 @@ export function createTranslateLoader(http: HttpClient) {
     Device,
     FileTransfer,
     HTTP,
-    Crop, JJzip, AndroidPermissions, MediaCapture, StreamingMedia, VideoPlayer,
+    Crop,
+    JJzip,
+    AndroidPermissions,
+    MediaCapture,
+    StreamingMedia,
+    VideoPlayer,
+    LocalNotifications,
+    CallNumber,
+    HandlingError,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [TranslateModule],

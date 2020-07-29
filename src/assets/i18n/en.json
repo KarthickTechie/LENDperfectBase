@@ -219,5 +219,8 @@
     "Description": "Description",
     "Attach": "Attach",
     "View": "View",
-    "Doc-Type": "Doc-Type"
+    "Doc-Type": "Doc-Type",
+    "Backup":"Backup",
+    "Sync":"Sync",
+    "Add":"Add"
 }

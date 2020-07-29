@@ -1,3 +1,4 @@
+import { SqliteProvider } from './sqlite';
 import { JJzip } from 'ionic-native-j-jzip/ngx';
 import { ProgressBarDirective } from '../document-upload/progress-bar.directive';
 import { Base64 } from '@ionic-native/base64/ngx';
@@ -34,6 +35,7 @@ export class DocUploadService implements OnDestroy {
     private http: HttpClient,
     public compFactoryResolver: ComponentFactoryResolver,
     public errorHandling: ErrorHandlingService,
+    public sqlite: SqliteProvider
   ) { }
   async copyfiles(files) {
     let arr = []
@@ -66,7 +68,7 @@ export class DocUploadService implements OnDestroy {
           this.errorHandling.errorLog(new Error(JSON.stringify(error)));
         }
         try {
-          const single = await this.singleDocUpload(encodedImage, progressBar);
+          const single = await this.singleDocUpload(encodedImage, progressBar,options.successCount);
           return single;
         } catch (error) {
           this.errorHandling.errorLog(new Error(JSON.stringify(error)));
@@ -81,7 +83,8 @@ export class DocUploadService implements OnDestroy {
     return this.networkStatus;
   }
 
-  async singleDocUpload(data: any[], progressBar: ProgressBarDirective): Promise<DocUploadResponse[]> {
+  async singleDocUpload(data: any[], progressBar: ProgressBarDirective,successCount?): Promise<DocUploadResponse[]> {
+    console.log(data, "ddddd");
     let resArr = [];
     const progressComponent: ComponentFactory<ProgressWidgetComponent> = this.compFactoryResolver.resolveComponentFactory(ProgressWidgetComponent);
     const hostViewContainer: ViewContainerRef = progressBar.viewContainerRef;
@@ -90,11 +93,13 @@ export class DocUploadService implements OnDestroy {
     componentRef.instance.docUpload = true;
     componentRef.instance.zipUpload = false;
     componentRef.instance.closeBtn.subscribe(observer => {
+      
       componentRef.destroy();
     });
     for (let index = 0; index < data.length; index++) {
       componentRef.instance.imgStartCount = index;
       componentRef.instance.imgTotalCount = data.length;
+      componentRef.instance.alreadyUploaded = successCount.length;
       let httpResp: HttpResponse<object> | HttpErrorResponse;
       try {
         httpResp = await this.http.post(this.postUrl, { name: 'haha', value: data[index] }, { reportProgress: true, observe: 'events' })
@@ -106,6 +111,7 @@ export class DocUploadService implements OnDestroy {
                 break;
               case HttpEventType.Response:
                 if (index === data.length - 1) {
+                  console.log(data[index], "http response");
                   componentRef.instance.imgStartCount += 1;
                   componentRef.instance.successClose = true;
                   componentRef.instance.setImageProcess.imgSuccess = true;
@@ -136,17 +142,44 @@ export class DocUploadService implements OnDestroy {
         this.singleDocUpload(filteredData, progressBar);
       });
     }
+    console.log(isError, "iserror");
+    console.log(resArr, "resarr");
+    let successIndex = resArr.filter((val, i) => {
+      if (val.response.status === 200) {
+        return true;
+      }
+    })
+    let uploadedData = [];
+    let failedData = [];
+    successIndex.map((val, i) => {
+      uploadedData.push(data[val.index]);
+    })
+
+    isError.map((val, i) => {
+      failedData.push(data[val.index]);
+    })
+    console.log(uploadedData, "uploaded data");
+    console.log(failedData, "failed data");
+    for (let success of uploadedData) {
+      this.sqlite.updateUploadedDoc(success.name);
+    }
     return resArr;
   }
 
   async imageEncoding(files) {
     let fileListArray = files;
     let base64Encoded: string;
+
     const base64Arr = [];
     for (let i = 0; i < fileListArray.length; i++) {
       try {
         base64Encoded = await this.base64.encodeFile(fileListArray[i].native);
-        base64Arr.push({ name: fileListArray[i].native.substring(fileListArray[i].native.length - 18), data: base64Encoded });
+        if(fileListArray[i].name == "Signature"){
+          base64Arr.push({ name: "Signature", data: base64Encoded });
+        }else{
+          base64Arr.push({ name: fileListArray[i].native.substring(fileListArray[i].native.lastIndexOf('/')+1), data: base64Encoded });
+        }
+
       }
       catch (error) {
         this.errorHandling.errorLog(new Error(JSON.stringify(error)));
@@ -217,9 +250,9 @@ export class DocUploadService implements OnDestroy {
     componentRef.instance.imgStartCount = 0;
     componentRef.instance.imgTotalCount = 1;
 
-    
+
   }
-  
+
   //Gallery
   @Output() deleteImage: EventEmitter<any> = new EventEmitter(false);
   galleryDelete(parentIndex, childIndex, add = false, camera = false) {
@@ -228,9 +261,13 @@ export class DocUploadService implements OnDestroy {
 
   galleryObservable = new Subject<any>();
 
-  galleryView(listArray: any[], parentIndex: number, ) {
+  galleryView(listArray: any[], parentIndex: number, profile = false) {
     console.log(listArray, parentIndex, "inside doc service");
-    this.galleryObservable.next({ listArray, parentIndex });
+    if (profile) {
+      this.galleryObservable.next({ listArray, parentIndex, profile: profile });
+    } else {
+      this.galleryObservable.next({ listArray, parentIndex });
+    }
   }
 
 
@@ -243,6 +280,7 @@ export interface DocumentUploadOptions {
   uploadType: string;
   endPoint: string;
   file?: any[];
+  successCount?:any[];
 }
 
 export interface DocUploadResponse {

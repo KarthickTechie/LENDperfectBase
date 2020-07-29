@@ -1,5 +1,6 @@
+import { IonFab } from '@ionic/angular';
 import { GlobalService } from './../global/global.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { SqliteProvider } from '../global/sqlite';
 
@@ -19,39 +20,51 @@ export class ExistingApplicationDetailsPage implements OnInit {
   applications = [];
   coApplications = [];
   gurantorApplications = [];
-  coApplicants:any;
-  gurantorsList:any;
+  coApplicants: any;
+  gurantorsList: any;
   refId: any;
+  @ViewChild('fab', { static: false }) fab: IonFab;
+
 
 
   constructor(public router: Router, public activatedRoute: ActivatedRoute, public global: GlobalService, public sqlite: SqliteProvider) {
     this.addressType = 'C';
-    
+
   }
 
   ngOnInit() {
-    
-    let test = this.activatedRoute.snapshot.queryParamMap.get("existApplicant");
-    this.applications.push(JSON.parse(test));
+
+    // let test = this.activatedRoute.snapshot.queryParamMap.get("existApplicant");
+    // this.applications.push(JSON.parse(test));
     this.refId = this.activatedRoute.snapshot.queryParamMap.get("refId");
+    this.getApplicants();
     this.getCoApplicants();
     this.getGurantorApplicants();
 
 
   }
 
+  ionViewWillLeave() {
+    (this.fab) ? this.fab.close() : '';
+  }
+  ionViewDidEnter() {
+    this.getApplicants();
+    this.getCoApplicants();
+    this.getGurantorApplicants();
+  }
+
   goBack() {
-    this.router.navigate(["/existapp"])
+    this.router.navigate(["/existapp"], { skipLocationChange: true });
   }
 
 
   existingApp(applicant) {
-    console.log(applicant.refId,"applicant idddddddddd");
+    console.log(applicant.refId, "applicant idddddddddd");
     this.global.setRefId(applicant.refId);
     this.global.setId(applicant.id);
     this.global.setApplicantType("A");
     this.global.setProfileImage(applicant.profileImage);
-    this.router.navigate(["/newapp"])
+    this.router.navigate(["/newapp"], { skipLocationChange: true, queryParams: { loader: true } });
   }
 
   existingcoApp(coAapplicant) {
@@ -59,7 +72,8 @@ export class ExistingApplicationDetailsPage implements OnInit {
     this.global.setId(coAapplicant.id);
     this.global.setApplicantType("C");
     this.global.setProfileImage(coAapplicant.profileImage);
-    this.router.navigate(["/newapp"])
+    this.router.navigate(["/newapp"], { skipLocationChange: true, queryParams: { loader: true } });
+
   }
 
   existingGurantorApp(gurantor) {
@@ -67,11 +81,13 @@ export class ExistingApplicationDetailsPage implements OnInit {
     this.global.setId(gurantor.id);
     this.global.setApplicantType("G");
     this.global.setProfileImage(gurantor.profileImage);
-    this.router.navigate(["/newapp"])
+    this.router.navigate(["/newapp"], { skipLocationChange: true, queryParams: { loader: true } });
+
   }
 
   segmentChanged(e) {
     this.addressType = e.target.value;
+    this.fab.close();
   }
 
   openExistingPage() {
@@ -81,50 +97,49 @@ export class ExistingApplicationDetailsPage implements OnInit {
 
 
   addCoApplicantGurantor(refId) {
-    if(this.addressType == 'C'){
-      if(this.coApplicants.length<=3){
+    if (this.addressType == 'C') {
+      if (this.coApplicants.length <= 3) {
         this.global.setApplicantType("C");
         this.global.setRefId(refId);
         this.global.setId("");
         this.global.setProfileImage("");
         this.global.setEditSaveStatus("");
-        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute,queryParams: {dataInsert:"true" }});
-      }else{
-        this.global.presentAlert("Alert","Maxmimum limit exceeds");
+        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute, queryParams: { dataInsert: "true", loader: true } });
+      } else {
+        this.global.presentAlert("Alert", "Maxmimum limit exceeds");
       }
-    }else{
-      if(this.gurantorsList.length<=3){
+    } else {
+      if (this.gurantorsList.length <= 3) {
         this.global.setApplicantType("G");
         this.global.setRefId(refId);
         this.global.setId("");
         this.global.setProfileImage("");
         this.global.setEditSaveStatus("");
-        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute,queryParams: {dataInsert:"true" }});
-      }else{
-        this.global.presentAlert("Alert","Maxmimum limit exceeds");
+        this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute, queryParams: { dataInsert: "true", loader: true } });
+      } else {
+        this.global.presentAlert("Alert", "Maxmimum limit exceeds");
       }
 
     }
   }
 
-  async getCoApplicants() {
-    
-    this.coApplicants = await this.sqlite.getAllCoapplicants(this.refId, "C");
-    
-    if (this.coApplicants.length) {
-      this.coApplications = this.coApplicants;
-    } else {
-      this.coApplications = [];
-    }
+  async getApplicants() {
+    const applicants = await this.sqlite.getAllApp(this.refId);
+    applicants.length
+      ? (this.applications = applicants)
+      : (this.applications = []);
   }
+
+  async getCoApplicants() {
+    this.coApplicants = await this.sqlite.getAllCoapplicants(this.refId, "C");
+    (this.coApplicants.length) ? this.coApplications = this.coApplicants : this.coApplications = [];
+  }
+
 
   async getGurantorApplicants() {
     this.gurantorsList = await this.sqlite.getAllCoapplicants(this.refId, "G");
-    
-    if (this.gurantorsList.length) {
-      this.gurantorApplications = this.gurantorsList;
-    } else {
-      this.gurantorApplications = [];
-    }
+    (this.gurantorsList.length) ? this.gurantorApplications = this.gurantorsList : this.gurantorApplications = [];
   }
+
+
 }

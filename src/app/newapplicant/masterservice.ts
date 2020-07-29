@@ -56,7 +56,10 @@ getStaticMasterTable(){
             createdUser: "VARCHAR(30)",
             referenceNumber: "VARCHAR(40)",
             submitStatus: "VARCHAR(5) DEFAULT 'N'",
-            submitDate: "DATETIME"
+            submitDate: "DATETIME",
+            backup: "VARCHAR(1) DEFAULT 'N'",
+            sync: "VARCHAR(1) DEFAULT 'N'",
+            tempAppNo: "VARCHAR(30)"
         }
     }
 
@@ -73,7 +76,7 @@ getStaticMasterTable(){
             email: "VARCHAR(50) NOT NULL DEFAULT ''",
             dob: "DATETIME NOT NULL DEFAULT ''",
             nationality: "VARCHAR(40) NOT NULL DEFAULT ''",
-            addressType: "VARCHAR(20)",
+            addressType: "VARCHAR(20) DEFAULT 'Permanent'",
             samePermanentAdd: "VARCHAR(20) NOT NULL DEFAULT ''",
             permanentAddress: "VARCHAR(100) NOT NULL DEFAULT ''",
             residentialAddress: "VARCHAR(100) NOT NULL DEFAULT ''",
@@ -128,7 +131,7 @@ getStaticMasterTable(){
             refId:"INTEGER NOT NULL DEFAULT ''",
             id:"INTEGER NOT NULL DEFAULT ''",
             otherDocumentType:"VARCHAR(40) NOT NULL DEFAULT ''",
-            otherDescription:"VARCHAR(50) NOT NULL DEFAULT ''",
+            // otherDescription:"VARCHAR(50) NOT NULL DEFAULT ''",
             applicantType: "VARCHAR(20)",
             // imagePath:"VARCHAR(50) NOT NULL DEFAULT ''",
             // imageName:"VARCHAR(50) NOT NULL DEFAULT ''",
@@ -140,13 +143,27 @@ getStaticMasterTable(){
             refId:"INTEGER NOT NULL DEFAULT ''",
             id:"INTEGER NOT NULL DEFAULT ''",
             otherDocumentType:"VARCHAR(40) NOT NULL DEFAULT ''",
-            otherDescription:"VARCHAR(50) NOT NULL DEFAULT ''",
+            // otherDescription:"VARCHAR(50) NOT NULL DEFAULT ''",
             imagePath:"VARCHAR(100) NOT NULL DEFAULT ''",
             imageNativePath:"VARCHAR(100) NOT NULL DEFAULT ''",
             name:"VARCHAR(40) NOT NULL DEFAULT ''",
             applicantType: "VARCHAR(20)",   
         }
     }
+
+
+    getUploadDocumentTable(){
+        return{
+            refId:"INTEGER NOT NULL DEFAULT ''",
+            id:"INTEGER NOT NULL DEFAULT ''",
+            otherDocumentType:"VARCHAR(40) NOT NULL DEFAULT ''",
+            imagePath:"VARCHAR(100) NOT NULL DEFAULT ''",
+            name:"VARCHAR(40) NOT NULL DEFAULT ''",
+            applicantType: "VARCHAR(20)",  
+            status:"VARCHAR(5) DEFAULT 'N'"
+        }
+    }
+
 
     getTitleList() {
         return [

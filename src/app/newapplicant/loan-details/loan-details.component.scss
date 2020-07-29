@@ -1,14 +1,26 @@
-.container{
-  width: 95vw;
-}
 
-form{
-  display:grid;
+
+form {
+  display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
 }
-.item.sc-ion-label-md-h, .item .sc-ion-label-md-h
-{
-    font-size:14px;
+@media only screen and (max-width: 412px) {
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    font-size: 14px;
+  }
+  .container {
+    width: 95vw;
+  }
 }
-
+@media only screen and (min-width: 413px) {
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    font-size: 110%;
+  }
+  .container {
+    width: 95vw;
+    height: 100vh;
+  }
+}

@@ -1,14 +1,18 @@
+import { GlobalService } from './../global/global.service';
 import { ActionSheetController } from '@ionic/angular';
-import { BarcodeScannerOptions, BarcodeScanner, } from "@ionic-native/barcode-scanner/ngx";
+import { BarcodeScannerOptions, BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { OCR, OCRSourceType, OCRResult } from '@ionic-native/ocr/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx';
 import { HandlingError } from './../utility/ErrorHandling';
 import * as X2JS from 'x2js';
 import { Subject, Observable } from 'rxjs';
-import { resolve } from 'q';
+import { Injectable } from '@angular/core';
 
 
+@Injectable({
+    providedIn: 'root'
+})
 
 export class KycScanAPI {
     proofSelected: string;
@@ -19,9 +23,9 @@ export class KycScanAPI {
     ocr: OCR;
     camera: Camera;
     filePath: FilePath;
-    errorHandler: HandlingError;
+    // errorHandler: HandlingError;
     _options: ScannerOptions;
-    constructor() {
+    constructor(public errorHandler: HandlingError, public global: GlobalService) {
 
         this.actionSheetCtrl = new ActionSheetController();
         this.barcodeScanner = new BarcodeScanner();
@@ -63,19 +67,41 @@ export class KycScanAPI {
 
     async selectSource(value) {
         this.proofSelected = value;
-        let actionSheet = await this.actionSheetCtrl.create({
+        const ocrActionSheet = await this.actionSheetCtrl.create({
+            backdropDismiss: true,
             buttons: [
                 {
                     icon: 'image-outline',
                     text: 'Use Library',
+                    role: 'Use Library',
                     handler: () => {
-                        this.getPicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+                        ocrActionSheet.dismiss()
+                            .then(val => {
+                                // if (isDismissed) {
+                                this.global.globalLodingPresent("please wait");
+                                this.getPicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+                                // }
+                                // return false;
+                                console.log(val, "acionhsheet")
+                            }).catch(err => console.log(err, "acionhsheet error"));
+
                     }
                 }, {
                     icon: 'camera-outline',
                     text: 'Capture Image',
+                    role: 'Capture Image',
                     handler: () => {
-                        this.getPicture(this.camera.PictureSourceType.CAMERA);
+
+                        ocrActionSheet.dismiss()
+                            .then(val => {
+                                // if (isDismissed) { 
+                                this.global.globalLodingPresent("please wait");
+                                this.getPicture(this.camera.PictureSourceType.CAMERA);
+                                // }
+                                // return false;                        
+                                console.log(val, "acionhsheet")
+                            }).catch(err => console.log(err, "acionhsheet error"));
+
                     }
                 }, {
                     icon: 'close-circle-outline',
@@ -84,7 +110,9 @@ export class KycScanAPI {
                 }
             ]
         });
-        await actionSheet.present();
+        await ocrActionSheet.present();
+        // const isDismissed = ocrActionSheet.onDidDismiss();
+        // console.log(isDismissed, "isdismissed");
     }
 
     getPicture(sourceType: PictureSourceType) {
@@ -132,9 +160,12 @@ export class KycScanAPI {
             //PAN Num:
             let pan_no = pan_str.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/);
             this.proofValue.next(pan_no);
+            this.global.globalLodingDismiss();
+            // this.errorHandler.pinField();
             this.errorHandler.panCardSuccessAlert();
         }
         else {
+            this.global.globalLodingDismiss();
             this.errorHandler.notScanPan();
         }
     }
@@ -146,10 +177,13 @@ export class KycScanAPI {
             //AADHAR num
             let aa_rep_str = aadhar_string.replace(/\s/g, '');
             let aa_num = aa_rep_str.match(/[0-9]{4}[0-9]{4}[0-9]{4}/);
+            console.log(aa_num, "aadhar_api");
             this.proofValue.next(aa_num);
+            this.global.globalLodingDismiss();
             this.errorHandler.aadharCardSuccessAlert();
         }
         else {
+            this.global.globalLodingDismiss();
             this.errorHandler.notScanAadhar();
         }
     }
@@ -161,9 +195,11 @@ export class KycScanAPI {
             //VOTER id:
             let voter_id = voter_str.match(/[A-Z]{3}[0-9]{7}/);
             this.proofValue.next(voter_id);
+            this.global.globalLodingDismiss();
             this.errorHandler.voterSuccessAlert();
         }
         else {
+            this.global.globalLodingDismiss();
             this.errorHandler.notScanVoter();
         }
     }
@@ -181,9 +217,11 @@ export class KycScanAPI {
             dl_no1 = repstring.match(/[A-Z]{2}[0-9A-Z]{3}[0-9]{11}/);
             dl_no2 = repstring.match(/[A-Z]{2}[0-9]{2}[0-9]{11}/);
             this.proofValueDL.next({ dl_no1, dl_no2 });
+            this.global.globalLodingDismiss();
             this.errorHandler.dlSuccessAlert();
         }
         else {
+            this.global.globalLodingDismiss();
             this.errorHandler.notScanDl();
         }
     }
@@ -223,19 +261,25 @@ export class KycScanAPI {
     kycDataBinding(qrData) {
         switch (this._options.proofType) {
             case "02":
-                if (!!qrData.PrintLetterBarcodeData)
+                if (!!qrData.PrintLetterBarcodeData) {
                     this.proofValue.next(qrData.PrintLetterBarcodeData._uid);
+                    this.global.globalLodingDismiss();
 
-                else
+                }
+                else {
+
                     this.errorHandler.qrResFormatErr();
+                }
                 break;
             case "05":
                 var responseStr = qrData;
                 let arr = responseStr.split(',');
                 let DLNO = arr.filter(val => (val.toLowerCase().includes('dlno')))[0].split(':')[1];
                 this.proofValue.next(DLNO);
+                this.global.globalLodingDismiss();
                 break;
             default:
+                this.global.globalLodingDismiss();
                 this.errorHandler.kycNotMatchErr();
         }
 

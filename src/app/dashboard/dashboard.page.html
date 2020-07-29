@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="text-align: center;">
     <ion-buttons *ngIf="!searchtext" slot="start">
       <ion-menu-button autoHide="true"></ion-menu-button>
     </ion-buttons>
     <ion-title *ngIf="!searchtext">{{"Dashboard" | translate}}</ion-title>
-    <ion-searchbar *ngIf="searchtext" [showCancelButton]="true" animated debounce="500" (ionInput)="onInput($event)"
+    <!-- <ion-searchbar *ngIf="searchtext" [showCancelButton]="true" animated debounce="500" (ionInput)="onInput($event)"
       (ionCancel)="searchCancel($event)">
     </ion-searchbar>
     <ion-buttons *ngIf="!searchtext" slot="end" style='padding-right: 10px;' (click)="doSearch()">
       <ion-icon name="search"></ion-icon>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 
 
@@ -57,8 +57,8 @@
             <!--(click)="openExistingPage()" -->
             <ion-icon name="person"></ion-icon>
           </ion-fab-button>
-          <ion-label style="position: absolute;top: 15px;left: 46px;">{{"New" | translate}}</ion-label>
-          <ion-label style="position: absolute;top: 55px;left: 46px;">{{"Existing" | translate}}</ion-label>
+          <ion-label style="position: absolute;top: 15px;font-size: 110%; left: 46px;">{{"New" | translate}}</ion-label>
+          <ion-label style="position: absolute;top: 55px;font-size: 110%; left: 46px;">{{"Existing" | translate}}</ion-label>
         </ion-fab-list>
       </ion-fab>
     </div>

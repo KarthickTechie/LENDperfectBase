@@ -22,11 +22,11 @@ export class SignatureComponent implements OnInit {
   constructor(public modalCtrl: ModalController, public platform: Platform) { }
 
   ngOnInit() {
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.modalCtrl.dismiss({
-        'signature': false
-      });
-    })
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+    //   this.modalCtrl.dismiss({
+    //     'signature': false
+    //   });
+    // })
   }
 
   //Update Profile Piccture

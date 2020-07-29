@@ -16,12 +16,12 @@ export class FormControlData {
             middleName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
             lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
             gender: ['', Validators.compose([Validators.required])],
-            mobileNumber: ['',Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]{10}$'), Validators.required])],
+            mobileNumber: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]{10}$'), Validators.required])],
             email: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(50), Validators.pattern('^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$'), Validators.required])],
             dob: ['', Validators.compose([Validators.required])],
             nationality: [''],
             // company: ['', Validators.compose([Validators.pattern('[0-9a-zA-Z ]*'), Validators.required])],
-            addressType: [''],
+            addressType: ['Permanent'],
             samePermanentAdd: [''],
             permanentAddress: ['', Validators.compose([Validators.required])],
             residentialAddress: ['', Validators.compose([Validators.required])],
@@ -74,7 +74,7 @@ export class FormControlData {
     loanform() {
         return this.formbuilder.group({
             // product: ['', Validators.compose([Validators.required])],
-            
+
             // producttype: ['1', Validators.compose([Validators.required])],
             // loan_amount_range: ['', Validators.compose([Validators.min(250000), Validators.max(25000000)])],
             amountRequested: ['', Validators.compose([Validators.required, Validators.min(1000), Validators.pattern('[0-9]*')])],
@@ -94,7 +94,7 @@ export class FormControlData {
     otherDocumnetForm() {
         return this.formbuilder.group({
             otherDocumentType: ['', Validators.compose([Validators.required])],
-            otherDescription: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*'),Validators.required])]
+            // otherDescription: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*'), Validators.required])]
         });
     }
 

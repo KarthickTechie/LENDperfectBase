@@ -4,5 +4,19 @@
     border: 1px solid grey;
 }
 .scan-icon{
-    margin-right: 15px;
+    margin-right: 10px;
+}
+
+ion-item {
+    position: relative;
+}
+ion-label {
+    font-size: 16px !important;
+    padding-right: 6px !important;
+}
+ion-item ion-icon {
+    // position: absolute;
+    // right: 1px;
+    // color: green;
+    font-size: 20px;
 }

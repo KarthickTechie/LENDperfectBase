@@ -1,3 +1,4 @@
+import { MenuController } from '@ionic/angular';
 import { MasterData } from 'src/app/newapplicant/masterservice';
 import { SqliteProvider } from './../global/sqlite';
 import { Component } from '@angular/core';
@@ -55,13 +56,14 @@ export class HomePage {
     private errorHandling: HandlingError,
     public globalService: GlobalService,
     public master:MasterData,
-    public sqlite:SqliteProvider
+    public sqlite:SqliteProvider,
+    public menuCtrl:MenuController
   ) {
     this.setting = environment.settings;
     this.logoImg = this.setLogoImg.logoImg;
   }
   ngOnInit() {
-    
+    this.menuCtrl.enable(false);
     this.logout = this.globalService.logout.subscribe(data => {
       if (data == 'logout') {
         this.logout.unsubscribe()
@@ -74,6 +76,10 @@ export class HomePage {
       this.setLoginInfo.loginset = true;
       this.setLoginInfo.forgotPwd = false;
     }
+  }
+
+  ionViewWillLeave(){
+    this.menuCtrl.enable(true);
   }
 
 

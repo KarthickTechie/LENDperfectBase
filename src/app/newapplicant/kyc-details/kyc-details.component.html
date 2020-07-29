@@ -56,8 +56,9 @@
         <!--   <ion-label position="floating">Id Value<span class="mandatory">*</span>
         </ion-label> -->
 
-        <ion-input type="text" formControlName="proofvalue" [placeholder]="'Enter Proof Value' | translate"></ion-input>
-        <ion-icon name="images-outline" (click)="showScannerOption()"></ion-icon>
+        <ion-input type="text" [maxlength]="maxCount" formControlName="proofvalue" UpperCase [placeholder]="'Enter Proof Value' | translate">
+        </ion-input>
+        <ion-icon name="images-outline" (click)="showScannerOption($event)"></ion-icon>
       </ion-item>
 
       <div>
@@ -70,7 +71,7 @@
       </div>
     </div>
 
-    <app-kyc-scan-option [hidden]="hideScanOption" (_scanTypeSelected)="calAPIMethods($event)"></app-kyc-scan-option>
+    <!-- <app-kyc-scan-option [hidden]="hideScanOption" (_scanTypeSelected)="calAPIMethods($event)"></app-kyc-scan-option> -->
 
 
     <div class="item">

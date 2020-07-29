@@ -72,6 +72,11 @@
       <ion-label>Document Process</ion-label>
       <ion-badge>{{imgStartCount}} / {{imgTotalCount}}</ion-badge>
     </ion-item>
+
+    <ion-item lines="none" *ngIf="alreadyUploaded != 0">
+      <ion-label>Already Uploaded</ion-label>
+      <ion-badge>{{alreadyUploaded}}</ion-badge>
+    </ion-item>
     <ion-item *ngIf="showButton" lines="none">
       <ion-button type='button' shape="round" (click)="retry()">Re-Upload
       </ion-button>

@@ -6,7 +6,7 @@ import { FormGroup } from "@angular/forms";
 import { FormControlData } from "../formcontrol";
 import { MasterData } from "../masterservice";
 import { HandlingError } from "../../utility/ErrorHandling";
-import { AppDashboardPage } from '../app-dashboard/app-dashboard.page';
+import { AppDashboardPage } from '../app-dashboard.page';
 import { GlobalService } from "../../global/global.service";
 import { SqliteProvider } from './../../global/sqlite';
 import { keyInsert } from './../keyinsert';

@@ -22,7 +22,7 @@
 
     </div>
 
-    <div>
+    <!-- <div>
       <ion-item>
         <ion-label position="floating"> {{"Document Description" | translate}}</ion-label>
         <ion-input type="text" formControlName="otherDescription"></ion-input>
@@ -37,10 +37,10 @@
         </ng-container>
       </div>
 
-    </div>
+    </div> -->
 
     <div>
-      <ion-button type="submit" shape="round" [disabled]="otherDocument.invalid">{{"Save" | translate}}
+      <ion-button type="submit" shape="round" [disabled]="otherDocument.invalid">{{"Add" | translate}}
       </ion-button>
     </div>
 
@@ -48,16 +48,18 @@
     <div class="segbar">
       <span>{{"Doc-Type" | translate}}</span>
 
-      <span>{{"Description" | translate}}</span>
+      <!-- <span>{{"Description" | translate}}</span> -->
 
       <span>{{"Attach" | translate}}</span>
+
+      <span>{{"View" | translate}}</span>
 
       <span>{{"Action" | translate}}</span>
     </div>
 
     <div class="segbarWrap" *ngFor="let doc of dlist;let i=index; trackBy:trackByName">
       <span class="textSize">{{doc.otherDocumentType}}</span>
-      <span class="textSize">{{doc.otherDescription}}</span>
+      <!-- <span class="textSize">{{doc.otherDescription}}</span> -->
       <span *ngIf="doc.otherDocumentType !== 'Video' && doc.otherDocumentType !== 'Signature'">
         <ion-icon name="add-circle-outline" size="large" (click)="docActionSheet(i,false,i,doc)"></ion-icon>
       </span>
@@ -67,29 +69,57 @@
         <ion-icon size="large" name="images-outline"></ion-icon>
       </span>
 
+      <span *ngIf="doc.otherDocumentType !== 'Video' && doc.otherDocumentType !== 'Signature'"
+        (click)="documentDelete(doc.otherDocumentType)">
+        <ion-icon size="large" name="trash"></ion-icon>
+      </span>
+
       <span *ngIf="doc.otherDocumentType == 'Video'">
+        <ion-icon name="videocam-outline" size="large" (click)="videoRecord(i,false,i)">
+        </ion-icon>
+      </span>
+      <span *ngIf="doc.otherDocumentType == 'Video'">
+        <ion-icon name="play-circle-outline" size="large" (click)="videoRecord(i,true,i)">
+        </ion-icon>
+      </span>
+
+      <!-- <span *ngIf="doc.otherDocumentType == 'Video'">
         <ion-icon *ngIf="!isRecorded" name="videocam-outline" size="large" (click)="videoRecord(i,false,i)">
         </ion-icon>
         <ion-icon *ngIf="isRecorded" name="play-circle-outline" size="large" (click)="videoRecord(i,true,i)">
         </ion-icon>
-      </span>
+      </span> -->
       <span *ngIf="doc.otherDocumentType == 'Video'">
         <ion-icon size="large" name="trash" (click)="videoRecord(i,true,i,true)"></ion-icon>
       </span>
 
+
       <span *ngIf="doc.otherDocumentType == 'Signature'">
+        <ion-icon name="pencil-outline" size="large" (click)="signature(i,false,i)">
+        </ion-icon>
+      </span>
+      <span *ngIf="doc.otherDocumentType == 'Signature'">
+        <ion-icon name="eye-outline" size="large" (click)="viewDoc(doc.imgs,i)"></ion-icon>
+      </span>
+
+      <!-- <span *ngIf="doc.otherDocumentType == 'Signature'">
         <ion-icon *ngIf="!isSigned" name="pencil-outline" size="large" (click)="signature(i,false,i)">
         </ion-icon>
         <ion-icon *ngIf="isSigned" name="eye-outline" size="large" (click)="viewDoc(doc.imgs,i)"></ion-icon>
-      </span>
+      </span> -->
       <span *ngIf="doc.otherDocumentType == 'Signature'">
         <!-- <ion-badge class="segbarbadge">{{doc.imgs.length}}</ion-badge> -->
-        <ion-icon size="large" name="trash" (click)="this.getDocs(i,true,i)"></ion-icon>
+        <ion-icon size="large" name="trash" (click)="documentDelete(doc.otherDocumentType)"></ion-icon>
       </span>
     </div>
   </form>
 
-  <ion-button style="left: 35vw;position: fixed;top: 75vh;" *ngIf="isSelected" (click)="docUpload()" shape="round">
+  <ion-button style="position: fixed;
+  top: 75vh;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  width: 100px;" *ngIf="isSelected" (click)="docUpload()" shape="round">
     <!-- <ion-icon name="cloud-upload"></ion-icon> -->
 
     UPLOAD </ion-button>

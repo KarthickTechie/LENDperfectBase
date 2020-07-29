@@ -17,18 +17,27 @@ export class DashboardPage implements OnInit {
   @ViewChild('fab', { static: false }) fab: IonFab;
 
 
-  constructor(public router: Router, public activatedRoute: ActivatedRoute, public file: File, public global: GlobalService) { }
+  constructor(public router: Router, public activatedRoute: ActivatedRoute, public file: File, public global: GlobalService) {
+  }
 
 
   ngOnInit() {
-
     this.items = [{ label: "Submitted" }, { label: "Non Submitted" }, { label: "Pending" }]
+  }
+
+  ionViewDidEnter() {
+  }
+
+  ionViewWillLeave(){
+    this.closeFab();
   }
 
   openExistingPage() {
     localStorage.setItem("filter", "");
     localStorage.setItem("sort", "");
-    this.router.navigate(['/existapp'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['/existapp'], { relativeTo: this.activatedRoute, skipLocationChange: true });
+    // this.router.navigateByUrl('/existapp', { relativeTo: this.activatedRoute,skipLocationChange:true });
+
   }
   newApplicant() {
     this.global.setApplicantType("A");
@@ -36,7 +45,8 @@ export class DashboardPage implements OnInit {
     this.global.setId("");
     this.global.setProfileImage("");
     this.global.setEditSaveStatus("");
-    this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute, queryParams: { dataInsert: "true" } });
+    this.router.navigate(['/newapp'], { relativeTo: this.activatedRoute, queryParams: { dataInsert: "true",loader:true }, skipLocationChange: true });
+    // this.router.navigateByUrl('/newapp', { relativeTo: this.activatedRoute, queryParams: { dataInsert: "true" },skipLocationChange:true });
   }
 
   doSearch() {
@@ -51,7 +61,9 @@ export class DashboardPage implements OnInit {
     this.searchtext = false;
   }
   closeFab() {
-    this.fab.close();
+    if (this.fab) {
+      this.fab.close();
+    }
   }
 
 

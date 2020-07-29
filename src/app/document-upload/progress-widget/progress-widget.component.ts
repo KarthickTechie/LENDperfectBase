@@ -1,3 +1,7 @@
+import { GlobalService } from './../../global/global.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 
@@ -6,10 +10,11 @@ import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@
   templateUrl: './progress-widget.component.html',
   styleUrls: ['./progress-widget.component.scss'],
 })
-export class ProgressWidgetComponent {
+export class ProgressWidgetComponent implements OnInit {
 
   @Input() imgTotalCount: number;
   @Input() imgStartCount: number;
+  @Input() alreadyUploaded: number;
   @Input() value: number;
   @Input() showButton: boolean;
   @Input() showZipButton: boolean;
@@ -29,6 +34,7 @@ export class ProgressWidgetComponent {
   circumference_outside: number = 2 * Math.PI * this.radius_outside;
   dashoffset_outside: number = 420;
   reUpload: boolean;
+  backSub:Subscription;
   setImageProcess: progressbar = {
     imgProcess: true,
     imgFailure: false,
@@ -36,11 +42,37 @@ export class ProgressWidgetComponent {
     ZipSuccess: false
   }
 
-  constructor() {
-
+  constructor(public platform: Platform,public router:Router,public global: GlobalService) {
+    this.backSub = this.platform.backButton.subscribeWithPriority(9, () => {
+      document.addEventListener('backbutton', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log('hello');
+      }, false);
+    });
   }
   ngOnChanges(changes: SimpleChanges) {
   }
+
+  ngOnInit() {
+
+    
+    // document.addEventListener("backbutton",function(e) {
+    //   console.log("disable back button")
+    // }, false);
+}
+
+ionViewWillLeave(){
+  console.log("will Leave");
+  // this.platform.backButton.observers.pop();
+  // this.platform.backButton.subscribeWithPriority(10, () => {
+  //   document.addEventListener('backbutton', function (event) {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //     console.log('bye');
+  //   }, true);
+  // });
+}
 
 
 
@@ -70,6 +102,8 @@ export class ProgressWidgetComponent {
 
   close() {
     this.closeBtn.emit(null);
+    this.global.documentStatus.next(true);
+
   }
 
   startProgress() {
@@ -104,6 +138,19 @@ export class ProgressWidgetComponent {
     this.showZipButton = true;
 
 
+  }
+
+  ngOnDestroy(){
+    if(this.backSub){
+      this.backSub.unsubscribe();
+    }
+    // this.platform.backButton.subscribeWithPriority(9999, () => {
+    //   document.addEventListener('backbutton', function (event) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //     console.log('bye');
+    //   }, true);
+    // });
   }
 
 }

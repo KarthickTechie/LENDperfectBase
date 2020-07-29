@@ -1,3 +1,4 @@
+import { GlobalService } from './../../global/global.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MasterData } from 'src/app/newapplicant/masterservice';
 
@@ -13,6 +14,7 @@ export class KycScanOptionComponent implements OnInit {
 
   constructor(
     public master: MasterData,
+    public global: GlobalService
   ) { }
 
   ngOnInit() {
@@ -20,7 +22,8 @@ export class KycScanOptionComponent implements OnInit {
   }
 
   emitScanType(scanType) {
-    this._scanTypeSelected.emit(scanType);
+    // this._scanTypeSelected.emit(scanType);
+    this.global._scanTypeSelected.next(scanType);
   }
 
 }

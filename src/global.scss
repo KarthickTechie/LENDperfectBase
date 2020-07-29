@@ -109,3 +109,97 @@
     // contain: strict;
 }
   
+.popOver {
+    ion-backdrop {
+        background: rgba(0,0,0,0.75) !important;
+    }
+    .popover-wrapper {
+        .popover-arrow::after {
+            background: black !important;
+        }
+        .popover-content {
+            max-width: 35vw;
+            width: auto;
+            text-align: left;
+            border: 1px solid #ccc;
+            background: #fff !important;
+        }
+    }
+}
+
+.popOverInfo {
+    ion-backdrop {
+    background: rgba(0,0,0,0.75) !important;
+    }
+    .popover-wrapper {
+        .popover-arrow::after {
+        background: black !important;
+        }
+        .popover-content {
+        max-width: 45vw;
+        width: auto;
+        text-align: left;
+        border: 1px solid #ccc;
+        background: #fff !important;
+        }
+    }
+}
+
+.popInfoDeta {
+    .popover-wrapper {
+        .popover-arrow::after {
+        background: black !important;
+        }
+        .popover-content {
+            width: 95vw;
+            min-height: calc(97vh);
+            text-align: left;
+            border: 1px solid #ccc;
+            background: #fff !important;
+            margin: 0 auto;
+            top: 11px !important;
+            overflow: unset !important;
+        }
+    }
+}
+
+
+
+
+.sign-modal .modal-wrapper{
+    height: 50vh;
+    width: 98vw;
+    .container{
+        #b1{
+            position: absolute;
+        }
+        #b2{position: absolute;right: 0;}
+    }
+   
+}
+
+
+
+.item ion-item {
+    --padding-start: 0px !important;
+    --min-height: auto !important;
+  }
+
+
+  .popover-content.sc-ion-popover-md {
+    width: auto !important;
+}
+.popover-content.sc-ion-popover-md ion-list ion-radio {
+    margin-left: 20px !important;
+}
+.popover-content.sc-ion-popover-md ion-list ion-item {
+ --min-height: 39px !important;
+}
+.popover-content.sc-ion-popover-md ion-list {
+    padding: 0px !important;
+   }
+
+   .loading-wrapper.sc-ion-loading-md{
+    padding: 10px !important;
+    border-radius: 5px !important;
+   }

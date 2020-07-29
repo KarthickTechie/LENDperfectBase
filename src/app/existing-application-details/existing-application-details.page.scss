@@ -33,6 +33,12 @@ ion-title {
     margin-left: 10px;
     margin: 0px;
     line-height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 200px;
+    font-weight: 100;
+    font-size: 15px;
     ion-icon{
     margin-right: 0.5rem;
     }
@@ -51,4 +57,10 @@ ion-title {
   .existPlaceholder h2{
     color: darkgray;font-weight: bold;text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+
+  h6:first-child {
+    font-weight: bold;
+    font-size: 16px;
   }

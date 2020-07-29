@@ -6,20 +6,38 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #slider (ionSlideDidChange)="onSlideChanged($event)">
-    <ion-slide *ngFor="let item of dList; let i = index;">
+  <ion-slides #slider (ionSlideDidChange)="onSlideChanged($event)" *ngIf="!showProfile">
+    <ion-slide *ngFor="let item of dList; let i = index;trackBy:trackByName">
       <div class="imgContainer">
+        <pinch-zoom>
         <img [src]="item.webview" alt="">
+      </pinch-zoom>
       </div>
     </ion-slide>
   </ion-slides>
+  <div class="imgContainer" style="margin:7px" *ngIf="showProfile">
+    <pinch-zoom>
+    <img [src]="profilePic" alt="">
+  </pinch-zoom>
+  </div>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="!showProfile">
   <ion-toolbar>
-    <ion-icon size="large" slot="start" name="add"
+    <ion-icon *ngIf="this.enableAdd" size="large" slot="start" name="add"
       (click)="this.addActionSheet(this.parentIndex,this.currentSlideIndex-1)"></ion-icon>
     <ion-badge *ngIf="this.currentSlideIndex!==null"> {{currentSlideIndex}}/{{imgTotal}} </ion-badge>
     <ion-icon size="large" slot="end" name="trash" (click)="delete(this.parentIndex,this.currentSlideIndex-1)">
     </ion-icon>
+  </ion-toolbar>
+</ion-footer>
+<ion-footer *ngIf="showProfile">
+  <ion-toolbar>
+    <ion-button style="float: left;--padding-end: 0" size="small" (click)="updateimage()">
+      Update <ion-icon name="create"></ion-icon>
+    </ion-button>
+
+    <ion-button style="float: right;--padding-end: 0" size="small" (click)="close()">
+      Close <ion-icon name="close-circle"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

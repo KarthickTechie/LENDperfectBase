@@ -72,7 +72,7 @@
       <ion-item lines="none">
         <ion-label class="genderLabel">{{"Gender" | translate}} <span class="mandatory">*</span></ion-label>
       </ion-item>
-      <div class="segment">
+      <div class="segment" style="margin-top: -14px;">
         <ion-segment [(ngModel)]="genderSelect" (ionChange)="genderChng()" formControlName="gender">
           <ion-segment-button value="M" class="genMale">{{"Male" | translate}}</ion-segment-button>
           <ion-segment-button value="F" class="genFem">{{"Female" | translate}}</ion-segment-button>
@@ -93,7 +93,7 @@
     <div class="item">
       <div class="newdate">
         <ion-item>
-          <ion-label position="floating">{{"D.O.B" | translate}}
+          <ion-label>{{"D.O.B" | translate}}
             <span class="mandatory">*</span>
           </ion-label>
           <ion-input type="date" formControlName="dob" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
@@ -114,7 +114,7 @@
     <div class="item">
       <ion-item>
         <ion-label position="floating">{{"Mobile Number" | translate}} <span class="mandatory">*</span></ion-label>
-        <ion-input type="tel" formControlName="mobileNumber" maxlength="10"></ion-input>
+        <ion-input type="tel" formControlName="mobileNumber" maxlength="10" appNumberOnly></ion-input>
       </ion-item>
 
       <div>
@@ -143,7 +143,8 @@
       </div>
     </div>
 
-    <div class="item">
+
+    <div class="item" style="padding-bottom: 10px;">
       <ion-item>
         <ion-label>{{"Nationality" | translate}}</ion-label>
         <ion-select interface="popover" formControlName="nationality">
@@ -155,66 +156,70 @@
     </div>
 
 
+
+
     <div class="item">
-      <div class="segment">
-        <ion-segment [(ngModel)]="addressType" formControlName="addressType">
+      <div class="segment" style="height:215px">
+        <ion-segment [(ngModel)]="addressType" value="Permanent" formControlName="addressType"
+          (ionChange)="addressTab($event)">
           <ion-segment-button value="Permanent" class="genMale">{{"Permanent" | translate}}</ion-segment-button>
           <ion-segment-button value="Residential" class="genFem">{{"Residential" | translate}}</ion-segment-button>
         </ion-segment>
-      </div>
-    </div>
 
-    <div class="item">
-      <div *ngIf="addressType === 'Permanent'">
-        <ion-item>
-          <ion-label position="floating">{{"Address" | translate}} <span class="mandatory">*</span></ion-label>
-          <ion-input type="text" formControlName="permanentAddress"></ion-input>
-        </ion-item>
 
-        <div>
-          <ng-container *ngFor="let validation of validation_messages.permanentAddress">
-            <div class="mandatory"
-              *ngIf="personalDetails.get('permanentAddress').hasError(validation.type) && (personalDetails.get('permanentAddress').dirty || personalDetails.get('permanentAddress').touched)">
-              <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+        <div class="item">
+          <div *ngIf="addressType === 'Permanent'">
+            <ion-item>
+              <ion-label position="floating">{{"Address" | translate}} <span class="mandatory">*</span></ion-label>
+              <ion-input type="text" formControlName="permanentAddress"></ion-input>
+            </ion-item>
+
+            <div>
+              <ng-container *ngFor="let validation of validation_messages.permanentAddress">
+                <div class="mandatory"
+                  *ngIf="personalDetails.get('permanentAddress').hasError(validation.type) && (personalDetails.get('permanentAddress').dirty || personalDetails.get('permanentAddress').touched)">
+                  <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+                </div>
+              </ng-container>
             </div>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div *ngIf="addressType ==='Residential'">
-        <ion-item>
-          <ion-checkbox (ionChange)="getCheckedStatus()" [(ngModel)]="ionCheck" formControlName="samePermanentAdd">
-          </ion-checkbox>
-          <ion-label style="border-bottom: 0;border: 0;text-indent: 10px;">Same As Permanent Address</ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">{{"Address" | translate}} <span class="mandatory">*</span></ion-label>
-          <ion-input type="text" formControlName="residentialAddress"></ion-input>
-        </ion-item>
-
-        <div>
-          <ng-container *ngFor="let validation of validation_messages.residentialAddress">
-            <div class="mandatory"
-              *ngIf="personalDetails.get('residentialAddress').hasError(validation.type) && (personalDetails.get('residentialAddress').dirty || personalDetails.get('residentialAddress').touched)">
-              <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
-            </div>
-          </ng-container>
+          </div>
         </div>
 
+        <div class="item">
+          <div *ngIf="addressType ==='Residential'">
+            <ion-item>
+              <ion-checkbox (ionChange)="getCheckedStatus()" [(ngModel)]="ionCheck" formControlName="samePermanentAdd">
+              </ion-checkbox>
+              <ion-label style="border-bottom: 0;border: 0;text-indent: 10px;">Same As Permanent Address</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">{{"Address" | translate}} <span class="mandatory">*</span></ion-label>
+              <ion-input type="text" formControlName="residentialAddress"></ion-input>
+            </ion-item>
+
+            <div>
+              <ng-container *ngFor="let validation of validation_messages.residentialAddress">
+                <div class="mandatory"
+                  *ngIf="personalDetails.get('residentialAddress').hasError(validation.type) && (personalDetails.get('residentialAddress').dirty || personalDetails.get('residentialAddress').touched)">
+                  <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="buttspace roundbtn" class="ion-text-center">
+            <ion-button [disabled]="personalDetails.invalid" type="submit" shape="round">{{"Save" | translate}}
+            </ion-button>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div class="item">
-      <div class="buttspace roundbtn" class="ion-text-center">
-        <ion-button [disabled]="personalDetails.invalid" type="submit" shape="round">{{"Save" | translate}}
-        </ion-button>
-      </div>
-    </div>
-
-
 
   </form>
 </div>

@@ -1,6 +1,4 @@
-.container{
-  width: 95vw;
-}
+
 
 form{
   display: grid;
@@ -18,9 +16,9 @@ form{
   grid-column-start: 2;
   grid-column-end: 5;
 }
-.segment{
-  border-bottom: 1px solid rgba(0,0,0,0.3);
-}
+// .segment{
+//   border-bottom: 1px solid rgba(0,0,0,0.3);
+// }
 
 
 
@@ -49,11 +47,6 @@ form{
 //     margin-left: 5%;
 //     font-size: 10px;
 // }
-
-.item.sc-ion-label-md-h, .item .sc-ion-label-md-h
-{
-    font-size:14px;
-}
 
 // .left10{
 //     margin-left:10%;
@@ -114,3 +107,24 @@ form{
 // .addr_segment ion-segment .segment-button-checked {
 //     background: none;
 //   }
+
+
+@media only screen and (max-width: 412px) {
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    font-size: 14px;
+  }
+  .container {
+    width: 95vw;
+  }
+}
+@media only screen and (min-width: 413px) {
+  .item.sc-ion-label-md-h,
+  .item .sc-ion-label-md-h {
+    font-size: 110%;
+  }
+  .container {
+    width: 95vw;
+    height: 100vh;
+  }
+}
