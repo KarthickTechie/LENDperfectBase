@@ -150,14 +150,7 @@
       },
       "cordova-plugin-media-capture": {},
       "com.outsystems.mobile.stetho": {},
-<<<<<<< HEAD
-      "cordova-plugin-streaming-media": {},
-      "cordova-plugin-local-notification": {},
-      "mx.ferreyra.callnumber": {},
-      "com.telerik.plugins.nativepagetransitions": {}
-=======
       "cordova-plugin-streaming-media": {}
->>>>>>> 2510f77ab781f2d2937229544a0df4e0aabf3401
     },
     "platforms": [
       "android"
