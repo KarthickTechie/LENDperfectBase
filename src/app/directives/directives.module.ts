@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NumberOnlyDirective } from './number-only.directive';
 import { UpperCaseDirective } from './upper-case.directive'
 @NgModule({
-    declarations: [NumberOnlyDirective, UpperCaseDirective],
+    declarations: [ UpperCaseDirective],
     imports: [CommonModule],
-    exports: [NumberOnlyDirective, UpperCaseDirective]
+    exports: [UpperCaseDirective]
 })
 export class DirectivesModule { }

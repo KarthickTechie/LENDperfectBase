@@ -1,0 +1,48 @@
+form {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    margin: 10px;
+  
+  }
+  @media only screen and (max-width: 412px) {
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-size: 14px;
+      white-space: normal;
+    }
+    .container {
+      width: 95vw;
+    }
+  }
+  @media only screen and (min-width: 413px) {
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-size: 110%;
+      white-space: normal;
+    }
+    .container {
+      width: 95vw;
+      height: 100vh;
+    }
+  }
+  
+  
+  .fabBadge {
+    color: #ffffff;
+    position: absolute;
+    background-color: red;
+    padding: 3px 6px;
+    z-index: 1;
+    border-radius: 50%;
+    top: 3px;
+    right: 3px;
+    font-size: 10px;
+  }
+
+  .heading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+  }

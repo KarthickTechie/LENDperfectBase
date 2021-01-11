@@ -1,0 +1,115 @@
+
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Prospective Lead</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="prospectiveLeads" (ngSubmit)="prospectiveLeadsSave(prospectiveLeads.value)">
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Business Name</ion-label>
+        <ion-input type="text" formControlName="prosBusiName"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Customer Name</ion-label>
+        <ion-input type="text" formControlName="prosCustName"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Contact <span class="mandatory">*</span></ion-label>
+        <ion-input type="tel" formControlName="prosContact"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Status <span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" formControlName="prosStatus">
+          <ion-select-option *ngFor="let sta of status" [value]="sta.code">{{sta.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Tap to select Date</ion-label>
+        <ion-input type="date" formControlName="prosDate" displayFormat="DD/MM/YYYY"></ion-input>
+      </ion-item>
+    </div>
+
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Business Type <span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" formControlName="prosBusiType">
+          <ion-select-option *ngFor="let sta of status" [value]="sta.code">{{sta.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Product <span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" formControlName="prosProduct">
+          <ion-select-option *ngFor="let sta of status" [value]="sta.code">{{sta.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Estimate Monthly Business</ion-label>
+        <ion-input type="tel" formControlName="prosEstimate"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Remarks <span class="mandatory">*</span></ion-label>
+        <ion-input type="tel" formControlName="prosRemarks"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="prospectiveLeads.invalid" type="submit" shape="round">Save</ion-button>
+      </div>
+    </div>
+
+  </form>
+
+  <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+    <ion-fab-button type="button" size="small" (click)="presentModal()">
+      <ion-icon name="navigate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="bgColor">
+    <ion-row class="headClr">
+      <ion-col size="3" class="ion-text-center ion-align-self-center">Attach/ View</ion-col>
+      <ion-col size="3" class="ion-text-center ion-align-self-center">Company Name</ion-col>
+      <ion-col size="3" class="ion-text-center ion-align-self-center">Status</ion-col>
+      <ion-col size="3" class="ion-text-center ion-align-self-center">Submit</ion-col>
+    </ion-row>
+    <ion-row class="contentClr"  *ngFor="let app of applications;">
+      <ion-col size="3" class="ion-text-center ion-align-self-center"><img src="assets/imgs/person2.png" /></ion-col>
+      <ion-col size="3" class="ion-text-center ion-align-self-center">{{ app.name }}</ion-col>
+      <ion-col size="3" class="ion-text-center ion-align-self-center">{{ app.status }}</ion-col>
+      <ion-col size="3" class="ion-text-center ion-align-self-center">
+        <ion-icon name="thumbs-up" [ngClass]="app.status == 'Interested' ? 'green' : 'red'"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+
+</ion-content>

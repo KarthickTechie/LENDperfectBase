@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">Reference Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  
+
+  <form [formGroup]="referenceDetails" (ngSubmit)="concernDetailsSave(referenceDetails.value)">
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type=text formControlName="name"></ion-input>
+      </ion-item>
+    </div>
+
+
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Occupation</ion-label>
+        <ion-input type=text formControlName="occupation"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Address</ion-label>
+        <ion-input type=text formControlName="address"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Mobile No.</ion-label>
+        <ion-input type=text formControlName="mobNo"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="referenceDetails.invalid" type="submit" shape="round">Save</ion-button>
+      </div>
+    </div>
+  </form>
+
+<ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{2}}</div>
+    <ion-fab-button type="button" size="small" (click)="viewReferenceDetails($event,'referenceDetails')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

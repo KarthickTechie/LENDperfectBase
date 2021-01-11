@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>OTP Consent</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<div class="container">
+  <ion-icon class="phoneIcon" name="phone-portrait-outline"></ion-icon>
+  <h3>OTP Verification</h3>
+  <p>We sent a One Time Password to customers' mobile number.</p>
+
+  <!-- <h6 *ngIf="!resend">{{time|async}}</h6> -->
+
+  <!-- <ion-input *ngIf="!otp" placeholder="******"></ion-input> -->
+  <ion-input type=text style="border: 1px solid #F33F26;margin: 0 auto;
+    width: 100px;" placeholder="Enter OTP" [(ngModel)]="otpNumber"></ion-input>
+  <ion-button *ngIf="resend" (click)="reSendOTP()">Resend OTP</ion-button>
+  <ion-button *ngIf="beforeverify && !resend" (click)="checkOTPStatus()">Verify OTP</ion-button>
+  <div class="textCon" *ngIf="!beforeverify && !resend">OTP verifed Successfully
+    <ion-icon class="tick" name="checkmark-done-outline"></ion-icon>
+  </div>
+  <ion-button *ngIf="!beforeverify && !resend" (click)="ramp()">Proceed</ion-button>
+</div>

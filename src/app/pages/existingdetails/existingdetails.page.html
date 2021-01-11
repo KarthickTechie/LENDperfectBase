@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Existing Application</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <ion-card class="listcontainer">
+    <!-- <div class="listcontainer"> -->
+    <ion-item *ngFor="let app of applications;" (click)="existingApp(app)">
+      <div class="img"><img src="assets/imgs/person2.png" /></div>
+      <div class="existingdata">
+        <div class="title">{{app.name}}</div>
+        <div class="application">Application No: {{app.application}}</div>
+        <div class="loanamt">Loan Amount: <span>{{app.loanAmt}}</span></div>
+        <div class="existingdate">{{app.date}}</div>
+      </div>
+    </ion-item>
+    <!-- </div> -->
+  </ion-card>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title style="text-align: center;">Co-Applicant</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="listcontainer">
+    <!-- <div class="listcontainer"> -->
+    <ion-item *ngFor="let app of applications;" (click)="existingcoApp(app)">
+      <div class="img"><img src="assets/imgs/person2.png" /></div>
+      <div class="existingdata">
+        <div class="title">{{app.name}}</div>
+        <div class="application">Application No: {{app.application}}</div>
+        <div class="loanamt">Loan Amount: <span>{{app.loanAmt}}</span></div>
+        <div class="existingdate">{{app.date}}</div>
+      </div>
+    </ion-item>
+    <!-- </div> -->
+  </ion-card>
+
+
+
+  <ion-fab vertical="bottom " horizontal="end" #fab>
+    <ion-fab-button type="button" size="small">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button type="button" (click)="addCoApplicantGurantor(app.refId)">
+        <ion-icon name="person"></ion-icon>
+      </ion-fab-button>
+      <ion-label style="position: absolute;top: 18px;right: 55px;">{{"New"}}</ion-label>
+    </ion-fab-list>
+  </ion-fab>
+
+
+</ion-content>

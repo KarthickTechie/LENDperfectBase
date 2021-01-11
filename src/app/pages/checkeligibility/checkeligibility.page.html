@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">Check Eligibility</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="checkEligibilityDetails" (ngSubmit)="concernDetailsSave(checkEligibilityDetails.value)">
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Borrower Cibil</ion-label>
+        <ion-input type=text formControlName="borCib"></ion-input>
+      </ion-item>
+    </div>
+
+
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Promotors Cibil</ion-label>
+        <ion-input type=text formControlName="proCib"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Existing Liabilities</ion-label>
+        <ion-input type=text formControlName="exiLia"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Loan Applied For </ion-label>
+        <ion-input type=text formControlName="loanApply"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Facility Amount Tenor</ion-label>
+        <ion-input type=text formControlName="amtTenor"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Policy Parameters</ion-label>
+        <ion-input type=text formControlName="policyPar"></ion-input>
+      </ion-item>
+    </div>
+
+    <!-- <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="checkEligibilityDetails.invalid" type="submit" shape="round">Save</ion-button>
+      </div>
+    </div> -->
+  </form>
+
+
+</ion-content>

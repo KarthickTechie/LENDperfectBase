@@ -4,7 +4,7 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #FA7F22;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -12,7 +12,7 @@
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: #F33F26;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -20,7 +20,7 @@
   --ion-color-secondary-tint: #50c8ff;
 
   /** tertiary **/
-  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary: #017DC7;
   --ion-color-tertiary-rgb: 82, 96, 255;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
@@ -74,92 +74,61 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
-
-
-  --ion-color-logo: #303578;
-  --ion-color-logo-rgb: 48, 53, 120;
-  
-  --ion-color-logotext: #ffffff;
-  --ion-color-logotext-rgb: 255, 255, 255;
-
-  ion-content {
-    --background: #ffffff;
-    --color: var(--ion-color-dark);
-  }
-  app-home ion-content {
-    --background: beige;
-    --color: var(--ion-color-dark);
-  }
-  
-  ion-icon {
-    color:  var(--ion-color-secondary); 
-      }
-  
-  ion-toolbar {
-    // --background: var(--ion-color-primary);  
-    border-bottom: 1px solid var(--ion-color-primary);  
-    border: 1px solid var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07))));
-    // --color:  var(--ion-color-primary-contrast); 
-    --color:  var(--ion-color-primary); 
-    ion-icon {
-      // --background: var(--ion-color-primary);  
-      // color:  var(--ion-color-primary-contrast);
-      color:  var(--ion-color-primary);
-    }
-    ion-button ion-icon {
-      color:  var(--ion-color-primary-contrast);
-    }
-    
-  }
-
-
-  ion-tab-bar {
-    border-top: 1px solid var(--ion-color-primary);  
-    --color:  var(--ion-color-primary); 
-    ion-icon {
-      color:  var(--ion-color-primary);
-    }
-    
-  }
-
-  ion-card {
-    // --background: var(--ion-color-primary); 
-    --color: var(--ion-color-dark); 
-    ion-card-title {
-      --color: var(--ion-color-dark-contrast); 
-    }
-  }
-
-  // ion-tab-bar {
-  //   --background: var(--ion-color-primary); 
-  //   --color: var(--ion-color-primary-contrast); 
-  // }
-
-  ion-button {
-    --background: var(--ion-color-primary);  
-    --color: var(--ion-color-primary-contrast); 
-  }
-  ion-fab {
-    --background: var(--ion-color-tertiary);
-    ion-fab-button {
-      --background: var(--ion-color-tertiary);
-    }
-    ion-icon {
-      color:  var(--ion-color-tertiary-contrast); 
-    }
-  }
-
-
 }
 
-.ion-color-logo {
-  --ion-color-base: var(--ion-color-logo);
-  --ion-color-base-rgb: var(--ion-color-logo-rgb);
+
+
+ion-header ion-toolbar {
+  --background: var(--ion-color-primary);  
+  --color:  var(--ion-color-primary-contrast); 
+  ion-icon {
+    --color:  var(--ion-color-primary-contrast); 
+  }
+}
+
+ion-tabs ion-tab-bar{
+  --background: var(--ion-color-primary);  
+  --color:  var(--ion-color-primary-contrast); 
+  ion-label {
+    --color:  var(--ion-color-primary-contrast); 
+  }
+  
+}
+.fabItems {
+  ion-fab, ion-fab ion-fab-button, ion-fab ion-fab-button button, ion-icon {
+    --background: var(--ion-color-secondary);  
+    --color:  var(--ion-color-secondary-contrast); 
+  } 
+  ion-label {
+    --color: var(--ion-color-primary);  
+  }
+}
+
+app-home ion-content {
+  --background: beige;
+  --color: var(--ion-color-dark);
+
+  ion-icon {
+  color:  var(--ion-color-secondary); 
+}
+}
+
+app-fipredocument ion-icon {
+   color:  var(--ion-color-secondary) !important; 
  }
-.ion-color-logotext {
-  --ion-color-base: var(--ion-color-logotext);
-  --ion-color-base-rgb: var(--ion-color-logotext-rgb);
- }
+app-postdocument ion-icon {
+  color:  var(--ion-color-secondary) !important; 
+}
+
+.fabBadge {
+  background: var(--ion-color-primary); 
+  color: var(--ion-color-primary-contrast);
+}
+.fabicon button {
+  background: var(--ion-color-secondary);  
+  color: var(--ion-color-secondary-contrast);
+}
+
 
 @media (prefers-color-scheme: dark) {
   /*
@@ -267,6 +236,8 @@
     --ion-toolbar-background: #0d0d0d;
 
     --ion-item-background: #000000;
+
+    --ion-card-background: #1c1c1d;
   }
 
 
@@ -309,11 +280,7 @@
     --ion-toolbar-background: #1f1f1f;
 
     --ion-tab-bar-background: #1f1f1f;
-  }
 
-  ion-title.title-large {
-    --color: white;
+    --ion-card-background: #1e1e1e;
   }
-
 }
-

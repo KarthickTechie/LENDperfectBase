@@ -1,0 +1,531 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div  *ngIf="showInsurancePolicy" class="container">
+    <form [formGroup]="assetMovableInsuranceForm" (ngSubmit)="assetMovableInsuranceFormSave(assetMovableInsuranceForm.value)">
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Name Of Company</ion-label>
+        <ion-input type="text" formControlName="companyName"></ion-input>
+      </ion-item>
+    </div>
+  
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Company Branch Name</ion-label>
+        <ion-input type="text" formControlName="branchName"></ion-input>
+      </ion-item>
+    </div>
+  
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Policy Number</ion-label>
+        <ion-input type="text" formControlName="policyNo"></ion-input>
+      </ion-item>
+    </div>
+  
+    <div class="item">
+      <div class="newdate">
+        <ion-item>
+          <ion-label position="floating">Date Of Issue
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="dateOfIssue" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+          </ion-input>
+        </ion-item>
+      </div>
+    </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Sum Assured</ion-label>
+          <ion-input type="text" formControlName="sumAssured"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Surrender Value </ion-label>
+          <ion-input type="text" formControlName="surrenderValue"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Annual Premium </ion-label>
+          <ion-input type="tel" formControlName="annualPremium"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Premium paid upto? <span class="greyColor">(What Period)</span></ion-label>
+          <ion-input type="text" formControlName="annualPremium"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="assetMovableInsuranceForm.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+  </form>
+
+  
+
+<ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'insurancePolicy')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+  </div>
+  
+  <div *ngIf="showMutualFund" class="container">
+    <form [formGroup]="assetMovableMutualFundForm" (ngSubmit)="assetMovableMutualFundFormSave(assetMovableMutualFundForm.value)">
+      
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Name Of Company</ion-label>
+          <ion-input type="text" formControlName="companyName"></ion-input>
+        </ion-item>
+      </div>   
+      
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Number Of Shares</ion-label>
+          <ion-input type="tel" formControlName="numOfShare"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Certificate / Account / Demat Account Number</ion-label>
+          <ion-input type="text" formControlName="certificateNo"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Scheme Name</ion-label>
+          <ion-input type="text" formControlName="scheme"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Whether Fully Paid<span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" formControlName="fullPaid">
+            <ion-select-option *ngFor="let yesNo of yesNoList" [value]="yesNo.code">
+              {{yesNo.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Current Market Value <span class="greyColor">(Rs.)</span></ion-label>
+          <ion-input type="tel" formControlName="currentMarketValue"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="assetMovableMutualFundForm.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+      
+    </form>
+
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'mutalFund')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+    
+  </div>
+  
+  <div *ngIf="showTermDepositForm" class="container">
+    <form [formGroup]="assetMovableTermDepositForm" (ngSubmit)="assetMovableTermDepositFormSave(assetMovableTermDepositForm.value)">
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Term Deposit Receipt No.</ion-label>
+          <ion-input type="text" formControlName="receiptNo"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Bank / Branch Name</ion-label>
+          <ion-input type="text" formControlName="bankName"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Deposit Type</ion-label>
+          <ion-input type="text" formControlName="bankName"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Amount Of Receipt </ion-label>
+          <ion-input type="tel" formControlName="amountOfReceipt"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <div class="newdate">
+          <ion-item>
+            <ion-label position="floating">Date Of Receipt
+              <span class="mandatory">*</span>
+            </ion-label>
+            <ion-input type="date" formControlName="dateOfReceipt" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+            </ion-input>
+          </ion-item>
+        </div>
+        </div>
+  
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Maturity Amount</ion-label>
+            <ion-input type="text" formControlName="maturityAmount"></ion-input>
+          </ion-item>
+        </div>
+  
+        <div class="item">
+          <div class="newdate">
+            <ion-item>
+              <ion-label position="floating">Maturity Date
+                <span class="mandatory">*</span>
+              </ion-label>
+              <ion-input type="date" formControlName="maturityDate" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+              </ion-input>
+            </ion-item>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="ion-text-center">
+            <ion-button [disabled]="assetMovableTermDepositForm.invalid" type="submit" shape="round">Save</ion-button>
+          </div>
+        </div>
+    </form>
+
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'termPolicy')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+    
+  </div>
+  
+  <div *ngIf="showInvestmentForm"  class="container">
+    <form [formGroup]="assetMovableInvestmentForm" (ngSubmit)="assetMovableInvestmentFormSave(assetMovableInvestmentForm.value)">
+      
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Bond / Certificate No.</ion-label>
+          <ion-input type="text" formControlName="certificateNo"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Nature of Securities</ion-label>
+          <ion-input type="text" formControlName="natureOfSecurity"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <div class="newdate">
+          <ion-item>
+            <ion-label position="floating">Date Of Purchase
+              <span class="mandatory">*</span>
+            </ion-label>
+            <ion-input type="date" formControlName="dateOfPurchase" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+            </ion-input>
+          </ion-item>
+        </div>
+        </div>
+  
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Issuing / Post Office</ion-label>
+            <ion-input type="text" formControlName="issuingOffice"></ion-input>
+          </ion-item>
+        </div>
+  
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Face Value</ion-label>
+            <ion-input type="text" formControlName="faceValue"></ion-input>
+          </ion-item>
+        </div>
+  
+        <div class="item">
+          <div class="newdate">
+            <ion-item>
+              <ion-label position="floating">Due Date
+                <span class="mandatory">*</span>
+              </ion-label>
+              <ion-input type="date" formControlName="dueDate" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+              </ion-input>
+            </ion-item>
+          </div>
+          </div>
+  
+          <div class="item">
+            <ion-item>
+              <ion-label position="floating">Maturity Amount</ion-label>
+              <ion-input type="text" formControlName="maturityAmount"></ion-input>
+            </ion-item>
+          </div>
+  
+          <div class="item">
+            <div class="ion-text-center">
+              <ion-button [disabled]="assetMovableInvestmentForm.invalid" type="submit" shape="round">Save</ion-button>
+            </div>
+          </div>
+    </form>
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'investInGov')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+
+    
+  </div>
+  
+  <div *ngIf="showVehiclesForm" class="container">
+    <form [formGroup]="assetMovableVehiclesForm" (ngSubmit)="assetMovableVehiclesFormSave(assetMovableVehiclesForm.value)">
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Type of Vehicle </ion-label>
+          <ion-input type="text" formControlName="vehicleType"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Registration No. </ion-label>
+          <ion-input type="text" formControlName="registrationNo"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Vehicle Model</ion-label>
+          <ion-input type="text" formControlName="model"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Year Of Make</ion-label>
+          <ion-input type="tel" formControlName="yearOfMake"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Cost at the time of Purchase</ion-label>
+          <ion-input type="tel" formControlName="purchaseCost"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">RC Book Details</ion-label>
+          <ion-input type="text" formControlName="rcBookDetails"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Present Value of Vehicle</ion-label>
+          <ion-input type="tel" formControlName="presentValue"></ion-input>
+        </ion-item>
+      </div>
+  
+       <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="assetMovableVehiclesForm.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+  
+    </form>
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'vehicles')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+
+    
+  </div>
+  
+  <div *ngIf="showJewelleryForm"  class="container">
+    <form [formGroup]="assetMovableJewelleryForm" (ngSubmit)="assetMovableJewelleryFormSave(assetMovableJewelleryForm.value)">
+      
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Jewell Type<span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" formControlName="jewellType">
+            <ion-select-option *ngFor="let jewellTypeVar of jewellTypeList" [value]="jewellTypeVar.code">
+              {{jewellTypeVar.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Quantity</ion-label>
+          <ion-input type="tel" formControlName="quantity"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Valuation <span class="greyColor">(approx)*</span></ion-label>
+          <ion-input type="text" formControlName="valuation"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Details of 'Shridhan' <span class="greyColor"> (If any)</span></ion-label>
+          <ion-textarea formControlName="otherDetails"></ion-textarea>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="assetMovableJewelleryForm.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+  
+    </form>
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'jewellery')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+    
+  </div>
+  
+  <div *ngIf="showBusinessInvestmentForm" class="container">
+    <form [formGroup]="assetMovableBusinessInvestmentForm" (ngSubmit)="assetMovableBusinessInvestmentFormSave(assetMovableBusinessInvestmentForm.value)">
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Company / Firm Name <span class="greyColor">(as on Latest Balance Sheet)</span></ion-label>
+          <ion-input type="text" formControlName="companyName"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Amount Invested</ion-label>
+          <ion-input type="text" formControlName="amount"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Other Details</ion-label>
+          <ion-textarea formControlName="otherDetails"></ion-textarea>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="assetMovableBusinessInvestmentForm.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+    </form>
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{1}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'BusinessInvest')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+
+    
+  </div>
+  
+  <div *ngIf="showOtherInvestmentForm" class="container">
+    <form [formGroup]="assetMovableOtherInvestmentForm" (ngSubmit)="assetMovableOtherInvestmentFormSave(assetMovableOtherInvestmentForm.value)">
+        
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Asset Name <span class="greyColor">( Give Full Details)</span></ion-label>
+          <ion-input type="text" formControlName="assetName"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Amount Invested</ion-label>
+          <ion-input type="text" formControlName="amount"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Other Details</ion-label>
+          <ion-textarea formControlName="otherDetails"></ion-textarea>
+        </ion-item>
+      </div>
+      
+      <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="assetMovableOtherInvestmentForm.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+    </form>
+
+
+    <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+  <div class="fabBadge">{{2}}</div>
+    <ion-fab-button type="button" size="small" (click)="openContentModal($event,'otherAsset')">
+      <ion-icon name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+
+    
+  </div>
+  
+</ion-content>

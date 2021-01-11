@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Query Inbox</ion-title>
+      <ion-icon name="refresh-outline" class="title-icon"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="querycontainer">
+    <div *ngFor="let query of queryList;let index=index;let odd=odd; let even=even;">
+      <ion-icon class="queryleft" *ngIf="even" name="person-circle"></ion-icon>
+      <ion-icon class="leftarrow" *ngIf="even" name="caret-back"></ion-icon>
+
+      <ion-icon class="queryright" *ngIf="odd" name="person-circle"></ion-icon>
+      <ion-icon class="rightarrow" *ngIf="odd" name="caret-forward"></ion-icon>
+
+      <ion-card>
+        <div class="person">
+          <ion-icon name="person-outline"></ion-icon> <span class="personname">{{query.name}}</span></div>
+        <div>
+          <ion-icon name="folder-outline"></ion-icon><span class="textcolor">Branch -</span>
+          <ion-badge class="textdata">CBD BELAPUR</ion-badge>
+        </div>
+        <div>
+          <ion-icon name="folder-outline"></ion-icon> <span class="textcolor">Application / Lead No.</span> -
+          <ion-badge class="textdata">26012</ion-badge>
+        </div>
+        <div>
+          <ion-icon name="folder-outline"></ion-icon> <span class="textcolor">Open Queries -</span>
+          <ion-badge class="query">2</ion-badge>
+        </div>
+        <div>
+          <ion-icon name="folder-outline"></ion-icon> <span class="textcolor">Responded Queries -</span>
+          <ion-badge class="response">5</ion-badge>
+        </div>
+        <div class="querylist">
+          <div>
+            <ion-icon name="arrow-undo-circle"></ion-icon>
+            <ion-badge>Open Query</ion-badge>
+          </div>
+          <div>
+            <ion-icon name="refresh-circle"></ion-icon>
+            <ion-badge>History</ion-badge>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+
+
+
+
+</ion-content>

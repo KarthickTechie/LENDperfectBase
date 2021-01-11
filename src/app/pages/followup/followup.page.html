@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">Follow-Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="followup" (ngSubmit)="followupSave(followup.value)">
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Follow Up Period <span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" formControlName="followPriod">
+          <ion-select-option *ngFor="let sta of status" [value]="sta.code">{{sta.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Date From</ion-label>
+        <ion-input type="date" formControlName="followFrom" displayFormat="DD/MM/YYYY"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Date To</ion-label>
+        <ion-input type="date" formControlName="followTo" displayFormat="DD/MM/YYYY"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="followup.invalid" type="submit" shape="round">Search</ion-button>
+      </div>
+    </div>
+
+  </form>
+
+</ion-content>

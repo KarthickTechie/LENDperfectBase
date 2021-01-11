@@ -1,0 +1,61 @@
+.fabBadge {
+    color: #ffffff;
+    position: absolute;
+    background-color: #017DC7;
+    padding: 3px 6px;
+    z-index: 1;
+    border-radius: 50%;
+    top: 3px;
+    right: 3px;
+    font-size: 10px;
+  }
+
+  .greyColor{
+    color: rgb(179, 174, 174);
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  
+}
+
+.item{
+    order: 5;
+}
+// .container {
+//   height: 100%;
+//   display: grid;
+//   grid-template-rows: auto;
+//   grid-template-columns: auto;
+// }
+
+// .container .item:nth-child(1),
+// .container .item:nth-child(2),
+// .container .item:nth-child(3),
+// .container .item:nth-child(4),
+// .container .item:nth-child(5),
+// .container .item:nth-child(6),
+// .container .item:nth-child(7),
+// .container .item:nth-child(8){
+//   grid-column-start: 1;
+//   grid-column-end:5;
+// }
+
+
+
+.ionIcon{
+  zoom: 2 !important;
+  color:var(--ion-color-secondary); 
+}
+
+ion-footer{
+
+  ion-icon{
+      zoom: 2;
+      color:var(--ion-color-secondary);
+  }
+}
+

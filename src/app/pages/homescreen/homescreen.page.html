@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="padding-right: 14vw;">HOME</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+  <ion-list>
+    <ion-item>
+      <div class="listbox" (click)="prospectiveLead()">
+        <ion-icon name="play-circle"></ion-icon>
+        <ion-label>Prospective Lead</ion-label>
+      </div>
+    </ion-item>
+    <ion-item>
+      <div class="listbox" (click)="newApplication()">
+        <ion-icon name="create"></ion-icon>
+        <ion-label>New Application</ion-label>
+      </div>
+    </ion-item>
+    <ion-item>
+      <div class="listbox" (click)="existingApplication()">
+        <ion-icon name="expand"></ion-icon>
+        <ion-label>Existing Applications</ion-label>
+      </div>
+    </ion-item>
+    <ion-item>
+      <div class="listbox" (click)="openReceivedApplication()">
+        <ion-icon name="repeat"></ion-icon>
+        <ion-label>Received Applications </ion-label>
+      </div>
+    </ion-item>
+    <ion-item>
+      <div class="listbox" (click)="openMasterUpdate()">
+        <ion-icon name="sync-circle"></ion-icon>
+        <ion-label>Get Master Updates</ion-label>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <!-- <ion-button (click)="image()">image</ion-button> -->
+
+</div>
+</ion-content>
+

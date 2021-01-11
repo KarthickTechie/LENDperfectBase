@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Asset Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<div class="contentdetails">
+  <div class="content" (click)="openMovable()">
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <!-- <ion-icon name="library"></ion-icon> -->
+    <ion-icon name="navigate-circle"></ion-icon>
+    <!-- <img src="../../../assets/imgs/asset2.png" class="assetIcon"> -->
+    <ion-label>Movable Asset</ion-label>
+  </div>
+  <div class="content" (click)="openImmovable()">
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <!-- <ion-icon name="ribbon"></ion-icon> -->
+    <ion-icon name="cube"></ion-icon>
+    <!-- <img src="../../../assets/imgs/asset3.png" class="assetIcon"> -->
+    <ion-label>Immovable Asset</ion-label>
+  </div>
+</div>
+
+</ion-content>

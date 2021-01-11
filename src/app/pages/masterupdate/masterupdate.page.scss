@@ -1,0 +1,105 @@
+.title {
+  color: var(--ion-color-secondary);
+  text-align: center;
+  padding-top: 20px;
+  font-size: 1.4rem;
+}
+p {
+  text-align: center;
+}
+ion-item {
+  width: 90%;
+  margin: 0 auto;
+}
+ion-item ion-icon{
+  color: var(--ion-color-secondary);
+}
+ion-label {
+  padding-left: 20px;
+}
+@media only screen and (min-width: 413px) {
+
+  ion-item {
+    width: 50%;
+    float: left;
+  }
+  
+}
+// form {
+//     display: grid;
+//     grid-template-columns: auto;
+//     grid-template-rows: auto;
+//     margin: 10px;
+  
+//   }
+//   @media only screen and (max-width: 412px) {
+//     .item.sc-ion-label-md-h,
+//     .item .sc-ion-label-md-h {
+//       font-size: 14px;
+//       white-space: normal;
+//     }
+//     .container {
+//       width: 95vw;
+//     }
+//   }
+//   @media only screen and (min-width: 413px) {
+//     .item.sc-ion-label-md-h,
+//     .item .sc-ion-label-md-h {
+//       font-size: 110%;
+//       white-space: normal;
+//     }
+//     .container {
+//       width: 95vw;
+//       height: 100vh;
+//     }
+//   }
+
+//   .cloud_icon{
+//         position: absolute;
+//         top: 50%;
+//         left: 25%;
+//         transform: translate(-50%,-50%); 
+//         font-size: 30px;
+//       }
+
+//       ion-card-title{
+//         position: absolute;
+//         top: 50%;
+//         left: 50%;
+//         transform: translate(-50%,-50%);
+//       }
+  
+
+    
+
+//       .listcontainer {
+//         width: 100%;
+//         margin-top: 10px;
+//     }
+//     .listbox {
+//         width: 100%;
+//         padding: 10px;
+//         vertical-align: top;
+//     }
+//     .listbox ion-icon {
+//         display: inline-block;
+//         zoom: 1.5;
+//         color: var(--ion-color-secondary);  
+//         vertical-align: top;
+//     }
+//     .listbox ion-label {
+//         display: inline-block;
+//         padding-left: 20px;
+//         font-size: 1.2rem;
+//         width: 80%;
+//         white-space: normal;
+//         text-align: center;
+//     }
+//     .listbox .tick {
+//         display: inline-block;
+//         float: right;
+//         vertical-align: top;
+//         padding-right: 5px;
+//         zoom: 1.7;
+//         color: var(--ion-color-primary);  
+//     }

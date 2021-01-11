@@ -1,0 +1,793 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">{{applicantType}}</ion-title>
+  </ion-toolbar>
+  <div class="menu" #fillBadge id="fillBadge">
+    <ion-badge (click)="getPersonal()">Personal</ion-badge>
+    <span class="green"></span>
+    <ion-badge (click)="getAddress()">Address</ion-badge>
+    <span *ngIf="showDetails"></span>
+    <ion-badge *ngIf="showDetails" (click)="getLoan()">Loan</ion-badge>
+    <span></span>
+    <ion-badge (click)="getKyc()">Kyc</ion-badge>
+  </div>
+
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+
+  <ion-list id="personal">
+    <ion-item-group>
+      <ion-item-divider sticky class="itemDividerHeading">
+        <!-- <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon> -->
+        <ion-label class="labelHeading">Personal Information</ion-label>
+      </ion-item-divider>
+      <div>
+
+        
+          <div class="profileImage">
+            <img src="../../../assets/imgs/profile1.png" *ngIf="!convertFile">
+            <img [src]="convertFile" *ngIf="convertFile" class="navuserimg">
+            <ion-icon (click)="uploadProfilePic('profile')" class="uploadIcon" size="large" name="camera" slot="icon-only"></ion-icon>
+          </div>
+
+
+
+
+            <div class="item" style="width: calc(96vw);margin: 0 auto;">
+              <ion-item>
+                <ion-label position="floating">Constitution<span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" [(ngModel)]="constitution"  (ionChange)="checkConstitution()">
+                  <ion-select-option *ngFor="let constitutionValue of constitutionList"  [value]="constitutionValue.code">
+                    {{constitutionValue.OptionDesc}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+
+            <form [formGroup]="personalDetails" (ngSubmit)="personalSave(personalDetails.value)">
+          <div class="container mrgnTop2px">
+            <div class="item" *ngIf="showNonIndividual">
+              <div class="item">
+                <div class="mobileverify">
+                  <ion-item>
+                    <ion-label position="floating">CIN Number <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="cinNumber" maxlength="21"></ion-input>
+                  </ion-item>
+                  <ion-button *ngIf="!showCinVerified" size="small" (click)="cinNumberVerification()">Verify CIN
+                  </ion-button>
+                  <ion-button *ngIf="showCinVerified" size="small" color="success">Verified</ion-button>
+                </div>
+                <!-- <ion-item class="noMarginPadding">
+              <ion-grid class="noMarginPadding fullWidth">
+                <ion-row>
+                  <ion-col size="8" class="ion-text-left marginLeftMinus5px">
+                    <ion-label position="floating">CIN Number <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="cinNumber"></ion-input>
+                  </ion-col>
+                  <ion-col size="4" class="ion-text-right marginTopmargiBottomAuto">
+                    <ion-button color="warning" (click)="cinNumberVerification()">Verify CIN</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item> -->
+
+                <div>
+                  <ng-container *ngFor="let validation of validation_messages.cinNumber">
+                    <div class="mandatory" *ngIf="personalDetails.get('cinNumber').hasError(validation.type) && (personalDetails.get('cinNumber').dirty || personalDetails.get('cinNumber').touched)">
+                      <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Title<span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="title">
+                  <ion-select-option *ngFor="let title of titleList" [value]="title.code">
+                    {{title.OptionDesc}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.title">
+                  <div class="mandatory" *ngIf="personalDetails.get('title').hasError(validation.type) && (personalDetails.get('title').dirty || personalDetails.get('title').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="item" *ngIf="showNonIndividual">
+              <ion-item>
+                <ion-label position="floating">Business Entity Name<span class="mandatory">*</span></ion-label>
+                <ion-input type="text" formControlName="businessEntityName" maxlength="30"></ion-input>
+              </ion-item>
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.businessEntityName">
+                  <div class="mandatory" *ngIf="personalDetails.get('businessEntityName').hasError(validation.type) && (personalDetails.get('businessEntityName').dirty || personalDetails.get('businessEntityName').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="item" *ngIf="showIndividual">
+              <ion-item>
+                <ion-label position="floating">First Name <span class="mandatory">*</span></ion-label>
+                <ion-input type="text" formControlName="firstName" maxlength="30"></ion-input>
+              </ion-item>
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.firstName">
+                  <div class="mandatory" *ngIf="personalDetails.get('firstName').hasError(validation.type) && (personalDetails.get('firstName').dirty || personalDetails.get('firstName').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="item" *ngIf="showIndividual">
+              <ion-item>
+                <ion-label position="floating">Middle Name </ion-label>
+                <ion-input type="text" formControlName="middleName" maxlength="30"></ion-input>
+              </ion-item>
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.middleName">
+                  <div class="mandatory" *ngIf="personalDetails.get('middleName').hasError(validation.type) && (personalDetails.get('middleName').dirty || personalDetails.get('middleName').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="item" *ngIf="showIndividual">
+              <ion-item>
+                <ion-label position="floating">Last Name <span class="mandatory">*</span></ion-label>
+                <ion-input type="text" formControlName="lastName" maxlength="30"></ion-input>
+              </ion-item>
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.lastName">
+                  <div class="mandatory" *ngIf="personalDetails.get('lastName').hasError(validation.type) && (personalDetails.get('lastName').dirty || personalDetails.get('lastName').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+
+
+            <div class="item">
+              <div class="mobileverify">
+                <ion-item>
+                  <ion-label position="floating">Mobile Number <span class="mandatory">*</span></ion-label>
+                  <ion-input type="tel" formControlName="mobileNumber" maxlength="10" appNumberOnly></ion-input>
+                </ion-item>
+                <ion-button *ngIf="beforeVerify" size="small" (click)="sendOTP()">Send OTP
+                </ion-button>
+                <ion-button *ngIf="!mobileVerified && !beforeVerify" size="small" (click)="presentModalOTP(null,'mobile')">Verify OTP
+                </ion-button>
+                <ion-button *ngIf="mobileVerified && !beforeVerify" size="small" color="success">Verified</ion-button>
+              </div>
+
+
+
+
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.mobileNumber">
+                  <div class="mandatory" *ngIf="personalDetails.get('mobileNumber').hasError(validation.type) && (personalDetails.get('mobileNumber').dirty || personalDetails.get('mobileNumber').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="newdate">
+                <ion-item>
+                  <ion-label position="floating">Date of Incorporation
+                    <span class="mandatory">*</span>
+                  </ion-label>
+                  <ion-input type="date" formControlName="dateOfIncorporation" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+                  </ion-input>
+                </ion-item>
+              </div>
+
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.dateOfIncorporation">
+                  <div class="mandatory" *ngIf="personalDetails.get('dateOfIncorporation').hasError(validation.type) && (personalDetails.get('dateOfIncorporation').dirty || personalDetails.get('dateOfIncorporation').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Vintage<span class="mandatory">*</span></ion-label>
+                <ion-input type="tel" formControlName="vintage"></ion-input>
+              </ion-item>
+
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.vintage">
+                  <div class="mandatory" *ngIf="personalDetails.get('vintage').hasError(validation.type) && (personalDetails.get('vintage').dirty || personalDetails.get('vintage').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Source of Lead<span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="sourceOfLead">
+                  <ion-select-option *ngFor="let sourceOfLead of sourceOfLeadList" [value]="sourceOfLead.code">
+                    {{sourceOfLead.OptionDesc}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div>
+                <ng-container *ngFor="let validation of validation_messages.sourceOfLead">
+                  <div class="mandatory" *ngIf="personalDetails.get('sourceOfLead').hasError(validation.type) && (personalDetails.get('sourceOfLead').dirty || personalDetails.get('sourceOfLead').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </ion-item-group>
+  </ion-list>
+
+
+  <ion-list id="address">
+    <ion-item-group>
+      <ion-item-divider sticky class="itemDividerHeading">
+        <!-- <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon> -->
+        <ion-label class="labelHeading">Address Information </ion-label>
+      </ion-item-divider>
+      <div>
+        <form [formGroup]="addressDetails" (ngSubmit)="addressSave(addressDetails.value)">
+          <div class="container">
+            <div class="segment">
+              <ion-segment [(ngModel)]="addressType" value="Business" formControlName="addressType" (ionChange)="addressTab($event)">
+                <ion-segment-button value="Business">Business</ion-segment-button>
+                <ion-segment-button value="Factory">Unit / Factory</ion-segment-button>
+              </ion-segment>
+
+              <div *ngIf="addressType === 'Business'" class="ion-margin-top">
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">Address 1 <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="businessAddress"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.businessAddress">
+                      <div class="mandatory" *ngIf="addressDetails.get('businessAddress').hasError(validation.type) && (addressDetails.get('businessAddress').dirty || addressDetails.get('businessAddress').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">Address 2 <span class="mandatory">*</span></ion-label>
+                    <!-- <ion-label position="floating">Nearest Landmark <span class="mandatory">*</span></ion-label> -->
+                    <ion-input type="text" formControlName="nearestLandmarkBA"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.nearestLandmarkBA">
+                      <div class="mandatory" *ngIf="addressDetails.get('nearestLandmarkBA').hasError(validation.type) && (addressDetails.get('nearestLandmarkBA').dirty || addressDetails.get('nearestLandmarkBA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">District</ion-label>
+                    <ion-input type="text" formControlName="districtBA"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.districtBA">
+                      <div class="mandatory" *ngIf="addressDetails.get('districtBA').hasError(validation.type) && (addressDetails.get('districtBA').dirty || addressDetails.get('districtBA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">City <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="cityBA"></ion-input>
+                  </ion-item>
+                  <!-- <ion-item>
+                    <ion-label position="floating">City <span class="mandatory">*</span></ion-label>
+                    <ion-select interface="popover" formControlName="cityBA">
+                      <ion-select-option *ngFor="let city of cityList" [value]="city.code">
+                        {{city.Name}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item> -->
+
+                  <!-- <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.cityBA">
+                      <div class="mandatory"
+                        *ngIf="addressDetails.get('cityBA').hasError(validation.type) && (addressDetails.get('cityBA').dirty || addressDetails.get('cityBA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                      </div>
+                    </ng-container>
+                  </div> -->
+                </div>
+
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">State <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="stateBA"></ion-input>
+                  </ion-item>
+                  <!-- <ion-item>
+                    <ion-label position="floating">State <span class="mandatory">*</span></ion-label>
+                    <ion-select interface="popover" formControlName="stateBA">
+                      <ion-select-option *ngFor="let state of stateList" [value]="state.code">
+                        {{state.Name}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item> -->
+
+                  <!-- <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.stateBA">
+                      <div class="mandatory"
+                        *ngIf="addressDetails.get('stateBA').hasError(validation.type) && (addressDetails.get('stateBA').dirty || addressDetails.get('stateBA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                      </div>
+                    </ng-container>
+                  </div> -->
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">Pincode <span class="mandatory">*</span></ion-label>
+                    <ion-input type="tel" formControlName="pincodeBA"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.pincodeBA">
+                      <div class="mandatory" *ngIf="addressDetails.get('pincodeBA').hasError(validation.type) && (addressDetails.get('pincodeBA').dirty || addressDetails.get('pincodeBA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+              </div>
+
+              <div *ngIf="addressType ==='Factory'" class="ion-margin-top">
+                <div class="item">
+                  <ion-item>
+                    <ion-checkbox (ionChange)="getCheckedStatus()" [(ngModel)]="ionCheck" formControlName="sameBusinessAdd">
+                    </ion-checkbox>
+                    <ion-label style="border-bottom: 0;border: 0;text-indent: 10px;">Same As Business Address
+                    </ion-label>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label position="floating">Address 1<span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="factoryAddress"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.factoryAddress">
+                      <div class="mandatory" *ngIf="addressDetails.get('factoryAddress').hasError(validation.type) && (addressDetails.get('factoryAddress').dirty || addressDetails.get('factoryAddress').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <!-- <ion-label position="floating">Nearest Landmark <span class="mandatory">*</span></ion-label> -->
+                    <ion-label position="floating">Address 2 <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="nearestLandmarkFA"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.nearestLandmarkFA">
+                      <div class="mandatory" *ngIf="addressDetails.get('nearestLandmarkFA').hasError(validation.type) && (addressDetails.get('nearestLandmarkFA').dirty || addressDetails.get('nearestLandmarkFA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">District</ion-label>
+                    <ion-input type="text" formControlName="districtFA"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.districtFA">
+                      <div class="mandatory" *ngIf="addressDetails.get('districtFA').hasError(validation.type) && (addressDetails.get('districtFA').dirty || addressDetails.get('districtFA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">City <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="cityFA"></ion-input>
+                  </ion-item>
+                  <!-- <ion-item>
+                    <ion-label position="floating">City <span class="mandatory">*</span></ion-label>
+                    <ion-select interface="popover" formControlName="cityFA">
+                      <ion-select-option *ngFor="let city of cityList" [value]="city.code">
+                        {{city.Name}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item> -->
+
+                  <!-- <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.cityFA">
+                      <div class="mandatory"
+                        *ngIf="addressDetails.get('cityFA').hasError(validation.type) && (addressDetails.get('cityFA').dirty || addressDetails.get('cityFA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                      </div>
+                    </ng-container>
+                  </div> -->
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">State <span class="mandatory">*</span></ion-label>
+                    <ion-input type="text" formControlName="stateFA"></ion-input>
+                  </ion-item>
+                  <!-- <ion-item>
+                    <ion-label position="floating">State <span class="mandatory">*</span></ion-label>
+                    <ion-select interface="popover" formControlName="stateFA">
+                      <ion-select-option *ngFor="let state of stateList" [value]="state.code">
+                        {{state.Name}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item> -->
+
+                  <!-- <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.stateFA">
+                      <div class="mandatory"
+                        *ngIf="addressDetails.get('stateFA').hasError(validation.type) && (addressDetails.get('stateFA').dirty || addressDetails.get('stateFA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                      </div>
+                    </ng-container>
+                  </div> -->
+                </div>
+
+                <div class="item">
+                  <ion-item>
+                    <ion-label position="floating">Pincode <span class="mandatory">*</span></ion-label>
+                    <ion-input type="tel" formControlName="pincodeFA"></ion-input>
+                  </ion-item>
+
+                  <div>
+                    <ng-container *ngFor="let validation of validation_messages_address.pincodeFA">
+                      <div class="mandatory" *ngIf="addressDetails.get('pincodeFA').hasError(validation.type) && (addressDetails.get('pincodeFA').dirty || addressDetails.get('pincodeFA').touched)">
+                        <p class="marginLR0pxTB5px">{{validation.message}} </p>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </ion-item-group>
+  </ion-list>
+
+
+
+  <ion-list id="Loan" *ngIf="showDetails">
+    <ion-item-group>
+      <ion-item-divider sticky class="itemDividerHeading">
+        <!-- <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon> -->
+        <ion-label class="labelHeading">Loan Information </ion-label>
+      </ion-item-divider>
+      <div>
+        <form [formGroup]="loanDetails" (ngSubmit)="loanDetailsSave(loanDetails.value)">
+          <div class="container">
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Customer Segment <span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="custSeg">
+                  <ion-select-option *ngFor="let custSegment of customerSegmentList" [value]="custSegment.code">
+                    {{custSegment.Name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Product Type <span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="product">
+                  <ion-select-option *ngFor="let product of productList" [value]="product.code">{{product.Name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Facility <span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="facility">
+                  <ion-select-option *ngFor="let facility of facilityList" [value]="facility.code">{{facility.Name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Loan Amount(in Rs.)</ion-label>
+                <ion-input type=text formControlName="loanAmt"></ion-input>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Period(in months)</ion-label>
+                <ion-input type=text formControlName="period"></ion-input>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Interest(%)</ion-label>
+                <ion-input type=text formControlName="interest"></ion-input>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">EMI</ion-label>
+                <ion-input type=tel formControlName="emi"></ion-input>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Branch <span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="branch">
+                  <ion-select-option *ngFor="let branch of branchList" [value]="branch.code">{{branch.Name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div class="item">
+              <ion-item>
+                <ion-label position="floating">Loan Purpose <span class="mandatory">*</span></ion-label>
+                <ion-select interface="popover" formControlName="loanPurpose">
+                  <ion-select-option *ngFor="let purpose of loanPurposeList" [value]="purpose.code">{{purpose.Name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ion-item-group>
+  </ion-list>
+
+  <ion-list id="kyc">
+    <ion-item-group>
+      <ion-item-divider sticky class="itemDividerHeading">
+        <!-- <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon> -->
+        <ion-label class="labelHeading">KYC Norms</ion-label>
+      </ion-item-divider>
+
+      <div style="height: 70vh;">
+        <form [formGroup]="kycDetails" (ngSubmit)="kycSave(kycDetails.value)">
+          <div class="container">
+            <div class="item" *ngFor="let item of itemsAadhar" id="udyog">
+              <ion-item>
+                <ion-label position="floating">Aadhaar Number <span class="mandatory">*</span>
+                  <ion-badge *ngIf="showAadharverify" class="badgeveri">Verified</ion-badge>
+                  <ion-icon *ngIf="showAadharverify" name="checkmark-circle-outline" class="green"></ion-icon>
+                </ion-label>
+                <ion-input type="tel" formControlName="udyogNumber" [maxlength]="12" [minlength]="12"></ion-input>
+                <!-- <ion-icon class="fieldIcon" name="qr-code" color="primary" (click)="openOCR('aadhar')"
+            *ngIf="!kycAadharHide" slot="end"></ion-icon> -->
+                <ion-icon name="scan" slot="end" (click)="showScannerOption($event,'aadhar')"></ion-icon>
+                <ion-icon class="fieldIcon" name="chevron-down-circle-outline" color="primary" (click)="expandItemAadhar(item)" *ngIf="!kycAadharHide"
+                  slot="end"></ion-icon>
+                <ion-icon class="fieldIcon" name="chevron-up-circle-outline" color="primary" (click)="expandItemAadhar(item)" *ngIf="kycAadharHide"
+                  slot="end"></ion-icon>
+              </ion-item>
+              <app-expandable expandHeight="auto" [expanded]="item.expanded">
+                <div class="kyc_btn">
+                  <ion-button *ngIf="!showAadharverify" fill="outline" (click)="verifyaadhar()">Verify</ion-button>
+                  <ion-button *ngIf="showAadharverify" fill="outline" color="success">Verified</ion-button>
+                  <ion-button [disabled]="!showAadharverify" fill="outline" (click)="attachDoc('aadhar')">
+                    Attach
+                  </ion-button>
+                  <ion-button [disabled]="viewAadharDoc" fill="outline" (click)="viewDoc('aadhar')">
+                    View
+                  </ion-button>
+                </div>
+                <ion-badge class="countBadge" color="primary">{{aadharCount}}</ion-badge>
+              </app-expandable>
+
+              <div>
+                <ng-container *ngFor="let validation of validation_messages_kyc.udyogNumber">
+                  <div class="mandatory" *ngIf="kycDetails.get('udyogNumber').hasError(validation.type) && (kycDetails.get('udyogNumber').dirty || kycDetails.get('udyogNumber').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+
+            </div>
+            <div class="item" *ngFor="let item of itemsPan" id="pan">
+              <ion-item>
+                <ion-label position="floating">PAN Number <span class="mandatory">*</span>
+                  <ion-badge *ngIf="showPanverify" class="badgeveri">Verified</ion-badge>
+                  <ion-icon *ngIf="showPanverify" name="checkmark-circle-outline" class="green"></ion-icon>
+                </ion-label>
+                <!-- <ion-input type="text" formControlName="panNumber" (keyup)="$event.target.value = $event.target.value.toUpperCase();"></ion-input> -->
+                <ion-input type="text" formControlName="panNumber" UpperCase></ion-input>
+                <ion-icon name="scan" slot="end" (click)="showScannerOption($event,'pan')"></ion-icon>
+                <ion-icon class="fieldIcon" name="chevron-down-circle-outline" color="primary" (click)="expandItemPan(item)" *ngIf="!kycPanHide"
+                  slot="end"></ion-icon>
+                <ion-icon class="fieldIcon" name="chevron-up-circle-outline" color="primary" (click)="expandItemPan(item)" *ngIf="kycPanHide"
+                  slot="end"></ion-icon>
+              </ion-item>
+
+              <app-expandable expandHeight="auto" [expanded]="item.expanded">
+                <div class="kyc_btn">
+                  <ion-button *ngIf="!showPanverify" fill="outline" (click)="verification('pan')">Verify</ion-button>
+                  <ion-button *ngIf="showPanverify" fill="outline" color="success">Verified</ion-button>
+                  <ion-button [disabled]="!showPanverify" fill="outline" (click)="attachDoc('pan')">
+                    Attach
+                  </ion-button>
+                  <ion-button [disabled]="viewPanDoc" fill="outline" (click)="viewDoc('pan')">
+                    View
+                  </ion-button>
+                </div>
+                <ion-badge class="countBadge" color="primary">{{panCount}}</ion-badge>
+              </app-expandable>
+
+              <div>
+                <ng-container *ngFor="let validation of validation_messages_kyc.panNumber">
+                  <div class="mandatory" *ngIf="kycDetails.get('panNumber').hasError(validation.type) && (kycDetails.get('panNumber').dirty || kycDetails.get('panNumber').touched)">
+                    <p class="marginLR0pxTB5px">{{validation.message}}</p>
+                  </div>
+                </ng-container>
+              </div>
+
+            </div>
+
+
+            <ion-segment class="gstsegment" [(ngModel)]="gstNo" formControlName="gstRegister" color="primary" (ionChange)="gstRegisterFun($event)"
+              id="lei">
+              <ion-segment-button value="yes">
+                I have GST
+              </ion-segment-button>
+              <ion-segment-button value="no">
+                I don't have GST
+              </ion-segment-button>
+            </ion-segment>
+            <div class="item" *ngIf="showGstRegister">
+              <div *ngFor="let item of itemsGst">
+                <ion-item>
+                  <ion-label position="floating">GST Number <span class="mandatory">*</span>
+                    <ion-badge *ngIf="showGSTverify" class="badgeveri">Verified</ion-badge>
+                    <ion-icon *ngIf="showGSTverify" name="checkmark-circle-outline" class="green"></ion-icon>
+                  </ion-label>
+                  <ion-input type="text" formControlName="gstNumber"></ion-input>
+                  <ion-icon class="fieldIcon" name="chevron-down-circle-outline" color="primary" (click)="expandItemGst(item)" *ngIf="!kycGstHide"
+                    slot="end"></ion-icon>
+                  <ion-icon class="fieldIcon" name="chevron-up-circle-outline" color="primary" (click)="expandItemGst(item)" *ngIf="kycGstHide"
+                    slot="end"></ion-icon>
+                </ion-item>
+                <app-expandable expandHeight="auto" [expanded]="item.expanded">
+                  <div class="kyc_btn">
+                    <ion-button *ngIf="!showGSTverify" fill="outline" (click)="callGST()">Verify</ion-button>
+                    <ion-button *ngIf="showGSTverify" fill="outline" color="success">Verified</ion-button>
+                    <ion-button [disabled]="!showGSTverify" fill="outline" (click)="attachDoc('gst')">
+                      Attach
+                    </ion-button>
+                    <ion-button [disabled]="viewGstDoc" fill="outline" (click)="viewDoc('gst')">
+                      View
+                    </ion-button>
+                  </div>
+                  <ion-badge class="countBadge" color="primary">{{gstCount}}</ion-badge>
+                </app-expandable>
+              </div>
+            </div>
+
+            <div class="item" *ngFor="let item of itemsLei">
+              <ion-item>
+                <ion-label position="floating">LEI Number <span class="mandatory">*</span>
+                  <ion-badge *ngIf="showLeiverify" class="badgeveri">Verified</ion-badge>
+                  <ion-icon *ngIf="showLeiverify" name="checkmark-circle-outline" class="green"></ion-icon>
+                </ion-label>
+                <ion-input type="text" formControlName="leiNumber"></ion-input>
+                <ion-icon class="fieldIcon" name="chevron-down-circle-outline" color="primary" (click)="expandItemLei(item)" *ngIf="!kycLeiHide"
+                  slot="end"></ion-icon>
+                <ion-icon class="fieldIcon" name="chevron-up-circle-outline" color="primary" (click)="expandItemLei(item)" *ngIf="kycLeiHide"
+                  slot="end"></ion-icon>
+              </ion-item>
+              <app-expandable expandHeight="auto" [expanded]="item.expanded">
+                <div class="kyc_btn">
+                  <ion-button *ngIf="!showLeiverify" fill="outline" (click)="verification('lei')">Verify</ion-button>
+                  <ion-button *ngIf="showLeiverify" fill="outline" color="success">Verified</ion-button>
+
+                  <ion-button [disabled]="!showLeiverify" fill="outline" (click)="attachDoc('lei')">
+                    Attach
+                  </ion-button>
+                  <ion-button [disabled]="viewLeiDoc" fill="outline" (click)="viewDoc('lei')">
+                    View
+                  </ion-button>
+                </div>
+                <ion-badge class="countBadge" color="primary">{{leiCount}}</ion-badge>
+              </app-expandable>
+            </div>
+          </div>
+        </form>
+        <div>
+          <ion-segment class="gstsegmentVideo" [(ngModel)]="kycVid">
+            <ion-segment-button value="kycVideo">
+              VIDEO KYC
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-button *ngIf="initiateVid" class="videoBtn" fill="outline" type="button" (click)="initiateVideo()">
+            Initiate Video KYC</ion-button>
+          <ion-button *ngIf="processVid" class="videoBtn" fill="outline" type="button" (click)="processVideo()">
+            Processing...
+            <ion-spinner name="bubbles"></ion-spinner>
+          </ion-button>
+          <ion-button *ngIf="proceedVid" class="videoBtn" fill="outline" type="button" (click)="proceedVideo()">
+            <!-- Proceed<a href="#" onclick="window.open('https://www.google.com/', '_systems', 'location=yes')">Google</a> -->
+            Proceed
+            <!-- <a href="#">Google</a> -->
+          </ion-button>
+          <ion-button *ngIf="successVid" class="videoBtn" fill="outline" type="button" color="success">
+            <!-- Proceed<a href="#" onclick="window.open('https://www.google.com/', '_systems', 'location=yes')">Google</a> -->
+            Video KYC verified
+            <!-- <a href="#">Google</a> -->
+          </ion-button>
+
+        </div>
+      </div>
+
+
+    </ion-item-group>
+  </ion-list>
+
+
+
+  <!-- <div class="item">
+    <div class="ion-text-center">
+      <ion-button type="button" shape="round">Save</ion-button>
+    </div>
+  </div> -->
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar style="text-align: center;" color="primary">
+    <ion-label>Save</ion-label>
+  </ion-toolbar>
+</ion-footer>

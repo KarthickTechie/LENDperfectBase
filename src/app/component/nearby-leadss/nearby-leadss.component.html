@@ -1,0 +1,37 @@
+<div class="content">
+  <div class="text"><ion-icon class="greenIcon" name="navigate"></ion-icon> Nearby captured Leads (<span class="badge">2</span>)</div>
+  <div class="parentDiv" *ngFor="let app of applicantDetails;">
+    <div class="companyName">
+      <ion-icon name="podium"></ion-icon> {{ app.company }} <span class="floatRight"><span class="whiteBgIcon">
+          <ion-icon name="eye"></ion-icon>
+        </span><span class="whiteBgIcon">
+          <ion-icon name="document"></ion-icon>
+        </span></span>
+    </div>
+    <div class="childDiv">
+      <ion-row>
+        <ion-col size="3"><img src="assets/imgs/person2.png" /></ion-col>
+        <ion-col size="9">
+          <div>
+            <ion-icon class="iconClr" name="location"></ion-icon> {{ app.address }}
+          </div>
+          <div>
+            <ion-icon class="iconClr" name="card"></ion-icon> {{ app.user }}
+          </div>
+          <div>
+            <ion-icon class="iconClr" name="bookmark"></ion-icon> {{ app.status }}
+          </div>
+          <div>
+            <ion-icon class="iconClr" name="locate"></ion-icon> {{ app.distance }}
+          </div>
+          <div><b>{{ app.applNo }}</b></div>
+          <div><span class="floatRight"><span class="whiteCircle">
+                <ion-icon name="pencil"></ion-icon>
+              </span><span class="whiteCircle">
+                <ion-icon name="camera"></ion-icon>
+              </span></span></div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</div>

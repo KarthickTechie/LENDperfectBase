@@ -1,0 +1,286 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Product Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="container">
+
+    <form [formGroup]="loanDetails" (ngSubmit)="productSave(loanDetails.value)">
+      <!-- <ion-item>
+          <ion-label>Loan Type</ion-label>
+          <ion-select interface="action-sheet" formControlName="loanType">
+            <ion-select-option *ngFor="let loan of loanProductList" [value]="loan.code">
+              {{loan.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item> -->
+
+      <div class="item">
+        <ion-item>
+          <ion-label>Make<span class="mandatory">*</span></ion-label>
+          <ion-select interface="action-sheet" formControlName="make">
+            <ion-select-option *ngFor="let make of makeList" [value]="make.code">
+              {{make.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.make">
+            <div class="mandatory" *ngIf="loanDetails.get('make').hasError(validation.type) && (loanDetails.get('make').dirty || loanDetails.get('make').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label>Model <span class="mandatory">*</span></ion-label>
+          <ion-select interface="action-sheet" formControlName="model">
+            <ion-select-option *ngFor="let model of modelList" [value]="model.code">
+              {{model.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.model">
+            <div class="mandatory" *ngIf="loanDetails.get('model').hasError(validation.type) && (loanDetails.get('model').dirty || loanDetails.get('model').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label>Variant <span class="mandatory">*</span></ion-label>
+          <ion-select interface="action-sheet" formControlName="variant">
+            <ion-select-option *ngFor="let variant of variantList" [value]="variant.code">
+              {{variant.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.variant">
+            <div class="mandatory" *ngIf="loanDetails.get('variant').hasError(validation.type) && (loanDetails.get('variant').dirty || loanDetails.get('variant').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message }}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label>NDLP <span class="mandatory">*</span></ion-label>
+          <ion-select interface="action-sheet" formControlName="ndlp">
+            <ion-select-option *ngFor="let ndlp of ndlpList" [value]="ndlp.code">
+              {{ndlp.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.ndlp">
+            <div class="mandatory" *ngIf="loanDetails.get('ndlp').hasError(validation.type) && (loanDetails.get('ndlp').dirty || loanDetails.get('ndlp').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Quotation Amount <span> (Rs) </span> <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input formControlName="quotationAmount" type="tel" maxlength="13"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.quotationAmount">
+            <div class="mandatory" *ngIf="loanDetails.get('quotationAmount').hasError(validation.type) && (loanDetails.get('quotationAmount').dirty || loanDetails.get('quotationAmount').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Loan Amount Applied <span> (Rs) </span> <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input formControlName="amountRequested" type="tel" maxlength="13"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.amountRequested">
+            <div class="mandatory" *ngIf="loanDetails.get('amountRequested').hasError(validation.type) && (loanDetails.get('amountRequested').dirty || loanDetails.get('amountRequested').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- <div class="item">
+          <ion-item>
+            <ion-label>{{"Interest Type" | translate}} <span class="mandatory">*</span></ion-label>
+            <ion-select interface="action-sheet" formControlName="interestType">
+              <ion-select-option *ngFor="let product of interestTypeList" [value]="product.code">
+                {{product.Name | translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div>
+            <ng-container *ngFor="let validation of validation_messages.interestType">
+              <div class="mandatory"
+                *ngIf="loanDetails.get('interestType').hasError(validation.type) && (loanDetails.get('interestType').dirty || loanDetails.get('interestType').touched)">
+                <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+              </div>
+            </ng-container>
+          </div>
+        </div> -->
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Land Holding (In Acres) <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type=tel formControlName="landHolding"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.landHolding">
+            <div class="mandatory" *ngIf="loanDetails.get('landHolding').hasError(validation.type) && (loanDetails.get('landHolding').dirty || loanDetails.get('landHolding').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message }}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">House Distance From RM Location (Kms) </ion-label>
+          <ion-input type=tel formControlName="houseDistance"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.houseDistance">
+            <div class="mandatory" *ngIf="loanDetails.get('houseDistance').hasError(validation.type) && (loanDetails.get('houseDistance').dirty || loanDetails.get('houseDistance').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label> Residence Stability <span class="mandatory">*</span></ion-label>
+          <ion-select interface="action-sheet" formControlName="residenceStability">
+            <ion-select-option *ngFor="let residenceStability of residenceStabilityList" [value]="residenceStability.code">
+              {{residenceStability.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.residenceStability">
+            <div class="mandatory" *ngIf="loanDetails.get('residenceStability').hasError(validation.type) && (loanDetails.get('residenceStability').dirty || loanDetails.get('residenceStability').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Voter ID </ion-label>
+          <ion-input type=tel formControlName="voterId"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.voterId">
+            <div class="mandatory" *ngIf="loanDetails.get('voterId').hasError(validation.type) && (loanDetails.get('voterId').dirty || loanDetails.get('voterId').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Pan No. / Form60 / 61 </ion-label>
+          <ion-input type=tel formControlName="form60"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.form60">
+            <div class="mandatory" *ngIf="loanDetails.get('form60').hasError(validation.type) && (loanDetails.get('form60').dirty || loanDetails.get('form60').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+      <!-- <div class="item">
+          <ion-item>
+            <ion-label> {{"Repayment Type" | translate}} <span class="mandatory">*</span></ion-label>
+            <ion-select interface="action-sheet" formControlName="repaymentType">
+              <ion-select-option *ngFor="let repaymentType of repaymenttypeList" [value]="repaymentType.code">
+                {{repaymentType.Name | translate}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div>
+            <ng-container *ngFor="let validation of validation_messages.repaymentType">
+              <div class="mandatory"
+                *ngIf="loanDetails.get('repaymentType').hasError(validation.type) && (loanDetails.get('repaymentType').dirty || loanDetails.get('repaymentType').touched)">
+                <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+              </div>
+            </ng-container>
+          </div>
+        </div> -->
+
+      <!-- <div class="item">
+          <ion-item>
+            <ion-label>{{"Mode of Repayment" | translate}} <span class="mandatory">*</span></ion-label>
+            <ion-select interface="action-sheet" formControlName="repaymentMode">
+              <ion-select-option *ngFor="let repaymentMode of repaymentModeList" [value]="repaymentMode.code">
+                {{repaymentMode.Name | translate}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div>
+            <ng-container *ngFor="let validation of validation_messages.repaymentMode">
+              <div class="mandatory"
+                *ngIf="loanDetails.get('repaymentMode').hasError(validation.type) && (loanDetails.get('repaymentMode').dirty || loanDetails.get('repaymentMode').touched)">
+                <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+              </div>
+            </ng-container>
+          </div>
+        </div> -->
+
+      <!-- product
+        producttype
+        loan_amount_range
+        loanpurpose
+        mclr
+        proposalType
+        amortization -->
+
+      <div class="item">
+        <div class="buttspace roundbtn" class="ion-text-center">
+          <ion-button [disabled]="loanDetails.invalid" type="submit" shape="round"> Save </ion-button>
+        </div>
+      </div>
+
+      <!-- <div class="item">
+          <ion-item>
+            <ion-label position="floating">{{"OTP" | translate}} </ion-label>
+            <ion-input type=tel formControlName="otp"></ion-input>
+          </ion-item>
+          <div>
+            <ng-container *ngFor="let validation of validation_messages.otp">
+              <div class="mandatory"
+                *ngIf="loanDetails.get('otp').hasError(validation.type) && (loanDetails.get('otp').dirty || loanDetails.get('otp').touched)">
+                <p class="marginLR0pxTB5px">{{validation.message | translate}}</p>
+              </div>
+            </ng-container>
+          </div>
+        </div> -->
+
+
+    </form>
+  </div>
+</ion-content>

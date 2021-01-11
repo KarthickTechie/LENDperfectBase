@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Application/Documents</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="fullView">
+    <div *ngIf="viewApplication == 'A'">
+      <div class="image"><img class="img" [src]="appProfile" /></div>
+      <div class="bodyhead" *ngFor="let item of appItems">
+        <h3>{{item.firstName}}</h3>
+        <ion-card class="headdetails">
+          <div class="headleft">Loan: {{item.amountRequested}}</div>
+          <div class="headright">Mobile: {{item.mobileNumber}}</div>
+          <div class="headleft">Interest: {{item.interestType}}</div>
+          <div class="headright">Periods: {{item.tenure}}</div>
+        </ion-card>
+      </div>
+
+      <ion-card style="line-height:40px;position:sticky;top:0;background:white;z-index: 999;" class="ion-text-center" (click)="applicantview=!applicantview">
+        <h6>Applicant Details
+          <ion-icon name="chevron-down-circle-outline" *ngIf="!applicantview"></ion-icon>
+          <ion-icon name="chevron-up-circle-outline" *ngIf="applicantview"></ion-icon>
+        </h6>
+      </ion-card>
+
+      <div>
+        <div class="headdetails" *ngIf="applicantview">
+          <h5 *ngIf="appItems.length == 0">No Data Found</h5>
+          <div *ngIf="appItems.length != 0">
+            <ion-list *ngFor="let item of appItems | keys">
+
+              <ion-row>
+                <ion-col style="padding-left:10px;text-transform:capitalize;">{{item.key}}</ion-col>
+                <ion-col style="overflow: auto; padding: 0; white-space: nowrap;">: <span style="white-space: normal;">{{item.value}}</span></ion-col>
+              </ion-row>
+
+            </ion-list>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngFor="let coApp of coAppItems; let i=index;">
+        <ion-card style="line-height:40px;position:sticky;top:0;background:white;z-index: 999;">
+          <h6>Co-Applicant Details
+            <ion-badge>{{i+1}}</ion-badge>
+            <ion-icon name="chevron-down-circle-outline" *ngIf="!coApp.enable" (click)="coApp.enable = !coApp.enable">
+            </ion-icon>
+            <ion-icon name="chevron-up-circle-outline" *ngIf="coApp.enable" (click)="coApp.enable = !coApp.enable">
+            </ion-icon>
+          </h6>
+        </ion-card>
+        <div class="headdetails" *ngIf="coApp.enable">
+          <ion-list *ngFor="let item of coAppItems[i] | keys">
+
+            <ion-row>
+              <ion-col style="padding-left:10px;text-transform:capitalize;">{{item.key}}</ion-col>
+              <ion-col style="overflow: auto; padding: 0; white-space: nowrap;">: {{item.value}}</ion-col>
+            </ion-row>
+
+          </ion-list>
+        </div>
+
+      </div> -->
+
+
+      <!-- <div *ngFor="let guran of gauItems;let i=index">
+        <ion-card style="line-height:40px;position:sticky;top:0;background:white;z-index: 999;">
+          <h6>Gaurantor Details
+            <ion-badge>{{i+1}}</ion-badge>
+            <ion-icon name="chevron-down-circle-outline" *ngIf="!guran.enable" (click)="guran.enable = !guran.enable">
+            </ion-icon>
+            <ion-icon name="chevron-up-circle-outline" *ngIf="guran.enable" (click)="guran.enable = !guran.enable">
+            </ion-icon>
+          </h6>
+        </ion-card>
+        <div class="headdetails" *ngIf="guran.enable">
+          <ion-list *ngFor="let item of gauItems[i] | keys">
+
+            <ion-row>
+              <ion-col style="padding-left:10px;text-transform:capitalize;">{{item.key}}</ion-col>
+              <ion-col style="overflow: auto; padding: 0; white-space: nowrap;">: {{item.value}}</ion-col>
+            </ion-row>
+
+          </ion-list>
+        </div>
+
+      </div> -->
+
+
+    </div>
+
+    <div *ngIf="viewApplication != 'A'">
+      <div class="documents" style="position: sticky;top: 0;z-index: 999;">Total Documents
+
+        <ion-badge>{{totalImageCount}}</ion-badge>
+        <div style="width: 105%;height: 20px;background: white;margin-top: 3px;position: relative;top: 5px;right: 8px;"></div>
+      </div>
+
+
+
+
+      <div class="documents" style="position: sticky;top: 42px;z-index: 999;">Personal Pictures
+        <ion-badge>{{profilePic.length ? profilePic.length : 0}}</ion-badge>
+      </div>
+
+      <div class="imageview">
+        <h5 *ngIf="profilePic.length == 0">No Image Found</h5>
+        <div class="img" *ngIf="profilePic.length != 0"><img [src]="profile.profileImage" (click)="openSlides('profile',profile)" *ngFor="let profile of profilePic" /></div>
+      </div>
+
+      <div class="documents" style="position: sticky;top: 42px;z-index: 999;">Other Documents
+
+        <ion-badge>{{otherDoc.length ? otherDoc.length : 0 }}</ion-badge>
+      </div>
+
+      <div class="imageview">
+        <h5 *ngIf="otherDoc.length == 0">No Image Found</h5>
+        <div class="img" *ngIf="otherDoc.length != 0"><img [src]="doc.imagePath" (click)="openSlides('document',doc)" *ngFor="let doc of otherDoc" /></div>
+      </div>
+
+    </div>
+    <div class="segment">
+      <ion-segment [(ngModel)]="viewApplication" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="A">{{"View Application"}}</ion-segment-button>
+        <ion-segment-button value="D">{{"View Documents"}}</ion-segment-button>
+      </ion-segment>
+    </div>
+
+  </div>
+
+</ion-content>

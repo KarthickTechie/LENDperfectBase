@@ -1,0 +1,57 @@
+form {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    margin: 10px;
+  
+  }
+  @media only screen and (max-width: 412px) {
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-size: 14px;
+      white-space: normal;
+    }
+    .container {
+      width: 95vw;
+    }
+  }
+  @media only screen and (min-width: 413px) {
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-size: 110%;
+      white-space: normal;
+    }
+    .container {
+      width: 95vw;
+      height: 100vh;
+    }
+  }
+
+  .backBtn{
+    zoom: 3;;
+}
+
+.saveBtn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+.cardContent{
+  font-size: 18px;
+  text-align: center;
+  background-color:#017DC7;
+  color: white;
+}
+
+.heading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%); 
+}
+
+  
+

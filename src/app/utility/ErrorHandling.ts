@@ -1,6 +1,7 @@
+import { GlobalService } from './../providers/global.service';
 import { Injectable } from '@angular/core';
 
-import { GlobalService } from '../global/global.service';
+
 
 
 @Injectable({
@@ -119,56 +120,94 @@ export class HandlingError {
                 { type: "required", message: "Enter Email." },
                 { type: "pattern", message: "Enter Valid Email." },
             ],
+            residentialStatus: [
+                { type: "required", message: "Select Residential Status." },
+            ],
+            panNo: [
+                { type: "required", message: "Enter PAN number." },
+                { type: "pattern", message: "Enter Valid PAN number." },
+            ],
+            aadharNo: [
+                { type: "pattern", message: "Enter Valid Aadhar number." },
+            ],
+            presentAddress1: [
+                { type: "required", message: "Enter Present Address1." },
+            ],
+            presentAddress2: [
+                { type: "required", message: "Enter Present Address2." },
+            ],
+            presentDistrict: [
+                { type: "required", message: "Enter Present District." },
+            ],
+            presentCity: [
+                { type: "required", message: "Enter Present City." },
+            ],
+            presentState: [
+                { type: "required", message: "Enter Present State." },
+            ],
+
             permanentAddress1: [
-                { type: "required", message: "Enter Permanent Address." },
+                { type: "required", message: "Enter Permanent Address1." },
             ],
+            permanentAddress2: [
+                { type: "required", message: "Enter Permanent Address2." },
+            ],
+            permanentDistrict: [
+                { type: "required", message: "Enter Permanent District." },
+            ],
+            permanentCity: [
+                { type: "required", message: "Enter Permanent City." },
+            ],
+            permanentState: [
+                { type: "required", message: "Enter Permanent State." },
+            ]
+        };
+    }
 
-            residentialAddress1: [
-                { type: "required", message: "Enter Resedential Address." },
+    addressValid() {
+        return {
+            businessAddress: [
+                { type: "required", message: "Enter Business Address." },
+                { type: "pattern", message: "Enter Valid Business Address." },
             ],
-            customerCategory: [
-                { type: "required", message: "Select Custom Categroy Type. " }
+            nearestLandmarkBA: [
+                { type: "required", message: "Enter Nearest Landmark of Business Address." },
+                { type: "pattern", message: "Enter Valid Nearest Landmark of Business Address." },
             ],
-            custNationality: [
-                { type: "required", message: "Select Nationality Type. " }
+            stateBA: [
+                { type: "required", message: "Select State of Business Address." },
             ],
-            stlCustomer: [
-                { type: "required", message: "Select STL Customer Type. " }
+            districtBA: [
+                { type: "pattern", message: "Enter Valid District of Business Address." },
             ],
-            custType: [
-                { type: "required", message: "Select Customer Type. " }
+            cityBA: [
+                { type: "required", message: "Select City of Business Address." },
             ],
-            bankingWith: [
-                { type: "required", message: "Select Banking With field. " }
+            pincodeBA: [
+                { type: "required", message: "Enter Pincode of Business Address." },
+                { type: "pattern", message: "Enter Valid Pincode of Business Address." },
             ],
-            vipFlag: [
-                { type: "required", message: "Select VIP Flag Type. " }
+            factoryAddress: [
+                { type: "required", message: "Enter Unit / Factory Address." },
+                { type: "pattern", message: "Enter Valid Business Address." },
             ],
-            incomeAssign: [
-                { type: "required", message: "Select Inome Assign Type. " }
+            nearestLandmarkFA: [
+                { type: "required", message: "Enter Nearest Landmark of Unit / Factory Address." },
+                { type: "pattern", message: "Enter Valid Nearest Landmark of Unit / Factory Address." },
             ],
-            cbrbResult: [
-                { type: "required", message: "Select CBRB Result Type. " }
+            stateFA: [
+                { type: "required", message: "Select State of Unit / Factory Address." },
             ],
-            alEthiadBureau: [
-                { type: "required", message: "Enter Bureau Value. " }
+            districtFA: [
+                { type: "pattern", message: "Enter Valid District of Unit / Factory Address." },
             ],
-            accNo: [
-                { type: "required", message: "Enter Account Number. " }
+            cityFA: [
+                { type: "required", message: "Select City of Unit / Factory Address." },
             ],
-            passportNo: [
-                { type: "required", message: "Enter Pasport Number. " }
-            ],
-            eidaNo: [
-                { type: "required", message: "Enter EIDA No. " }
-            ],
-            rimNo: [
-                { type: "required", message: "Enter RIM Number. " }
-            ],
-            poBoxNo: [
-                { type: "required", message: "Enter PoBox Number. " }
-            ],
-
+            pincodeFA: [
+                { type: "required", message: "Enter Pincode of Unit / Factory Address." },
+                { type: "pattern", message: "Enter Valid Pincode of Unit / Factory Address." },
+            ]
         };
     }
 
@@ -178,35 +217,68 @@ export class HandlingError {
                 { type: "required", message: "Select Employment Category Type." }
             ],
             empName: [
-                { type: "pattern", message: "Enter Valid Employer Name." }
+                { type: "required", message: "Enter Employer Name." },
+                { type: "pattern", message: "Enter valid Employer Name." }
             ],
             doj: [
                 { type: "required", message: "Select Date of Joining." }
             ],
-            incomeType: [
-                { type: "required", message: "Select Income Type." }
+            takeIncome: [
+                { type: "required", message: "Enter Net Take Home." },
+                { type: "pattern", message: "Enter valid Net Take Home." }
+
             ],
             grossIncome: [
-                { type: "required", message: "Enter Employee Gross Income." },
-                { type: "pattern", message: "Enter Valid Gross Income value." }
+                { type: "required", message: "Enter Gross Income." },
+                { type: "pattern", message: "Enter valid Gross Income." }
+
             ],
-            statutory: [
-                { type: "required", message: "Enter Employee Statutory Deduction Value." },
-                { type: "pattern", message: "Enter Valid Statutory Deduction value." }
-            ],
-            otherDeductions: [
-                { type: "required", message: "Enter Employee Other Deductions." },
-                { type: "pattern", message: "Enter Valid Deduction value." }
+            otherEmi: [
+                { type: "required", message: "Enter Other EMI" },
+                { type: "pattern", message: "Enter valid Other EMI." }
             ],
             netIncome: [
-                { type: "required", message: "Enter Employee Net Income." },
-                { type: "pattern", message: "Enter Valid Net Income Value." }
+                { type: "required", message: "Enter Net Income." },
+                { type: "pattern", message: "Enter valid Net Income" }
+
             ],
-            eosb: [
-                { type: "required", message: " Enter EOSB Value." }
+            natureBusiness: [
+                { type: "required", message: " Enter Nature of Business" },
+                { type: "pattern", message: "Enter valid Nature of Business" }
+
             ],
-            lengthService: [
-                { type: "required", message: " Enter Length Of Service Value (In Months)." }
+            yearOfEsta: [
+                { type: "required", message: " Enter Year of Establishment" }
+            ],
+            businessIncome: [
+                { type: "required", message: " Enter Business Income." },
+                { type: "pattern", message: "Enter valid Business Income." }
+
+            ],
+            otherIncome: [
+                { type: "required", message: " Enter Other Income." },
+                { type: "pattern", message: "Enter valid Other Income." }
+
+            ],
+            otherObi: [
+                { type: "required", message: " Enter Other Obligations." },
+                { type: "pattern", message: "Enter valid Other Obligations." }
+
+            ],
+            deduction: [
+                { type: "required", message: " Enter Deduction." },
+                { type: "pattern", message: "Enter valid Deduction." }
+
+            ],
+            totalNetIncome: [
+                { type: "required", message: " Enter Total Net Income." },
+                { type: "pattern", message: "Enter valid Total Net Income." }
+
+            ],
+            itrReturn: [
+                { type: "required", message: " Enter ITR returns(3 years)." },
+                { type: "pattern", message: "Enter valid ITR returns(3 years)." }
+
             ]
         }
     }
@@ -220,9 +292,14 @@ export class HandlingError {
             proofDocument: [
                 { type: "required", message: "Select Proof Document." },
             ],
-            proofvalue: [
-                { type: "required", message: "Enter Proof Value." },
-                { type: "pattern", message: "Enter Valid Proof Value." }
+            panNumber: [
+                { type: "required", message: "Enter PAN Number." },
+                { type: "pattern", message: "Enter Valid PAN Number ." }
+
+            ],
+            udyogNumber: [
+                { type: "required", message: "Enter Aadhaar Number." },
+                { type: "pattern", message: "Enter Valid Aadhaar Number." }
 
             ]
         }
@@ -230,19 +307,9 @@ export class HandlingError {
 
     loanFormValidation() {
         return {
+
             loanProduct: [
                 { type: "required", message: "Select Loan Product Type." }
-            ],
-            interestType: [
-                { type: "required", message: "Select Interest Type." }
-            ],
-            productType: [
-                { type: "required", message: "Select Product Type." }
-            ],
-            loanAmountRange: [
-                { type: "required", message: "Enter Loan Amount Range." },
-                { type: "max", message: "Maximum Loan Amount Range is 2,50,00,000.00." },
-                { type: "min", message: "Minimum Loan Amount Range is 2,50,000.00." }
             ],
             amountRequested: [
                 { type: "required", message: "Enter Amount Requested." }
@@ -251,28 +318,16 @@ export class HandlingError {
                 { type: "required", message: "Enter Periodicity of Installments (In Months)." },
                 { type: "pattern", message: "Enter Valid Installments Period (In Months). " }
             ],
-            moratorium: [
-                { type: "required", message: "Enter Moratorium Period (In Months)." },
-                { type: "pattern", message: "Enter Valid Moratorium Period (In Months). " }
+            roi: [
+                { type: "required", message: "Enter Rate of Interest." }
             ],
-            interestRateDefined: [
-                { type: "required", message: "Select Interest Rate Defined Value." }
+            EMI: [
+                { type: "required", message: "Enter EMI." }
             ],
-            loanpurpose: [
-                { type: "required", message: "Select Loan Purpose Type." }
-            ],
-            repaymentMode: [
-                { type: "required", message: "Select Repayment Mode Type." }
-            ],
-            repaymentType: [
-                { type: "required", message: "Select Repayment Type." }
-            ],
-            proposalType: [
-                { type: "required", message: "Select Proposal Type." }
-            ],
-            amortization: [
-                { type: "required", message: "Select Amortization Value." }
-            ],
+            preferredBranch: [
+                { type: "required", message: "Select Preferred Branch." }
+            ]
+
         }
     }
 
@@ -288,6 +343,45 @@ export class HandlingError {
         }
     }
 
-
+    assetImmovableValid() {
+        return {
+            assetType: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            nonAgriLandType: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            ownName: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            area: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            freeHold: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            address: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            purchaseCost: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            presentValue: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+            whetherEncumbered: [
+                { type: "required", message: "." },
+                { type: "pattern", message: "." }
+            ],
+        }
+    }
 
 }

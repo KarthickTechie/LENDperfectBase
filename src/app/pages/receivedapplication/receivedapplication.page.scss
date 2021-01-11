@@ -1,0 +1,26 @@
+.personname {
+    color: var(--ion-color-primary);
+    font-size: 20px;
+    font-weight: bold;
+}
+.reallocate {
+    color: var(--ion-color-secondary);
+}
+.listdata {
+    padding-top: 3px;
+}
+.listicon {
+    zoom: 3.0;
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    color: var(--ion-color-secondary);
+}
+
+.heading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+  }

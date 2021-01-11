@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-item (click)="popoverClick('list','view')">
+    <ion-icon *ngIf="viewTick == 'list'" name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-label>List View</ion-label>
+  </ion-item>
+  <ion-item (click)="popoverClick('grid','view')">
+    <ion-icon *ngIf="viewTick == 'grid'" name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-label>Grid View</ion-label>
+  </ion-item>
+
+</ion-list>

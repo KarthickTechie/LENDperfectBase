@@ -1,0 +1,199 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div *ngIf="showImmovableAsset">
+  <form [formGroup]="assetImmovable" (ngSubmit)="assetImmovableSave(assetImmovable.value)">
+    <div class="container">
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Asset Type<span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" formControlName="assetType" (ionChange)="assetTab($event)">
+            <ion-select-option *ngFor="let assetTypeVar of assetTypeList" [value]="assetTypeVar.code">
+              {{assetTypeVar.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.assetType">
+            <div class="mandatory" *ngIf="assetImmovable.get('assetType').hasError(validation.type) && (assetImmovable.get('assetType').dirty || assetImmovable.get('assetType').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+
+
+      <div class="item" *ngIf="showNonAgriType">
+        <ion-item>
+          <ion-label position="floating">Non Agri Land Type<span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" formControlName="nonAgriLandType">
+            <ion-select-option *ngFor="let nonAgriLandTypeVar of nonAgriLandTypeList" [value]="nonAgriLandTypeVar.code">
+              {{nonAgriLandTypeVar.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.nonAgriLandType">
+            <div class="mandatory" *ngIf="assetImmovable.get('nonAgriLandType').hasError(validation.type) && (assetImmovable.get('nonAgriLandType').dirty || assetImmovable.get('nonAgriLandType').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Own / Joint Name </ion-label>
+          <ion-input type="text" formControlName="ownName" maxlength="30"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.ownName">
+            <div class="mandatory" *ngIf="assetImmovable.get('ownName').hasError(validation.type) && (assetImmovable.get('ownName').dirty || assetImmovable.get('ownName').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Area </ion-label>
+          <ion-input type="text" formControlName="area"></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.area">
+            <div class="mandatory" *ngIf="assetImmovable.get('area').hasError(validation.type) && (assetImmovable.get('area').dirty || assetImmovable.get('area').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Free Hold or Lease Hold </ion-label>
+          <ion-input type="text" formControlName="freeHold" ></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.freeHold">
+            <div class="mandatory" *ngIf="assetImmovable.get('freeHold').hasError(validation.type) && (assetImmovable.get('freeHold').dirty || assetImmovable.get('freeHold').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Location / Address </ion-label>
+          <ion-textarea type="text" formControlName="address" ></ion-textarea>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.address">
+            <div class="mandatory" *ngIf="assetImmovable.get('address').hasError(validation.type) && (assetImmovable.get('address').dirty || assetImmovable.get('address').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Purchase Cost</ion-label>
+          <ion-input type="tel" formControlName="purchaseCost" ></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.purchaseCost">
+            <div class="mandatory" *ngIf="assetImmovable.get('purchaseCost').hasError(validation.type) && (assetImmovable.get('purchaseCost').dirty || assetImmovable.get('purchaseCost').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Present Value</ion-label>
+          <ion-input type="tel" formControlName="presentValue" ></ion-input>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.presentValue">
+            <div class="mandatory" *ngIf="assetImmovable.get('presentValue').hasError(validation.type) && (assetImmovable.get('presentValue').dirty || assetImmovable.get('presentValue').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Whether Encumbered <span class="greyColor">(Give Details)</span></ion-label>
+          <ion-textarea formControlName="whetherEncumbered" ></ion-textarea>
+        </ion-item>
+        <div>
+          <ng-container *ngFor="let validation of validation_messages.whetherEncumbered">
+            <div class="mandatory" *ngIf="assetImmovable.get('whetherEncumbered').hasError(validation.type) && (assetImmovable.get('whetherEncumbered').dirty || assetImmovable.get('whetherEncumbered').touched)">
+              <p class="marginLR0pxTB5px">{{validation.message}}</p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="buttspace roundbtn" class="ion-text-center ion-margin-top"> 
+          <ion-button [disabled]="assetImmovable.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+
+        <!-- <ion-fab vertical="bottom" horizontal="end" #fab slot="fixed" (click)="openContentModal('assetImmovable')">
+          <div class="fabBadge">{{2}}</div>
+          <ion-fab-button>
+            <ion-icon name="eye-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab> -->
+
+
+        
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openContentModal($event,'assetImmovable')">
+          <!-- <ion-badge class="position" color="warning">1</ion-badge> -->
+      <div class="fabBadge">{{1}}</div>
+          <ion-fab-button>
+            <ion-icon name="eye-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>    
+    </div>
+  </form>
+</div>
+
+<div *ngIf="showMovableAsset" class="container"> 
+<!-- <div> -->
+  <!-- <ion-list> -->
+    
+    <ion-item class="item" *ngFor="let form of formNameList">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2" class="ion-text-left"><ion-icon class="ionIcon" [name]="form.icon"></ion-icon></ion-col>
+          <ion-col size="8" class="ion-text-left" (click)="openMovableForm(form.name)"><ion-label style="font-size: 18px;">{{form.name}}</ion-label></ion-col>
+          <ion-col size="2" class="ion-text-right"><ion-icon name="chevron-forward"  class="ionIcon" *ngIf="form.tick"></ion-icon></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  <!-- </ion-list> -->
+</div>
+<!-- </div> -->
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-toolbar style="text-align:left;">
+    <ion-icon class="backBtn" name="caret-back-circle" (click)="goBack()"></ion-icon>
+  </ion-toolbar>
+</ion-footer> -->

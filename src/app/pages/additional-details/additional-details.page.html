@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;"> 
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Additional Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="content" (click)="openGroupConcern()">
+    <ion-icon name="briefcase"></ion-icon>
+    <ion-label>Group Concern Details</ion-label>
+  </div>
+  <div class="content" (click)="openMonthlyFinacials()">
+    <ion-icon name="trending-up"></ion-icon>
+    <ion-label>Monthly Financials</ion-label>
+  </div>
+  <div class="content" (click)="openReferenceDetails()">
+    <ion-icon name="people"></ion-icon>
+    <ion-label>Reference Details</ion-label>
+  </div>
+  <div class="content" (click)="openPreSanction()">
+    <ion-icon name="alert-circle"></ion-icon>
+    <ion-label>Pre Sanction Inspection</ion-label>
+  </div>
+
+</ion-content>

@@ -1,0 +1,109 @@
+// .card_content{
+//     // width: 40%;
+//     height: 50%;
+//     border: 1px solid red;
+//   }
+  
+
+//   // .text-caption span:nth-child(1){ 
+//   //   position: absolute;
+//   //   top: 20px;
+//   //   left: 5px;
+  
+//   // }
+//   // .text-caption span:nth-child(2){
+//   //   left: 5px;
+//   //   position: absolute;
+//   // }
+//   .text-caption{
+//     margin: 2px;
+//     font-size: 1.2rem;
+//     // color: red;
+//     display: inline-block;
+//     vertical-align: top;
+    
+//   }
+
+//   .text-detail{
+//     position: relative;
+//     left: 25px;
+//     font-size: 1.2rem;
+//     color: red;
+//     font-weight: bold;
+//       white-space: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     width: 100%;
+//   }
+
+//   .icon_content{
+//     position: relative;
+//     top:5px;
+//   }
+
+//   .label_content{
+//     position: relative;
+//     font-size: 16px;
+//     left: 5px;
+//   }
+
+//   .edit_btn{
+//     float: right;
+//     font-size: 1.5rem;
+//     position: relative;
+//     bottom: 2px;
+//     left: 7px;
+//   }
+
+//   .heading{
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%,-50%); 
+//   }
+
+  ion-toolbar{
+
+    ion-icon{
+      zoom: 2;
+      color: white;
+      padding-right: 10px;
+  }
+  }
+
+
+  .header {
+       display: flex;
+    flex-direction: row;
+    width: 100%; 
+  }
+  .header div.subhead {
+    width: 50%;
+    position: relative;
+  }
+  .header div.subhead ion-icon {
+    zoom: 1.5;
+    color: red;
+  }
+  .header div span {
+    position: absolute;
+    top: 2px;
+    white-space: normal;
+    font-size: 1rem;
+    left: 25px;
+  }
+  .header .text {
+    width: 100%;
+    font-size: 1.2rem;
+    color: red;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  ion-card {
+    padding: 7px;
+  }

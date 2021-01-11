@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">Reallocation</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngFor="let rev of reallocate;">
+    <ion-row>
+      <ion-col size="3">
+        <div class="img"><img src="assets/imgs/person2.png" /></div>
+      </ion-col>
+      <ion-col size="9">
+        <div class="personname">{{rev.name}}</div>
+        <div class="reallocate">AppNo: <br/>({{rev.appNo}})</div>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="reallocatefooter">
+      <ion-searchbar class="search" animated></ion-searchbar>
+      <ion-button class="textallocate" type="button" shape="round">Reallocate</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

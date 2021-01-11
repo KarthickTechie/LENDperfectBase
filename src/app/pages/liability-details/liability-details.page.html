@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Liabilities Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container"> 
+    <div *ngIf="showBorrower">
+      <form [formGroup]="liabilitesBorrower" (ngSubmit)="liabilitesBorrowerSave(liabilitesBorrower.value)">
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Borrowed from <span class="mandatory">*</span></ion-label>
+            <ion-input type=text formControlName="borrowFrom"></ion-input>
+          </ion-item>
+        </div>
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Purpose of Loan <span class="mandatory">*</span></ion-label>
+            <ion-input type=text formControlName="purpose"></ion-input>
+          </ion-item>
+        </div>
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Amt.of Loan <span class="mandatory">*</span></ion-label>
+            <ion-input type=text formControlName="amt"></ion-input>
+          </ion-item>
+        </div>
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Security <span class="mandatory">*</span></ion-label>
+            <ion-input type=text formControlName="security"></ion-input>
+          </ion-item>
+        </div>
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Repayment Terms <span class="mandatory">*</span></ion-label>
+            <ion-input type=text formControlName="repayment"></ion-input>
+          </ion-item>
+        </div>
+        <div class="item">
+          <ion-item>
+            <ion-label position="floating">Outstanding Balance <span class="mandatory">*</span></ion-label>
+            <ion-input type=text formControlName="outstandBal"></ion-input>
+          </ion-item>
+        </div>
+        <div class="item">
+          <div class="ion-text-center">
+            <ion-button [disabled]="liabilitesBorrower.invalid" type="submit" shape="round">Save</ion-button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    
+      <div *ngIf="showGurantor">
+        <form [formGroup]="GurantorLiabilites" (ngSubmit)="gurantorLiabilitesSave(GurantorLiabilites.value)">
+          <div class="item">
+            <ion-item>
+              <ion-label position="floating">Name of the person to whom Guaranteed<span class="mandatory">*</span></ion-label>
+              <ion-input type=text formControlName="personName"></ion-input>
+            </ion-item>
+          </div>
+          <div class="item">
+            <ion-item>
+              <ion-label position="floating">Name of the Bank / Financial Institution  <span class="mandatory">*</span></ion-label>
+              <ion-input type=text formControlName="bankName"></ion-input>
+            </ion-item>
+          </div>
+          <div class="item">
+            <ion-item>
+              <ion-label position="floating">Guarantee Amount (Rs.) <span class="mandatory">*</span></ion-label>
+              <ion-input type=text formControlName="gurantAmt"></ion-input>
+            </ion-item>
+          </div>
+          <div class="item">
+            <ion-item>
+              <ion-label position="floating">Present status of a/c  <span class="mandatory">*</span></ion-label>
+              <ion-input type=text formControlName="accStatus"></ion-input>
+            </ion-item>
+          </div>
+          <div class="item">
+            <ion-item>
+              <ion-label position="floating">Outstanding Balance <span class="mandatory">*</span></ion-label>
+              <ion-input type=text formControlName="outstandBal"></ion-input>
+            </ion-item>
+          </div>
+          <div class="item">
+            <div class="ion-text-center">
+              <ion-button [disabled]="GurantorLiabilites.invalid" type="submit" shape="round">Save</ion-button>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>
+</ion-content>

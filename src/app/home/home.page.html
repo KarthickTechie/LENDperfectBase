@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-
+<!-- <div style="background-image: url('assets/imgs/banking.jpg')"> -->
   <div class="img-container"><img [src]=logoImg alt="img" /></div>
 
   <div class="loginBox">
@@ -36,8 +36,8 @@
               <ion-icon name="person"></ion-icon>
             </ion-col>
             <ion-col size="9">
-              <ion-input type="text" [placeholder]="'placeholder.username'|translate"
-                [(ngModel)]="setUserInfo.username"></ion-input>
+              <!-- <ion-input type="text" [placeholder]="'placeholder.username'|translate" [(ngModel)]="setUserInfo.username" (keyup)="$event.target.value = $event.target.value.toUpperCase();"></ion-input> -->
+              <ion-input type="text" [placeholder]="'placeholder.username'|translate" UpperCase [(ngModel)]="setUserInfo.username" ></ion-input>
             </ion-col>
             <ion-col size="1"></ion-col>
           </ion-row>
@@ -49,8 +49,7 @@
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
             <ion-col size="8">
-              <ion-input [type]="inputType" [placeholder]="'placeholder.password'| translate"
-                [(ngModel)]="setUserInfo.password"></ion-input>
+              <ion-input [type]="inputType" [placeholder]="'placeholder.password'| translate" [(ngModel)]="setUserInfo.password"></ion-input>
             </ion-col>
             <ion-col size="2" class="ion-text-center eyeIconSize" (click)="inputChng()">
               <ion-icon name="eye" *ngIf="inputType == 'password'"></ion-icon>
@@ -59,7 +58,9 @@
           </ion-row>
         </div>
 
-        <div class="ion-text-end colFontSize">{{"Forgot Password" | translate}}</div>
+        <div class="ion-text-end colFontSize">{{"Forgot Password" | translate}}
+          <ion-icon style="zoom: 1.5;vertical-align: bottom;" name="help-circle"></ion-icon>
+        </div>
 
 
         <div class="loginSubmit">
@@ -79,8 +80,7 @@
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
             <ion-col size="8">
-              <ion-input [type]="pinInputType" [placeholder]="'Set new PIN' | translate" maxlength="4"
-                [(ngModel)]="setPinInfo.pina">
+              <ion-input [type]="pinInputType" [placeholder]="'Set new PIN' | translate" maxlength="4" [(ngModel)]="setPinInfo.pina">
               </ion-input>
             </ion-col>
             <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
@@ -96,8 +96,7 @@
               <ion-icon name="lock-closed"></ion-icon>
             </ion-col>
             <ion-col size="8">
-              <ion-input [type]="pinInputType" [placeholder]="'Confirm PIN' | translate" maxlength="4"
-                [(ngModel)]="setPinInfo.pinb">
+              <ion-input [type]="pinInputType" [placeholder]="'Confirm PIN' | translate" maxlength="4" [(ngModel)]="setPinInfo.pinb">
               </ion-input>
             </ion-col>
             <ion-col size="2" class="ion-text-center eyeIconSize" (click)="pinInputChng()">
@@ -145,13 +144,14 @@
 
     </div>
   </div>
+<!-- </div> -->
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <span class='logochange' [routerLink]="['/setting']" *ngIf="setting">
-    <ion-icon name="settings" class="setting"></ion-icon>
-  </span>
+      <ion-icon name="settings" class="setting"></ion-icon>
+    </span>
 
   <!-- <div class="settings" (click)="settings()">
-    <ion-icon name="person"></ion-icon> settings</div> -->
+      <ion-icon name="person"></ion-icon> settings</div> -->
 </ion-footer>

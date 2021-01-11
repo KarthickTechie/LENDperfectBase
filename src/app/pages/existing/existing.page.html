@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Existing Applications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<!-- <ion-header>
+  <div class="headingback">
+    <ion-icon name="menu" class="menuicon" (click)="menuopen()"></ion-icon>
+    <div class="headTheme"></div>
+    <ion-icon name="options-outline" class="headicon" (click)="listGridView($event, 'list')"></ion-icon>
+    <div class="headTitle">Existing Applications</div>
+  </div>
+</ion-header> -->
+
+<ion-content>
+
+  <ion-searchbar class="search" placeholder="Search"></ion-searchbar>
+
+  <div class="listcontainer" #view>
+    <div class="statusRel">
+      <div class="status">
+        <ion-row class="fontSize">
+          <ion-col><ion-icon class="greenClr" name="flag"></ion-icon> Submitted: <span class="greenClr">4</span></ion-col>
+          <ion-col  class="ion-text-end"><ion-icon  class="redClr" name="flag"></ion-icon> Not Submitted: <span class="redClr">2</span></ion-col>
+        </ion-row>
+      </div>
+    </div>
+
+    <div>&nbsp;</div>
+
+    <ion-card *ngFor="let app of applications;">
+      <div class="ribbon"><span>{{app.date}}</span></div>
+      <ion-row>
+        <ion-col size="3">
+          <div class="img"><img src="assets/imgs/person2.png" /></div>
+        </ion-col>
+        <ion-col size="9">
+          <div>
+            <ion-icon name="person"></ion-icon> <span class="name">{{app.name}}</span>
+          </div>
+          <div><span class="name">Loan: </span> <span>{{app.loanAmt}}</span></div>
+          <div><span class="name">Status: </span> <span
+              [ngClass]="app.status == 'Submitted' ? 'green' : 'red'">{{app.status}}</span></div>
+            </ion-col>
+          </ion-row>
+          <ion-icon class="viewBtn" name="eye-outline" (click)="openDetailsView()"></ion-icon>
+    </ion-card>
+
+    <!-- <ion-item  (click)="existingApp(app)">
+      <ion-icon class="moredetails" (click)="moreInfo($event, app)" name="ellipsis-vertical-outline"></ion-icon>
+      <div class="img"><img src="assets/imgs/person2.png" /></div>
+      <div class="existingdata">
+        <div class="title">{{app.name}}</div>
+        <div class="application">Application No: {{app.application}}</div>
+        <div class="application">Status: <span>{{app.status}}</span></div>
+        <div class="loanamt">Loan Amount: <span>{{app.loanAmt}}</span></div>
+        <div class="existingdate">{{app.date}}</div>
+      </div>
+    </ion-item> -->
+  </div>
+
+</ion-content>

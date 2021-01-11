@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>OTP Consent</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<div class="container">
+  <ion-icon name="phone-portrait-outline"></ion-icon>
+  <h3>OTP Verification</h3>
+  <p>We sent a One Time Password to customers' mobile number.</p>
+
+  <h6 *ngIf="!resend">{{time|async}}</h6>
+  <ion-button *ngIf="resend" color="light" (click)="onClick()">Resend OTP</ion-button>
+
+  <ion-input *ngIf="!otp" placeholder="******"></ion-input>
+  <ion-input *ngIf="otp" placeholder="437254"></ion-input>
+
+  <ion-button *ngIf="otp" (click)="ramp()">Proceed</ion-button>
+</div>

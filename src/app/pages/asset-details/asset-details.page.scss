@@ -1,0 +1,74 @@
+.contentdetails {
+        width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top:1px;
+  }
+.content {
+    border: 1px solid gray;
+    position: relative;
+    width: 50%;
+    height: 23vh;
+}
+.greentik {
+    color: green !important;
+    position: absolute;
+    top: 40px;
+    right: 22px;
+    zoom: 1.5;
+    left: auto;
+  }
+
+
+   ion-icon{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);  
+    zoom: 2;
+    color: var(--ion-color-secondary);
+   } 
+
+
+   ion-label{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%,50%);
+    white-space: normal;
+    font-size: 18px;
+   }
+  
+
+
+
+  @media only screen and (min-width: 413px) {
+
+  .contentdetails {
+    width: 420px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top:2px;
+  }
+.content {
+    border: 1px solid gray;
+    position: relative;
+    width: 50%;
+    height: 23vh;
+}
+.greentik {
+    color: green !important;
+    position: absolute;
+    top: 40px;
+    right: 30px;
+    zoom: 1.5;
+    left: auto;
+  }
+}
+

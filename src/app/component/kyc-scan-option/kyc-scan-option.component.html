@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-item *ngFor="let type of kycScanType" (click)="emitScanType(type.code)">
+    
+    <ion-icon name={{type.icon}} class="scan-icon"></ion-icon>
+    <ion-label>{{type.Name}}</ion-label>
+    <ion-icon *ngIf="tick == '02' && type.code == '02'" name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon *ngIf="tick == '01' && type.code == '01'" name="checkmark-circle-outline" class="greentik"></ion-icon>
+  </ion-item>
+</ion-list>

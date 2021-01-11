@@ -1,0 +1,30 @@
+
+form {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+  }
+  
+  .leftSpace {
+    margin-left: 10%;
+  }
+  @media only screen and (max-width: 412px) {
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-size: 14px;
+    }
+    .container {
+      width: 95vw;
+    }
+  }
+  @media only screen and (min-width: 413px) {
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-size: 110%;
+    }
+    .container {
+      width: 95vw;
+      height: 100vh;
+    }
+  }
+  

@@ -1,0 +1,69 @@
+<!-- <app-personal-details></app-personal-details>
+	<app-kyc-details></app-kyc-details>
+	<app-new-applicant-details></app-new-applicant-details> -->
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{applicantTitle}}
+      <span (click)="presentActionSheet()">
+        <img src="assets/imgs/profile.png" class="navuserimg" *ngIf="!profPic">
+          <img [src]="profPic" class="navuserimg" *ngIf="profPic">
+        
+        </span>
+
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-segment style="background: white;" [(ngModel)]="userdetail" (ionChange)="onSegmentChanged($event)">
+    <ion-segment-button value="newapp" *ngIf="!rblCoAp">
+
+      <ion-icon name="person" color="logo"></ion-icon>
+      <span *ngIf="newAppCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+        </span>
+
+    </ion-segment-button>
+
+    <ion-segment-button value="kyc">
+      <ion-icon name="journal" color="logo"></ion-icon>
+      <span *ngIf="kycCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+        </span>
+    </ion-segment-button>
+    <ion-segment-button value="personal">
+      <ion-icon name="document" color="logo"></ion-icon>
+      <span *ngIf="personalCheck">
+        <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+        </span>
+    </ion-segment-button>
+  </ion-segment>
+
+
+
+</ion-header>
+
+<ion-content>
+
+
+  <div [ngSwitch]="userdetail">
+    <ion-slides #mySlider (ionSlideDidChange)="onSlideChanged($event)">
+      <ion-slide *ngIf="!rblCoAp">
+        <!-- <app-personal-details (saveStatus)="showSubmittedTick($event)"></app-personal-details> -->
+        <app-applicantdetails (saveStatus)="showSubmittedTick($event)"></app-applicantdetails>
+      </ion-slide>
+      <ion-slide>
+        <!-- <app-kyc-details (saveStatus)="showSubmittedTick($event)"></app-kyc-details> -->
+        <app-kycdetails (saveStatus)="showSubmittedTick($event)"></app-kycdetails>
+      </ion-slide>
+      <ion-slide>
+        <!-- <app-income-details (saveStatus)="showSubmittedTick($event)"></app-income-details> -->
+        <app-personal (saveStatus)="showSubmittedTick($event)"></app-personal>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+</ion-content>

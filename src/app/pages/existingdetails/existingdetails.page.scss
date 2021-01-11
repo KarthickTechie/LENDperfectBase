@@ -1,0 +1,45 @@
+.listcontainer {
+    // width: 100%;
+    display: block;
+    position: relative;
+    margin-top: 20px;
+}
+.listcontainer ion-item {
+    margin-top: 15px;
+}
+.listcontainer .img {
+    width: 25%;
+    display: inline-block;
+}
+.listcontainer .img img {
+    vertical-align: top;
+    margin-top: -10px;
+}
+.listcontainer .existingdata {
+    display: inline-block;
+    margin-left: 10px;
+    line-height: 24px;
+    width: 70%;
+}
+.listcontainer .title {
+    color: #3B5387;
+    font-weight: bold;
+}
+.listcontainer .application {
+    color: #6E8CA0;
+    font-size: 0.8rem;
+}
+.listcontainer .loanamt {
+    color: #6E8CA0;
+    font-size: 0.8rem;
+}
+.listcontainer .loanamt span {
+    color: #E50019;
+    font-weight: bold;
+}
+
+.listcontainer .existingdate {
+    color: #798186;
+    font-size: 0.7rem;
+    float: right;
+}

@@ -1,4 +1,4 @@
-import { GlobalService } from './../global/global.service';
+import { GlobalService } from './../providers/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { BarcodeScannerOptions, BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { OCR, OCRSourceType, OCRResult } from '@ionic-native/ocr/ngx';
@@ -18,16 +18,16 @@ export class KycScanAPI {
     proofSelected: string;
     proofValue = new Subject<any>();
     proofValueDL = new Subject<any>();
-    actionSheetCtrl: ActionSheetController;
+    // actionSheetCtrl: ActionSheetController;
     barcodeScanner: BarcodeScanner;
     ocr: OCR;
     camera: Camera;
     filePath: FilePath;
     // errorHandler: HandlingError;
     _options: ScannerOptions;
-    constructor(public errorHandler: HandlingError, public global: GlobalService) {
+    constructor(public errorHandler: HandlingError, public global: GlobalService, public actionSheetCtrl: ActionSheetController) {
 
-        this.actionSheetCtrl = new ActionSheetController();
+        // this.actionSheetCtrl = new ActionSheetController();
         this.barcodeScanner = new BarcodeScanner();
         this.ocr = new OCR();
         this.camera = new Camera();
@@ -75,15 +75,19 @@ export class KycScanAPI {
                     text: 'Use Library',
                     role: 'Use Library',
                     handler: () => {
+
                         ocrActionSheet.dismiss()
                             .then(val => {
                                 // if (isDismissed) {
-                                this.global.globalLodingPresent("please wait");
+                                // this.global.globalLodingPresent("Please wait..."); //
                                 this.getPicture(this.camera.PictureSourceType.PHOTOLIBRARY);
                                 // }
                                 // return false;
                                 console.log(val, "acionhsheet")
-                            }).catch(err => console.log(err, "acionhsheet error"));
+                            }).catch(err => {
+                                // this.global.globalLodingDismiss();
+                                console.log(err, "acionhsheet error")
+                            });
 
                     }
                 }, {
@@ -95,12 +99,16 @@ export class KycScanAPI {
                         ocrActionSheet.dismiss()
                             .then(val => {
                                 // if (isDismissed) { 
-                                this.global.globalLodingPresent("please wait");
+                                // this.global.globalLodingPresent("Please wait...");
                                 this.getPicture(this.camera.PictureSourceType.CAMERA);
                                 // }
                                 // return false;                        
                                 console.log(val, "acionhsheet")
-                            }).catch(err => console.log(err, "acionhsheet error"));
+                            }).catch(err => {
+                                // this.global.globalLodingDismiss();
+                                console.log(err, "acionhsheet error")
+
+                            });
 
                     }
                 }, {
@@ -116,6 +124,8 @@ export class KycScanAPI {
     }
 
     getPicture(sourceType: PictureSourceType) {
+        this.global.globalLodingPresent("Please wait...");
+
         this.camera.getPicture({
             quality: 100,
             destinationType: this.camera.DestinationType.FILE_URI,
@@ -125,20 +135,31 @@ export class KycScanAPI {
         }).then(async (imageData) => {
             this.filePath.resolveNativePath(imageData).then(nativePath => {
                 this.recognizeImage(nativePath).then(data => {
-                    if (this.proofSelected == "01") {
-                        this.scanPan(data);
-                    }
-                    else if (this.proofSelected == "05") {
-                        this.scanDL(data);
-                    }
-                    else if (this.proofSelected == "02") {
-                        this.scanAadhar(data);
-                    }
-                    else if (this.proofSelected == "03") {
-                        this.scanVoter(data);
+                    if (data.foundText) {
+                        if (this.proofSelected['proofType'] == "pan") {
+                            this.scanPan(data);
+                        }
+                        else if (this.proofSelected['proofType'] == "05") {
+                            this.scanDL(data);
+                        }
+                        else if (this.proofSelected['proofType'] == "aadhar") {
+                            this.scanAadhar(data);
+                        }
+                        else if (this.proofSelected['proofType'] == "03") {
+                            this.scanVoter(data);
+                        }
+                        this.global.globalLodingDismiss();
+                    } else {
+                        this.global.globalLodingDismiss();
+                        this.errorHandler.ocrErrorInCapture();
                     }
                 })
+            }, error => {
+                this.global.globalLodingDismiss();
             })
+        }, error => {
+            this.global.globalLodingDismiss();
+
         })
     }
 
@@ -171,6 +192,7 @@ export class KycScanAPI {
     }
 
     scanAadhar(data) {
+
         let aadhar_arr = data.lines["linetext"];
         if (aadhar_arr.join(",").toLowerCase().includes('government of india')) {
             let aadhar_string = aadhar_arr.join(",");
@@ -233,7 +255,7 @@ export class KycScanAPI {
             this._qrScanner();
             return this.proofValue;
         } else {
-            this.selectSource(this._options.proofType);
+            this.selectSource(this._options);
             return this.proofValue;
 
         }
@@ -260,7 +282,7 @@ export class KycScanAPI {
 
     kycDataBinding(qrData) {
         switch (this._options.proofType) {
-            case "02":
+            case "aadhar":
                 if (!!qrData.PrintLetterBarcodeData) {
                     this.proofValue.next(qrData.PrintLetterBarcodeData._uid);
                     this.global.globalLodingDismiss();

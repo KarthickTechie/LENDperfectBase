@@ -1,0 +1,128 @@
+<div class="container">
+  <h2 class="title">Personal Details</h2>
+  <form [formGroup]="personalNewDetails" (ngSubmit)="personalNewSave(personalNewDetails.value)">
+    <div class="item">
+      <ion-item lines="none">
+        <ion-label class="genderLabel">Gender <span class="mandatory">*</span></ion-label>
+      </ion-item>
+      <div class="segment">
+        <ion-segment [(ngModel)]="genderSelect" formControlName="gender">
+          <ion-segment-button value="M" class="genMale">Male</ion-segment-button>
+          <ion-segment-button value="F" class="genFem">Female</ion-segment-button>
+          <ion-segment-button value="N" class="genOth">Others</ion-segment-button>
+        </ion-segment>
+      </div>
+
+    </div>
+    <div class="item">
+      <div class="newdate">
+        <ion-item>
+          <ion-label position="floating">D.O.B
+            <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="date" formControlName="dob" min="1900-01-01" [max]="getToday()" displayFormat="DD/MM/YYYY">
+          </ion-input>
+        </ion-item>
+      </div>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Age
+          <span class="mandatory">*</span>
+        </ion-label>
+        <ion-input type="text" formControlName="age">
+        </ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Father's Name <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="fatherName" maxlength="30"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Address Line 1 <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="addressLine1"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Address Line 2</ion-label>
+        <ion-input type="text" formControlName="addressLine2"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Village <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="village"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Taluka / Tehsil / Block <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="taluka"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">District / City <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="district"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">State <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="state"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Pincode <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="pincode"></ion-input>
+      </ion-item>
+
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label>Current Address Declaration</ion-label>
+        <ion-radio-group formControlName="currentAddress">
+          <ion-radio-group slot="end" value="checked"></ion-radio-group>
+        </ion-radio-group>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Update Current Address <span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="updateCurrentAddress"></ion-input>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label>Profile Type<span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" formControlName="profileType">
+          <ion-select-option *ngFor="let profileType of profileTypeList" [value]="profileType.code">
+            {{profileType.Name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </div>
+    <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="personalNewDetails.invalid" type="submit" shape="round">Save </ion-button>
+      </div>
+    </div>
+  </form>
+</div>

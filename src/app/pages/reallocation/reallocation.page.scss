@@ -1,0 +1,40 @@
+.personname {
+    color: var(--ion-color-primary);
+    font-size: 20px;
+    font-weight: bold;
+}
+.reallocate {
+    color: var(--ion-color-secondary);
+}
+.listdata {
+    padding-top: 3px;
+}
+.listicon {
+    zoom: 3.0;
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    color: var(--ion-color-secondary);
+}
+.img {
+    width: 60px;
+}
+.search {
+    width: 70%;
+}
+.textallocate {
+    width: 30%;
+    font-size: 12px;
+}
+.reallocatefooter {
+    display: flex;
+    flex-direction: row;
+}
+
+.heading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+  }

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{applicantType}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   <div class="contentdetails"> 
+  <div class="content" (click)="openPersonal('personalInfo')">
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="person"></ion-icon>
+    <ion-label>Personal Information</ion-label>
+  </div>
+  <div class="content" (click)="openPersonal('kycInfo')">
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="document"></ion-icon>
+    <ion-label>Kyc Norms</ion-label>
+  </div>
+  <div class="content" (click)="openPersonal('addressInfo')">
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="home"></ion-icon>
+    <ion-label>Address Information</ion-label>
+  </div>
+
+  <div class="content" (click)="openNetworth()">
+<ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="wallet"></ion-icon>
+    <ion-label>Net Worth</ion-label>
+  </div>
+  <div class="content" (click)="openPersonal('loanInfo')" *ngIf="showDetails">
+<ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="cash"></ion-icon>
+    <ion-label>Loan Information</ion-label>
+  </div>
+  <div class="content" (click)="openBureau()">
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="bar-chart"></ion-icon>
+    <ion-label>Bureau</ion-label>
+  </div>
+   </div> 
+</ion-content>

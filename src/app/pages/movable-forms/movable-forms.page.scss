@@ -1,0 +1,22 @@
+.greyColor{
+    color: rgb(179, 174, 174);
+}
+
+
+.fabBadge {
+    color: #ffffff;
+    position: absolute;
+    background-color: #017DC7;
+    padding: 3px 6px;
+    z-index: 1;
+    border-radius: 50%;
+    top: 3px;
+    right: 3px;
+    font-size: 10px;
+  }
+
+
+  .container {
+    width: 95vw;
+    margin:auto;
+  }

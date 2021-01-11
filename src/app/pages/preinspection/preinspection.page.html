@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Pre Sanction Inspection </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <div class="content" (click)="openVideo()">
+    <ion-icon name="videocam"></ion-icon>
+    <!-- <ion-label>Video</ion-label> -->
+  </div>
+  
+  <div class="content" (click)="openCamera()">
+    <ion-icon name="camera"></ion-icon>
+    <!-- <ion-label>Camera</ion-label> -->
+  </div>
+  <div class="content_btn">
+    <ion-button expand="full" disabled={{showVideoBtn}} (click)="showVideo()">View</ion-button>
+  </div>
+  <!-- <div class="content_btn">
+    <ion-button expand="full" disabled={{showVideoBtn}} (click)="deleteVideo()">Delete</ion-button>
+  </div> -->
+  <div class="content_btn">
+    <ion-button expand="full" disabled={{showCameraBtn}} (click)="showImage()">View</ion-button>
+  </div>
+  <!-- <div class="content_btn">
+    <ion-button expand="full" disabled={{showCameraBtn}} (click)="deleteImage()">Delete</ion-button>
+  </div> -->
+<div style="clear: both;"></div>
+  <div style="position: relative;top: 10px;">
+    <app-legend></app-legend>
+  </div>
+
+
+
+</ion-content>

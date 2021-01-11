@@ -1,0 +1,82 @@
+ion-toolbar {
+  text-align: center;
+  
+}
+
+ion-segment-button{
+min-width: 72px;
+}
+.navuserimg {
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  float: right;
+  border-radius: 100%;
+}
+
+ion-slides {
+  height: auto;
+  width: 100%;
+ }
+
+ 
+ .one-image {
+  margin: 2px;
+}
+
+.txtcenter{
+  text-align: center;
+}
+
+
+
+.docUpload {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-around;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.docImg {
+  width: 30vw;
+  height: 30vh;
+  margin-top: 10px;
+  position: relative;
+}
+.imgFooter {
+  margin: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+}
+.imgFooter ion-badge:first-child {
+  float: left;
+  zoom: 1.1;
+}
+.imgFooter ion-badge:last-child {
+  float: right;
+  zoom: 1.1;
+}
+
+@media only screen and (max-width: 420px) {
+  .docImg {
+    width: 45vw;
+    height: 30vh;
+    margin-top: 10px;
+    position: relative;
+  }
+}
+
+ion-segment-button {
+  position: relative;
+}
+.greentik {
+  color: var(--ion-color-primary) !important;
+  position: absolute;
+  font-size: 18px !important;
+  top: 5px;
+  right: -5px;
+  z-index: 1;
+  font-weight: bold;
+}

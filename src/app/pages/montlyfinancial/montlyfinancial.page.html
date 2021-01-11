@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">Monthly Financial </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="monthlyfinancial" (ngSubmit)="concernDetailsSave(monthlyfinancial.value)">
+    <div class="item">
+      <ion-card class="cardContent">Income Details as per ITR of A.Y</ion-card>
+      <ion-item>
+        <ion-label position="floating">Gross Sales/Gross Receipts Rs*</ion-label>
+        <ion-input type=text formControlName="grossSale"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Net Profit Rs*</ion-label>
+        <ion-input type=text formControlName="netProfit"></ion-input>
+      </ion-item>
+    </div>
+
+
+    <ion-card class="cardContent">Business Income Rs</ion-card>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Monthly Sales*</ion-label>
+        <ion-input type=text formControlName="monthlySales"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Other Income (Including Rent)*</ion-label>
+        <ion-input type=text formControlName="otherIncome"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Total Income (A)*</ion-label>
+        <ion-input type=text formControlName="totalIncome"></ion-input>
+      </ion-item>
+    </div>
+
+    <ion-card class="cardContent">Business Expenses Rs</ion-card>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Stock/Material*</ion-label>
+        <ion-input type=text formControlName="stock"></ion-input>
+      </ion-item>
+    </div>
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Rent Expense*</ion-label>
+        <ion-input type=text formControlName="rentExp"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="monthlyfinancial.invalid" type="submit" shape="round">Save</ion-button>
+      </div>
+    </div>
+  </form>
+</ion-content>
+
+
+<!-- <ion-footer>
+  <ion-toolbar>
+    <ion-icon class="backBtn" name="caret-back-circle" (click)="goBack()"></ion-icon>
+    <ion-icon style="text-align:center;" class="backBtn saveBtn" name="save" (click)="goBack()"></ion-icon>
+    <ion-icon style="float: right;" class="backBtn" name="caret-forward-circle" (click)="goBack()"></ion-icon>
+  </ion-toolbar>
+</ion-footer> -->

@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="heading">Group Concern Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="concernDetails" (ngSubmit)="concernDetailsSave(concernDetails.value)">
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Name of Associate Concern</ion-label>
+        <ion-input type=text formControlName="nameofAssCon"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label>Constitution <span class="mandatory">*</span></ion-label>
+        <ion-select interface="popover" formControlName="constitution">
+          <ion-select-option *ngFor="let constitution of constitutionList" [value]="constitution.code">{{constitution.Name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">Address of Associate Concern</ion-label>
+        <ion-input type=text formControlName="addOfAssCon"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="item">
+      <div class="ion-text-center">
+        <ion-button [disabled]="concernDetails.invalid" type="submit" shape="round">Save</ion-button>
+      </div>
+    </div>
+  </form>
+
+  
+
+  <ion-fab vertical="bottom" horizontal="end" #fab style="position: fixed">
+    <div class="fabBadge">{{1}}</div>
+      <ion-fab-button type="button" size="small" (click)="viewConcernDetails($event,'concernDetails')">
+        <ion-icon name="eye"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

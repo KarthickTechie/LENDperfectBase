@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Other Documents</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div>
+    <form [formGroup]="otherDocDetails" (ngSubmit)="otherDocDetailsSave(otherDocDetails.value)">
+      <div class="item">
+        <ion-item>
+          <ion-label>Applicant Type<span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" formControlName="appType">
+            <ion-select-option *ngFor="let applicant of applicantList" [value]="applicant.code">{{applicant.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <div class="item">
+        <ion-item>
+          <ion-label>Document Type<span class="mandatory">*</span></ion-label>
+          <ion-select interface="popover" formControlName="docType">
+            <ion-select-option *ngFor="let doc of DocumentList" [value]="doc.code">{{doc.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+
+
+      <div class="item">
+        <div class="ion-text-center">
+          <ion-button [disabled]="otherDocDetails.invalid" type="submit" shape="round">Save</ion-button>
+        </div>
+      </div>
+
+
+
+
+       <div class="segbar" *ngIf="showSegbar">
+        <span>{{"Doc-Type"}}</span>
+        <span>{{"Attach"}}</span>
+
+        <span>{{"View"}}</span>
+
+        <span>{{"Action"}}</span>
+      </div>
+
+      <!-- *ngFor="let doc of dlist;let i=index;" -->
+      <div class="itemDividerHeading" *ngIf="this.borrowerDocList.length!==0">Borrower</div>
+      <div class="segbarWrap" *ngFor="let doc of borrowerDocList;let i=index;">
+        <span class="textSize">{{doc.docDescription}}
+        </span>
+
+        <span (click)="docActionSheet(i,false,i,doc)">
+          <ion-icon name="add-circle" size="large"></ion-icon>
+        </span>
+        <span (click)="viewDoc(doc.imgs,i)">
+          <ion-badge class="segbarbadge">1</ion-badge>
+          <ion-icon size="large" name="images"></ion-icon>
+        </span>
+        <span>
+          <ion-icon size="large" name="trash"></ion-icon>
+        </span>
+      </div>
+
+      <div class="itemDividerHeading" *ngIf="this.promoterDocList.length!==0">Promoter</div>
+      <div class="segbarWrap" *ngFor="let doc of promoterDocList;let i=index;">
+        <span class="textSize">{{doc.docDescription}}
+        </span>
+
+        <span (click)="docActionSheet(i,false,i,doc)">
+          <ion-icon name="add-circle" size="large"></ion-icon>
+        </span>
+        <span (click)="viewDoc(doc.imgs,i)">
+          <ion-badge class="segbarbadge">1</ion-badge>
+          <ion-icon size="large" name="images"></ion-icon>
+        </span>
+        <span>
+          <ion-icon size="large" name="trash"></ion-icon>
+        </span>
+      </div>
+
+      <div class="itemDividerHeading" *ngIf="this.guarantorDocList.length!==0">Guarantor</div>
+      <div class="segbarWrap" *ngFor="let doc of guarantorDocList;let i=index;">
+        <span class="textSize">{{doc.docDescription}}
+        </span>
+
+        <span (click)="docActionSheet(i,false,i,doc)">
+          <ion-icon name="add-circle" size="large"></ion-icon>
+        </span>
+        <span (click)="viewDoc(doc.imgs,i)">
+          <ion-badge class="segbarbadge">1</ion-badge>
+          <ion-icon size="large" name="images"></ion-icon>
+        </span>
+        <span>
+          <ion-icon size="large" name="trash"></ion-icon>
+        </span>
+      </div>
+    </form>
+  </div>
+
+
+</ion-content>
+
+<ion-footer *ngIf="data">
+  <ion-toolbar style="text-align: center;">
+    <ion-button (click)="docUpload()" type="button" shape="round">UPLOAD</ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<ng-template appProgressBar></ng-template>
+<ng-template appGallery></ng-template>

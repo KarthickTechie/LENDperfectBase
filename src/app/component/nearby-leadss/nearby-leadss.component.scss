@@ -1,0 +1,61 @@
+.content{
+    margin: 0px;
+    padding: 10px 0px 0px 0px;
+}
+.parentDiv{
+    background-color: #f4882d;
+    position: relative;
+    width: 95%;
+    margin: 16px auto 0px auto;
+    border-radius: 10px;
+    padding: 2px;
+    font-size: 80%;
+}
+.companyName{
+    padding: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+.childDiv{
+    color: #282828;
+    background-color: #ffffff;
+    border-radius: 0px 0px 10px 10px;
+}
+.iconClr{
+    color: #f4882d;
+    font-size: 120%;
+}
+.whiteBgIcon{
+    margin-left: 20px;
+    background-color: #ffffff;
+    padding: 10px 4px 1px 4px;
+    border-radius: 19px;
+}
+.whiteBgIcon ion-icon, .whiteCircle ion-icon{
+    color: #f4882d;
+    font-size: 130%;
+}
+.floatRight{
+    float: right;
+}
+
+.whiteCircle{
+    margin-left: 20px;
+    border: solid 2px #f4882d;
+    padding: 10px 4px 1px 4px;
+    border-radius: 19px;
+}
+.greenIcon{
+    color: #33cd5f;
+}
+.text{
+    font-size: 80%;
+    color:White;
+}
+.badge{
+    background-color: red;
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 80%;
+}

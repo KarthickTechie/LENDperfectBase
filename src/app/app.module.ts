@@ -1,98 +1,71 @@
-import { ViewGalleryPageModule } from './view-gallery/view-gallery.module';
-import { HandlingError } from './utility/ErrorHandling';
-import { VideoPlayer } from "@ionic-native/video-player/ngx";
-import { MediaCapture } from "@ionic-native/media-capture/ngx";
-import { StreamingMedia } from "@ionic-native/streaming-media/ngx";
-import { SqliteProvider } from './global/sqlite';
+import { KycScanOptionComponent } from './component/kyc-scan-option/kyc-scan-option.component';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+import { ReferenceCardComponent } from './component/reference-card/reference-card.component';
+import { NearbyLeadssComponent } from './component/nearby-leadss/nearby-leadss.component';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { ReactiveFormsModule } from "@angular/forms";
+
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { OCR } from '@ionic-native/ocr/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { Crop } from '@ionic-native/crop/ngx';
-import { JJzip } from 'ionic-native-j-jzip/ngx';
-import { ColorPickerModule } from "ngx-color-picker";
-import { IonicStorageModule } from '@ionic/storage';
+import { ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SQLite } from '@ionic-native/sqlite/ngx';
+
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-import { CropDocComponent } from './Components/crop-doc/crop-doc.component';
-import { DocumentUploadPageModule } from './document-upload/document-upload.module';
-import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
+import { File } from '@ionic-native/file/ngx';
 import { Network } from '@ionic-native/network/ngx';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+import { ListviewComponent } from './component/listview/listview.component';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { StreamingMedia } from "@ionic-native/streaming-media/ngx";
 import { Device } from '@ionic-native/device/ngx';
+import { SQLite } from '@ionic-native/sqlite/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { HTTP } from '@ionic-native/http/ngx';
-import { SignaturePadModule } from 'angular2-signaturepad';
-import { KeyValuesPipe } from './popoverdetails/key-values.pipe';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { CallNumber } from '@ionic-native/call-number/ngx';
-
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { DirectivesModule } from './directives/directives.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-
 @NgModule({
-  declarations: [AppComponent, CropDocComponent, KeyValuesPipe],
-  entryComponents: [CropDocComponent],
-  imports: [
-    BrowserModule,
-    ColorPickerModule,
-    ReactiveFormsModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    IonicStorageModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }), HttpClientModule,
-    DocumentUploadPageModule,
-    SignaturePadModule,
-    ViewGalleryPageModule
-  ],
+  declarations: [AppComponent, NearbyLeadssComponent, ReferenceCardComponent,KycScanOptionComponent],
+  entryComponents: [NearbyLeadssComponent, ReferenceCardComponent,KycScanOptionComponent],
+
+  imports: [BrowserModule, ReactiveFormsModule, IonicModule.forRoot(), AppRoutingModule, TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [HttpClient],
+
+    }
+  }), HttpClientModule, DirectivesModule],
   providers: [
     StatusBar,
     SplashScreen,
     SQLite,
-    SqliteProvider,
-    BarcodeScanner,
-    OCR,
+    File, Crop, AndroidPermissions,
+    FileTransfer,
     Camera,
-    FilePath,
-    File,
-    WebView,
-    Network,
     AppVersion,
     Device,
-    FileTransfer,
+    WebView,
     HTTP,
-    Crop,
-    JJzip,
-    AndroidPermissions,
     MediaCapture,
+    Network,
     StreamingMedia,
-    VideoPlayer,
-    LocalNotifications,
-    CallNumber,
-    HandlingError,
+    FilePath, InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [TranslateModule],

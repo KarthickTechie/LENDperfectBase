@@ -1,0 +1,89 @@
+.title-icon{
+    float: right;
+    zoom: 1.5;
+    padding-right: 5px;
+}
+.personname {
+    color: var(--ion-color-primary);
+    font-size: 19px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-left: 10px;
+}
+ion-card {
+    padding: 10px;
+}
+ion-card div.person ion-icon {
+    zoom: 2.2;
+    color: var(--ion-color-secondary);
+}
+ion-card div ion-icon {
+    zoom: 1.3;
+    padding-top: 2px;
+    color: var(--ion-color-secondary);
+}
+.textdata {
+    background: #f8f8f8;
+    color: var(--ion-color-secondary);
+    font-weight: bold;
+}
+.textcolor {
+    padding-left: 10px;
+    color: var(--ion-color-primary);
+}
+ion-badge {
+    margin-left: 10px;
+    border-radius: 9px;
+    vertical-align: middle;
+}
+.response {
+    background: #33cd5f;
+    color: #fff;
+}
+.query {
+    background: #ef473a;
+    color: #fff;
+}
+.querycontainer {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.queryleft {
+    position: absolute;
+    left: 0px;
+    zoom: 2.0;
+    color: var(--ion-color-primary);
+}
+.queryright {
+    position: absolute;
+    right: 0px;
+    zoom: 2.0;
+    color: var(--ion-color-primary);
+}
+.leftarrow {
+    position: absolute;
+    left: 11px;
+    zoom: 1.8;
+    color: var(--ion-color-primary);
+}
+.rightarrow {
+    position: absolute;
+    right: 11px;
+    zoom: 1.8;
+    color: var(--ion-color-primary);
+}
+.querylist {
+    display: flex;
+    flex-direction: row;
+}
+.querylist div {
+    width: 50%;
+    text-align: center;
+}
+.querylist ion-icon {
+    zoom: 3.0 !important;
+}
+.querylist ion-badge {
+    display: block;
+}

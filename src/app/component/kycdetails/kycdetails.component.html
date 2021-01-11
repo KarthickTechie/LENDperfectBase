@@ -1,0 +1,44 @@
+<div class="container">
+  <h2 class="title"> KYC Details</h2>
+  <form [formGroup]="kycDetails" (ngSubmit)="kycSave(kycDetails.value)">
+    <div class="item">
+    </div>
+
+
+    <div class="item">
+      <ion-item>
+        <ion-label>Choose Proof Document<span class="mandatory">*</span>
+        </ion-label>
+        <ion-select formControlName="proofDocument" interface="popover" (ionChange)="setValidation()">
+          <ion-select-option *ngFor="let kycproof of kycproofList" [value]="kycproof.code">
+            {{kycproof.Name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+    </div>
+
+
+    <div class="item">
+      <ion-item>
+        <!--   <ion-label position="floating">Id Value<span class="mandatory">*</span>
+        </ion-label> -->
+
+        <ion-input type="text" [maxlength]="maxCount" formControlName="proofvalue" UpperCase [placeholder]="'Enter Proof Value'">
+        </ion-input>
+        <ion-icon name="images-outline" (click)="showScannerOption($event)"></ion-icon>
+      </ion-item>
+    </div>
+
+
+
+    <div class="item">
+      <div class="buttspace roundbtn" class="ion-text-center">
+        <!-- <ion-button [disabled]="kycDetails.invalid" type="submit" shape="round">Save </ion-button> -->
+        <ion-button type="submit" shape="round">Save </ion-button>
+      </div>
+    </div>
+
+  </form>
+</div>

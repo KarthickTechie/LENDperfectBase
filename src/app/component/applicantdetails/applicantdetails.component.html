@@ -1,0 +1,124 @@
+<div class="container">
+  <h2 class="title">New Applicant Details</h2>
+  <form [formGroup]="personalDetails" (ngSubmit)="personalSave(personalDetails.value)">
+
+    <div class="item">
+      <ion-item>
+        <ion-label position="floating">First Name<span class="mandatory">*</span></ion-label>
+        <ion-input type="text" formControlName="firstName" maxlength="30"></ion-input>
+      </ion-item>
+      <div>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Middle Name</ion-label>
+          <ion-input type="text" formControlName="middleName" maxlength="30"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Last Name <span class="mandatory">*</span></ion-label>
+          <ion-input type="text" formControlName="lastName" maxlength="30"></ion-input>
+        </ion-item>
+      </div>
+
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Mobile Number <span class="mandatory">*</span></ion-label>
+          <ion-input type="tel" formControlName="mobileNumber" maxlength="10" appNumberOnly></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">E-mail ID </ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Employee ID / Dealer Code <span class="mandatory">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="empId"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="item" style="padding-bottom: 10px;">
+        <ion-item>
+          <ion-label>Source</ion-label>
+          <ion-select interface="popover" formControlName="source">
+            <ion-select-option *ngFor="let source of sourceList" [value]="source.code">
+              {{source.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="item" style="padding-bottom: 10px;">
+        <ion-item>
+          <ion-label>Product</ion-label>
+          <ion-select interface="popover" formControlName="product">
+            <ion-select-option *ngFor="let product of productList" [value]="product.code">
+              {{product.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="item" style="padding-bottom: 10px;">
+        <ion-item>
+          <ion-label>Employee Name</ion-label>
+          <ion-select interface="popover" formControlName="empName">
+            <ion-select-option *ngFor="let empName of empNameList" [value]="empName.code">
+              {{empName.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="item" style="padding-bottom: 10px;">
+        <ion-item>
+          <ion-label>Scheme Code</ion-label>
+          <ion-select interface="popover" formControlName="schemeCode">
+            <ion-select-option *ngFor="let schemeCode of schemeCodeList" [value]="schemeCode.code">
+              {{schemeCode.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="item" style="padding-bottom: 10px;">
+        <ion-item>
+          <ion-label>Sol ID</ion-label>
+          <ion-select interface="popover" formControlName="solId">
+            <ion-select-option *ngFor="let solId of solIdList" [value]="solId.code">
+              {{solId.Name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="item">
+        <ion-item>
+          <ion-label position="floating">Lead / Inward No. <span class="mandatory">*</span></ion-label>
+          <ion-input type="text" formControlName="leadNo" aria-readonly="1234"></ion-input>
+        </ion-item>
+      </div>
+
+
+
+      <div class="item">
+        <div class="buttspace roundbtn" class="ion-text-center">
+          <!-- <ion-button [disabled]="personalDetails.invalid" type="submit" shape="round">Save -->
+          <ion-button type="submit" shape="round">Save
+          </ion-button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

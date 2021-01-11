@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar class="ion-text-center">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Net Worth</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="contentdetails"> 
+  <div class="content" (click)="openAsset()">
+    <!-- <ion-icon name="person"></ion-icon> -->
+    <!-- <img src="../../../assets/imgs/asset1.png" class="assetIcon"> -->
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="library"></ion-icon>
+    <ion-label>Asset Details</ion-label>
+  </div>
+  <div class="content" (click)="openLiabilites()">
+    <!-- <ion-icon name="document"></ion-icon> -->
+    <!-- <img src="../../../assets/imgs/liability1.svg" class="assetIcon"> -->
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="ribbon"></ion-icon>
+    <ion-label>Liabilities Details</ion-label>
+  </div>
+  <div class="content">
+    <!-- <ion-icon name="home"></ion-icon> -->
+    <!-- <img src="../../../assets/imgs/itr.png" class="assetIcon"> -->
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="document-text"></ion-icon>
+    <ion-label>ITR Statement</ion-label>
+  </div>
+  <div class="content">
+    <!-- <ion-icon name="wallet"></ion-icon> -->
+    <!-- <img src="../../../assets/imgs/bankStatement.svg" class="assetIcon"> -->
+    <ion-icon name="checkmark-circle-outline" class="greentik"></ion-icon>
+    <ion-icon name="newspaper"></ion-icon>
+    <ion-label>Bank Statement</ion-label>
+  </div>
+  </div>
+
+</ion-content>

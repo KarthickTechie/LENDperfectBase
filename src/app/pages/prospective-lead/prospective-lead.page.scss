@@ -1,0 +1,37 @@
+ion-card{
+    margin: 0;
+    border-radius: 0;
+    height: 150px;
+//     display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   text-align: center;
+position: relative;
+}
+ion-icon{
+    zoom: 2.0;
+    color: var(--ion-color-secondary);
+}
+div{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    // color: #61609a;
+    transform: translate(-50%, -50%);
+}
+div span{
+    // font-size: 120%;
+    font-size: 18px;
+    color: black;
+}
+
+
+    @media only screen and (min-width: 413px) {
+        ion-row {
+            width: 450px;
+            margin: 0 auto;
+        }
+  
+}
